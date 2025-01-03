@@ -1,0 +1,420 @@
+<template>
+  <section class="header" :class="{ 'intro-header': page.relativePath.includes('index') }">
+    <div class="left-nav">
+      <d-button v-if="page.relativePath.includes('components')" icon="nav-expand" variant="text" @click="collapseSideMenu()"></d-button>
+      <a class="mc-logo" v-localeHref="'/'">
+        <img src="/logo.svg" />
+        MateChat
+      </a>
+    </div>
+    <div class="right-nav">
+      <d-dropdown :overlay-class="page.relativePath.includes('index') ? 'intro-header-right-nav-dropdown' : 'header-right-nav-dropdown'">
+        <d-button class="nav-drop-btn" icon="icon-project-nav" variant="text"></d-button>
+        <template #menu>
+          <div class="nav-drop-menu">
+            <ul>
+              <li v-for="(item, index) in theme.nav" :key="index" @click="go(item.link)">
+                <img :class="{ 'enhance-icon': isGalaxy }" :src="iconMap[index]" />
+                <span>{{ $t(item.text) }}</span>
+              </li>
+              <li v-show="showTheme">
+                <div class="theme">
+                  <d-switch color="var(--devui-base-bg-dark)" v-model="isGalaxy" @change="themeChange($event)">
+                    <template #checkedContent>
+                      <i class="icon-dark"></i>
+                    </template>
+                    <template #uncheckedContent>
+                      <i class="icon-light"></i>
+                    </template>
+                  </d-switch>
+                  <div>主题</div>
+                </div>
+              </li>
+              <a href="https://gitcode.com/DevCloudFE/MateChat/overview" rel="noopener noreferrer" target="_blank">
+                <img src="/png/footer/gitcode.svg" style="height: 16px" />
+                <span>MateChat</span>
+              </a>
+            </ul>
+          </div>
+        </template>
+      </d-dropdown>
+
+      <div class="nav-list">
+        <a
+          v-for="(item, index) in theme.nav"
+          :key="index"
+          v-localeHref="item.link"
+          :class="['nav-op', { 'nav-active': isActive(item.link) }]"
+        >
+          <div v-if="!isGalaxy">
+            <img v-if="isActive(item.link)" :src="activeIconMap[index]" />
+            <img v-if="!isActive(item.link)" :src="iconMap[index]" />
+          </div>
+          <div v-if="isGalaxy">
+            <img :class="{ 'enhance-icon': isActive(item.link) }" :src="iconMap[index]" />
+          </div>
+          {{ $t(item.text) }}
+        </a>
+      </div>
+      <div class="release">
+        <d-dropdown :trigger="'hover'" style="width: 100px" :position="['bottom-end', 'right', 'top-end']">
+          <div class="version">
+            <span>1.0.0</span>
+            <i class="icon-chevron-down-2"></i>
+          </div>
+          <template #menu>
+            <ul class="list-menu">
+              <li class="menu-item">
+                <d-icon name="jump-to" operable @click="goThird('https://gitcode.com/DevCloudFE/MateChat/releases')">
+                  <template #prefix>
+                    <span>更新日志</span>
+                  </template>
+                </d-icon>
+              </li>
+            </ul>
+          </template>
+        </d-dropdown>
+      </div>
+      <div v-if="showTheme" class="header-menu-splitter"></div>
+      <div v-show="showTheme" class="theme">
+        <div>
+          <d-switch color="var(--devui-base-bg-dark)" v-model="isGalaxy" @change="themeChange($event)">
+            <template #checkedContent>
+              <i class="icon-dark"></i>
+            </template>
+            <template #uncheckedContent>
+              <i class="icon-light"></i>
+            </template>
+          </d-switch>
+        </div>
+      </div>
+      <div class="header-menu-splitter"></div>
+      <div class="gitcode-address" title="gitcode，欢迎star~">
+        <a href="https://gitcode.com/DevCloudFE/MateChat/overview" rel="noopener noreferrer" target="_blank">
+          <img src="/png/footer/gitcode.svg" style="height: 16px" />
+        </a>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script setup lang="ts">
+import { ref, onMounted, computed, inject } from 'vue';
+import { useData } from 'vitepress';
+import { ThemeKey, LocaleKey } from '../datas/type';
+import { infinityTheme, galaxyTheme } from 'devui-theme';
+import { themeServiceInstance } from '../../index';
+import { useI18n } from 'vue-i18n';
+import { useLangs } from '../../composables/langs';
+import { useRouter } from 'vitepress';
+const emit = defineEmits(['themeUpdate']);
+const i18n = useI18n();
+const { localeLinks, currentLang } = useLangs({ correspondingLink: true });
+const { theme, page, isDark } = useData();
+const isGalaxy = ref(false);
+const isZh = ref(true);
+const router = useRouter();
+const href = computed(() => localeLinks.value[0].link);
+
+const iconMap = ['/png/header/instruction.png', '/png/header/components.png', '/png/header/demo.png'];
+
+const activeIconMap = ['/png/header/instructionActive.png', '/png/header/componentsActive.png', '/png/header/demoActive.png'];
+
+const props = defineProps({
+  isScroll: {
+    type: Boolean,
+    default: false,
+  },
+  showTheme: {
+    type: Boolean,
+    default: true,
+  },
+});
+
+const ThemeConfig = {
+  [ThemeKey.Galaxy]: galaxyTheme,
+  [ThemeKey.Infinity]: infinityTheme,
+};
+
+const isActive = (link: string) => {
+  const prefix = link.split('/')[1];
+  return page.value.relativePath.startsWith(prefix);
+};
+
+onMounted(() => {
+  if (typeof localStorage !== 'undefined') {
+    if (localStorage.getItem('theme') === ThemeKey.Galaxy) {
+      isGalaxy.value = true;
+    }
+
+    if (localStorage.getItem('locale') === LocaleKey.en) {
+      isZh.value = false;
+    }
+  }
+});
+
+const go = (link: string) => {
+  router.go(link);
+};
+
+const goThird = (link: string) => {
+  window.open(link, '_blank');
+};
+
+const toggleAppearance = inject('toggle-appearance', (isGalaxy) => {
+  isDark.value = isGalaxy;
+});
+
+function setTheme(key: ThemeKey) {
+  isGalaxy.value = !isGalaxy.value;
+  typeof localStorage !== 'undefined' && localStorage.setItem('theme', key);
+  themeServiceInstance?.applyTheme(ThemeConfig[key]);
+  toggleAppearance(isGalaxy.value);
+  emit('themeUpdate', isGalaxy.value);
+}
+
+function themeChange(change) {
+  const key = change ? ThemeKey.Galaxy : ThemeKey.Infinity;
+  localStorage.setItem('theme', key);
+  themeServiceInstance?.applyTheme(ThemeConfig[key]);
+  toggleAppearance(isGalaxy.value);
+  emit('themeUpdate', isGalaxy.value);
+}
+
+function collapseSideMenu() {
+  const sideMenu = document.querySelector('.side-menu') as HTMLElement;
+  sideMenu.style.width = !sideMenu.style.width || sideMenu.style.width === '0px' ? '230px' : '0px';
+}
+</script>
+
+<style lang="scss" scoped>
+@import 'devui-theme/styles-var/devui-var.scss';
+.intro-header {
+  background-color: rgba(255, 255, 255, 0) !important;
+}
+
+.mc-logo {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  color: $devui-text;
+}
+
+.enhance-icon {
+  filter: brightness(10);
+}
+.header {
+  position: fixed;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 0;
+  width: 100%;
+  height: 48px;
+  background-color: $devui-base-bg;
+  transition: 0.5s;
+
+  img {
+    height: 32px;
+    margin: 8px 8px;
+    cursor: pointer;
+  }
+
+  .left-nav {
+    display: flex;
+    align-items: center;
+    button {
+      display: none;
+    }
+  }
+
+  .release {
+    margin-right: 12px;
+    color: $devui-icon-fill;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 32px;
+
+    .version {
+      line-height: 32px;
+    }
+
+    &:hover {
+      color: $devui-text;
+      transition: color $devui-animation-duration-base $devui-animation-ease-in-out-smooth;
+    }
+  }
+  .theme {
+    display: flex;
+    margin: 0 16px;
+
+    .opt {
+      padding: 5px;
+      cursor: pointer;
+      transition: 0.5s;
+      border-radius: 25%;
+
+      &:hover {
+        transform: scale(1.1);
+        background-color: $devui-glass-morphism-bg;
+      }
+    }
+  }
+}
+
+.right-nav {
+  display: flex;
+  align-items: center;
+
+  .nav-drop-btn {
+    display: none;
+  }
+
+  .nav-list {
+    gap: 12px;
+    display: flex;
+    margin-right: 12px;
+    .nav-op {
+      &:hover {
+        color: $devui-text;
+        background: $devui-icon-bg;
+        transition: all var(--devui-animation-duration-base, 0.2s)
+          var(--devui-animation-ease-in-out-smooth, cubic-bezier(0.645, 0.045, 0.355, 1));
+        box-shadow: var(--devui-shadow-length-base, 0 2px 6px 0) var(--devui-light-shadow, rgba(37, 43, 58, 0.12));
+        border-radius: $devui-border-radius-card;
+      }
+
+      color: $devui-aide-text;
+      display: flex;
+      align-items: center;
+      padding-right: 8px;
+      img {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    & > a {
+      text-decoration: none;
+    }
+
+    .nav-active {
+      color: $devui-text;
+      background: $devui-icon-bg;
+      box-shadow: var(--devui-shadow-length-base, 0 2px 6px 0) var(--devui-light-shadow, rgba(37, 43, 58, 0.12));
+      border-radius: $devui-border-radius-card;
+    }
+  }
+
+  .header-menu-splitter {
+    height: 24px;
+    border-left: 1px solid $devui-line;
+  }
+
+  .gitcode-address {
+    margin: 0 8px;
+  }
+}
+
+.nav-drop-menu {
+  display: flex;
+  background-color: $devui-base-bg;
+  width: 100vw;
+  justify-content: center;
+  ul {
+    padding: 12px;
+  }
+  li,
+  a {
+    height: 40px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    span {
+      color: $devui-text;
+    }
+  }
+
+  img {
+    width: 16px;
+    height: 16px;
+  }
+
+  .theme {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+}
+
+.list-menu {
+  padding: 0;
+  margin: 0 0 5px 0;
+}
+.menu-item {
+  padding: 5px 0 2px 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .header img {
+    margin: 8px;
+  }
+
+  .header {
+    .left-nav {
+      button {
+        display: block;
+        margin-right: -8px;
+      }
+    }
+
+    .right-nav {
+      .nav-drop-btn {
+        margin-right: 10px;
+        display: block;
+      }
+
+      .nav-list,
+      .theme,
+      .release,
+      .header-menu-splitter,
+      .gitcode-address {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .nav-drop-menu {
+    width: 320px;
+  }
+}
+</style>
+
+<style lang="scss">
+@import 'devui-theme/styles-var/devui-var.scss';
+.header-right-nav-dropdown {
+  left: 0 !important;
+  background: $devui-base-bg;
+  display: flex;
+  justify-self: center;
+  box-shadow: 0 2px 0 0 $devui-shadow !important;
+}
+
+.intro-header-right-nav-dropdown {
+  left: 0 !important;
+  background: rgba(255, 255, 255, 0) !important;
+  display: flex;
+  justify-self: center;
+  box-shadow: none !important;
+}
+</style>
