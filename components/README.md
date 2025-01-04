@@ -4,7 +4,7 @@
   </a>
 </p>
 <h1 align="center">MateChat</h1>
-<p align="center">前端智能化场景解决方案UI库，轻松构建你的AI应用。已服务于内部多个应用智能化改造，并助力InsCode AI IDE智能化助手搭建。</p>
+<p align="center">前端智能化场景解决方案UI库，轻松构建你的AI应用。已服务于华为内部多个应用智能化改造，并助力CodeArts、InsCode AI IDE等智能化助手搭建。</p>
 
 ![example](https://matechat.gitcode.com/example1.png)
 
@@ -423,6 +423,7 @@ MateChat 在不断的演进中，你可在这里了解我们的计划：[MateCha
 我们诚挚地邀请您加入MateChat社区，一起参与项目的建设。无论您是经验丰富的开发者，还是刚刚起步的编程爱好者，您的贡献都对我们至关重要，这里是我们的[【贡献指南】](https://gitcode.com/DevCloudFE/MateChat/blob/main/CONTRIBUTING.md)。
 
 ## 谁在使用
+[CodeArts盘古助手](https://www.huaweicloud.com/product/codeartside/snap.html)
 
 [InsCode AI IDE](https://inscode.csdn.net/)
 
