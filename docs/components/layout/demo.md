@@ -19,9 +19,9 @@ iconSrc: '/layoutIcon.png'
       <McBubble content="Hello MateChat" align="right"></McBubble>
       <McBubble content="Hello, what can I do for you?"></McBubble>
     </McLayoutContent>
-    <McSender>
+    <McLayoutSender>
       <McInput :value="inputValue" :maxLength="2000" showCount></McInput>
-    </McSender>
+    </McLayoutSender>
   </McLayout>
 </template>
 
