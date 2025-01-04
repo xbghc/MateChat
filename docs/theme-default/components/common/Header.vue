@@ -89,7 +89,7 @@
         </div>
       </div>
       <div class="header-menu-splitter"></div>
-      <div class="gitcode-address" title="gitcode，欢迎star~">
+      <div class="gitcode-address" title="到GitCode关注">
         <a href="https://gitcode.com/DevCloudFE/MateChat/overview" rel="noopener noreferrer" target="_blank">
           <img src="/png/footer/gitcode.svg" style="height: 16px" />
         </a>

@@ -76,7 +76,7 @@ onUnmounted(() => {
 .main-container {
   width: calc(100vw - 20px);
   padding-right: 150px;
-  max-width: 1440px;
+  max-width: 1600px;
   margin: 0 auto;
   &.main-container-playground {
     padding-right: 0;

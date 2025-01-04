@@ -9,7 +9,6 @@
         ref="vWebRef"
         class="top"
         muted
-        autoplay
         src="/png/home/gradualWeb.mp4"
         poster="/png/home/gradualTop.png">
       </video>

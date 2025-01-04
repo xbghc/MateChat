@@ -17,7 +17,6 @@
           ref="vDemoRef"
           class="top"
           muted
-          autoplay
           src="/png/home/demo.mp4"
           poster="/png/home/demo.png">
         </video>
