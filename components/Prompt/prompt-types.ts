@@ -1,5 +1,5 @@
 import type { PropType } from 'vue';
-import { ListDirection, ListVariant } from '../List/list-types';
+import { ListDirection, ListVariant } from '@matechat/core/List';
 
 export interface IconConfig {
   name: string;

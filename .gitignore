@@ -19,6 +19,7 @@ package-lock.json
 /cypress/screenshots/
 
 cache
+/components/index.ts
 
 # Editor directories and files
 .vscode/*

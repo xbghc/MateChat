@@ -17,13 +17,12 @@
     "url": "git@gitcode.com:DevCloudFE/MateChat.git"
   },
   "module": "mate-chat.js",
-  "style": "mate-chat.css",
   "types": "index.d.ts",
   "dependencies": {
     "@floating-ui/dom": "^1.6.12",
     "@vue/shared": "^3.5.13",
     "devui-theme": "^0.0.7",
-    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "vue-devui": "^1.6.29"
   },
   "peerDependencies": {

@@ -32,20 +32,17 @@ $ npm i vue-devui @matechat/core @devui-design/icons
 
 ### 2. 引入
 
-在`main.ts`文件中引入`matechat`, `vue-devui` 以及 `图标库` 样式文件
+在`main.ts`文件中引入`matechat`, `图标库` 样式文件
 
 ```ts
 import { createApp } from 'vue';
 import App from './App.vue';
 
-// matechat基于vue-devui组件
-import DevUI from 'vue-devui';
 import MateChat from '@matechat/core';
 
-import 'vue-devui/style.css';
 import '@devui-design/icons/icomoon/devui-icon.css';
 
-createApp(App).use(DevUI).use(MateChat).mount('#app');
+createApp(App).use(MateChat).mount('#app');
 ```
 
 ### 3. 使用
@@ -107,7 +104,7 @@ createApp(App).use(DevUI).use(MateChat).mount('#app');
         style="flex: 1"
         @itemClick="onSubmit($event.label)"
       ></McPrompt>
-      <d-button
+      <Button
         style="margin-left: auto"
         icon="add"
         shape="circle"
@@ -129,7 +126,7 @@ createApp(App).use(DevUI).use(MateChat).mount('#app');
               <span class="input-foot-maxlength">{{ inputValue.length }}/2000</span>
             </div>
             <div class="input-foot-right">
-              <d-button icon="op-clearup" shape="round" :disabled="!inputValue" @click="inputValue = ''">清空输入</d-button>
+              <Button icon="op-clearup" shape="round" :disabled="!inputValue" @click="inputValue = ''">清空输入</Button>
             </div>
           </div>
         </template>
@@ -140,6 +137,8 @@ createApp(App).use(DevUI).use(MateChat).mount('#app');
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { Button } from 'vue-devui/button';
+import 'vue-devui/button/style.css';
 
 const description = [
   'MateChat 可以辅助研发人员编码、查询知识和相关作业信息、编写文档等。',
@@ -421,6 +420,7 @@ MateChat 在不断的演进中，你可在这里了解我们的计划：[MateCha
 我们诚挚地邀请您加入MateChat社区，一起参与项目的建设。无论您是经验丰富的开发者，还是刚刚起步的编程爱好者，您的贡献都对我们至关重要，这里是我们的[【贡献指南】](https://gitcode.com/DevCloudFE/MateChat/blob/main/CONTRIBUTING.md)。
 
 ## 谁在使用
+
 [CodeArts盘古助手](https://www.huaweicloud.com/product/codeartside/snap.html)
 
 [InsCode AI IDE](https://inscode.csdn.net/)
