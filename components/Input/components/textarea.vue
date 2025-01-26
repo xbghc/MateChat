@@ -64,7 +64,7 @@ const onKeydown = (e: KeyboardEvent) => {
       : rootProps.submitShortKey === SubmitShortKey.ShiftEnter
         ? e.shiftKey
         : false;
-  if (shiftKey && e.code === 'Enter') {
+  if (shiftKey && e.key === 'Enter' && !lock) {
     e.preventDefault();
     rootEmits('submit', inputValue.value);
     inputValue.value = '';
