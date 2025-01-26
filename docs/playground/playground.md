@@ -143,6 +143,9 @@ const onInputIconClick = (e) => {
 };
 
 const onSubmit = (e, answer = undefined) => {
+  if(e === '') {
+    return;
+  }
   inputValue.value = '';
   if (!messages.value.length) {
     startChat.value = true;
