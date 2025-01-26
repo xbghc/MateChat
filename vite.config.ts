@@ -9,6 +9,7 @@ export default defineConfig({
   plugins: [vue(), vueJsx()],
   resolve: {
     alias: {
+      '@matechat/core': fileURLToPath(new URL('./components', import.meta.url)),
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },

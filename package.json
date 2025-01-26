@@ -4,18 +4,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --host 0.0.0.0",
+    "dev": "npm run generate && vite --host 0.0.0.0",
     "build": "run-p type-check \"build-only {@}\" --",
-    "build:lib": "vite build -c vite-lib.config.ts && npm run after:build",
-    "after:build": "node ./scripts/import-css.js && node ./scripts/generate-dts.js && node ./scripts/release.js",
+    "build:lib": "npm run generate && node ./scripts/build-component.js && node ./scripts/release.js",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
-    "docs:dev": "vitepress dev docs --port 5174 --host 0.0.0.0",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:dev": "npm run generate && vitepress dev docs --port 5174 --host 0.0.0.0",
+    "docs:build": "npm run generate && vitepress build docs",
+    "docs:preview": "npm run generate && vitepress preview docs",
+    "generate": "node ./scripts/generate-component.js"
   },
   "dependencies": {
     "@devui-design/icons": "^1.4.0",
@@ -24,7 +24,7 @@
     "clipboard-copy": "^4.0.1",
     "devui-theme": "^0.0.7",
     "highlight.js": "^11.11.0",
-    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "markdown-it": "12.2.0",
     "openai": "^4.77.0",
     "sass": "^1.83.0",
@@ -34,6 +34,8 @@
     "vue-i18n": "^11.0.0-beta.2"
   },
   "devDependencies": {
+    "@babel/parser": "^7.26.5",
+    "@babel/traverse": "^7.26.5",
     "@tsconfig/node22": "^22.0.0",
     "@types/node": "^22.9.3",
     "@vitejs/plugin-vue": "^5.2.1",

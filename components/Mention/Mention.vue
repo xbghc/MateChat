@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import PopperTrigger from '../PopperTrigger/PopperTrigger';
+import { PopperTrigger } from '@matechat/core/PopperTrigger';
 import { mentionProps, mentionEmits } from './mention-types';
 import { useMention } from './use-mention';
 
