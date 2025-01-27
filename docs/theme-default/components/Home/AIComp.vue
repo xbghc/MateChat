@@ -2,7 +2,7 @@
   <div class="ai-container">
     <div class="title">匹配不同业务类型的生成式AI体验</div>
     <div class="banner">
-      <div class="scene" v-for="(item, i) in list" :key="i" :class="{ active: index === i }" @click="index = i">
+      <div class="scene" v-for="(item, i) in list" :key="i" :class="{ active: index === i }" @mouseenter="index = i">
         <div class="label">{{ item.label }}</div>
         <div class="desc">{{ item.desc }}</div>
       </div>
@@ -49,25 +49,25 @@ const index = ref(1);
   justify-content: center;
 }
 .banner {
-  margin: 98px 0 56px 0;
-  width: 50%;
+  margin: 80px 0 56px 0;
+  width: 60%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 24px;
   .scene {
-    width: 30%;
+    flex: 1;
+    max-width: 382px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     padding: 25px;
-    border-radius: 20px;
+    border-radius: 24px;
     background:
       no-repeat center/cover url(/png/home/aiDefault.png),
       rgba(255, 255, 255, 0.8);
-    color: rgba(0, 0, 0, 0.8);
+    color: #43406D;
     cursor: pointer;
     transition: all 0.5 ease-in-out;
-    &.active,
-    &:hover {
+    &.active {
       color: rgba(255, 255, 255, 0.8);
       background:
         no-repeat center/cover url(/png/home/aiDefault.png),
@@ -78,8 +78,10 @@ const index = ref(1);
     }
 
     .label {
-      font-size: 28px;
       margin-bottom: 10px;
+      font-size: 28px;
+      font-weight: bold;
+      line-height: 1.5;
     }
     .desc {
       font-size: 16px;
@@ -91,16 +93,21 @@ const index = ref(1);
   width: 80%;
   display: flex;
   justify-content: center;
+  background: no-repeat url(/png/home/ai/contentBg.svg);
+  background-size: 100%;
+  background-position: center;
   img {
-    width: 100%;
+    width: 90%;
     object-fit: contain;
   }
-  margin-bottom: 98px;
+  padding-bottom: 140px;
 }
 @media (max-width: 1600px) {
   .banner {
     margin: 56px 0 30px 0;
     .scene {
+      padding: 15px;
+      border-radius: 12px;
       .label {
         font-size: 18px;
       }
@@ -110,7 +117,7 @@ const index = ref(1);
     }
   }
   .content {
-    margin-bottom: 56px;
+    padding-bottom: 56px;
   }
 }
 @media (max-width: 768px) {
@@ -127,9 +134,6 @@ const index = ref(1);
         display: none;
       }
     }
-  }
-  .content {
-    margin-bottom: 56px;
   }
 }
 </style>

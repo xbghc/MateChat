@@ -1,5 +1,5 @@
 <template>
-  <section class="header" :class="{ 'intro-header': page.relativePath.includes('index') }">
+  <section class="header" :class="{ 'intro-header': page.relativePath.includes('index'), active: isDropdown, scroll: isScroll }">
     <div class="left-nav">
       <d-button v-if="page.relativePath.includes('components')" icon="nav-expand" variant="text" @click="collapseSideMenu()"></d-button>
       <a class="mc-logo" v-localeHref="'/'">
@@ -8,7 +8,10 @@
       </a>
     </div>
     <div class="right-nav">
-      <d-dropdown :overlay-class="page.relativePath.includes('index') ? 'intro-header-right-nav-dropdown' : 'header-right-nav-dropdown'">
+      <d-dropdown
+        :overlay-class="page.relativePath.includes('index') ? 'intro-header-right-nav-dropdown' : 'header-right-nav-dropdown'"
+        @toggle="onDropdown($event)"
+      >
         <d-button class="nav-drop-btn" icon="icon-project-nav" variant="text"></d-button>
         <template #menu>
           <div class="nav-drop-menu">
@@ -141,6 +144,8 @@ const isActive = (link: string) => {
   return page.value.relativePath.startsWith(prefix);
 };
 
+const isDropdown = ref(false);
+
 onMounted(() => {
   if (typeof localStorage !== 'undefined') {
     if (localStorage.getItem('theme') === ThemeKey.Galaxy) {
@@ -185,20 +190,14 @@ function collapseSideMenu() {
   const sideMenu = document.querySelector('.side-menu') as HTMLElement;
   sideMenu.style.width = !sideMenu.style.width || sideMenu.style.width === '0px' ? '230px' : '0px';
 }
+
+function onDropdown(status: boolean) {
+  isDropdown.value = status;
+}
 </script>
 
 <style lang="scss" scoped>
 @import 'devui-theme/styles-var/devui-var.scss';
-.intro-header {
-  background-color: rgba(255, 255, 255, 0) !important;
-}
-
-.mc-logo {
-  display: flex;
-  align-items: center;
-  font-size: 20px;
-  color: $devui-text;
-}
 
 .enhance-icon {
   filter: brightness(10);
@@ -219,6 +218,18 @@ function collapseSideMenu() {
     height: 32px;
     margin: 8px 8px;
     cursor: pointer;
+  }
+
+  .mc-logo {
+    display: flex;
+    align-items: center;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1.5;
+    color: $devui-text;
+    img {
+      margin: 8px 8px 8px 20px;
+    }
   }
 
   .left-nav {
@@ -261,6 +272,20 @@ function collapseSideMenu() {
         background-color: $devui-glass-morphism-bg;
       }
     }
+  }
+}
+
+.intro-header {
+  background-color: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(4px);
+
+  &.scroll {
+    transition: background-color 1s;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  &.active {
+    background-color: $devui-base-bg;
   }
 }
 
@@ -314,7 +339,7 @@ function collapseSideMenu() {
   }
 
   .gitcode-address {
-    margin: 0 8px;
+    margin: 0 20px 0 8px;
   }
 }
 
@@ -354,7 +379,7 @@ function collapseSideMenu() {
 
 .list-menu {
   padding: 0;
-  margin: 0 0 5px 0;
+  margin: 0 0 3px 0;
 }
 .menu-item {
   padding: 5px 0 2px 8px;

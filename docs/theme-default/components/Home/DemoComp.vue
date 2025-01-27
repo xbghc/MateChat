@@ -58,16 +58,17 @@ const webPlay = () => {
 }
 .content {
   width: 80%;
-  margin: 98px 0;
+  margin: 80px 0 160px 0;
   display: flex;
   align-items: center;
   .case {
-    max-width: 30%;
+    max-width: min(30%, 375px);
     margin-right: 30px;
     .label {
       display: flex;
       align-items: center;
       font-size: 36px;
+      margin-bottom: 32px;
       img {
         margin-right: 8px;
         width: 1em;
@@ -84,6 +85,7 @@ const webPlay = () => {
     video {
       width: 100%;
       object-fit: contain;
+      border-radius: 24px;
     }
   }
 }
@@ -94,10 +96,14 @@ const webPlay = () => {
     .case {
       .label {
         font-size: 24px;
+        margin-bottom: 20px;
       }
       .desc {
         font-size: 11px;
       }
+    }
+    .video-container video {
+      border-radius: 12px;
     }
   }
 }
@@ -111,6 +117,7 @@ const webPlay = () => {
       margin-bottom: 30px;
       .label {
         font-size: 16px;
+        margin-bottom: 0;
       }
       .desc {
         display: none;

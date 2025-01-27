@@ -4,13 +4,15 @@
   text-align: center;
   font-weight: bold;
   font-size: 56px;
+  line-height: 1.5;
+  color: #302e51;
   &::before {
     content: '';
     display: block;
     margin: 0 10px;
     width: 1.5em;
     height: 1em;
-    background: no-repeat center / cover url(/png/home/titleLeft.png);
+    background: no-repeat center / cover url(/png/home/titleLeft.svg);
   }
   &::after {
     content: '';
@@ -18,7 +20,7 @@
     margin: 0 10px;
     width: 1.5em;
     height: 1em;
-    background: no-repeat center / cover url(/png/home/titleRight.png);
+    background: no-repeat center / cover url(/png/home/titleRight.svg);
   }
 }
 

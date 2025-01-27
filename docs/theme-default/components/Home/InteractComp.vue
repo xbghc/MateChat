@@ -44,9 +44,9 @@
       </div>
       <div class="demo">
         <!-- <InteractCarousel ref="carouselRef" class="demo-carousel"></InteractCarousel> -->
-        <img class="left" src="/logo.svg" data-src="/png/home/interLeft.png" />
+        <img class="left" src="/logo.svg" data-src="/png/home/interact/interLeft.png" />
         <img ref="imgRef" class="center" :src="imgs[0]" />
-        <img class="right" src="/logo.svg" data-src="/png/home/interRight.png" />
+        <img class="right" src="/logo.svg" data-src="/png/home/interact/interRight.png" />
       </div>
       <div class="btn-h">
         <a v-localeHref="'/playground/playground.html'" style="display: flex; align-items: center; justify-content: center">
@@ -122,7 +122,7 @@ watch(index, () => {
   if (!imgRef.value) {
     return;
   }
-  imgRef.value.style.opacity = 0.1;
+  imgRef.value.style.opacity = 0.5;
   setTimeout(() => {
     imgRef.value.src = imgs[index.value];
     imgRef.value.style.opacity = 1;
@@ -176,7 +176,8 @@ function onMouseWheel(e) {
     return;
   }
   const rect = interactRef.value.getBoundingClientRect();
-  if (rect.top < 0) {
+  const fix = document.documentElement.clientHeight + 200;
+  if (rect.top < 0 || rect.top + interactRef.value.clientHeight > fix) {
     return;
   }
   e.preventDefault();
@@ -213,14 +214,13 @@ function onTransitionEnd() {
 }
 .content {
   margin: 98px 0;
+  margin-bottom: 140px;
   width: 80%;
   display: flex;
   align-items: stretch;
+  justify-content: center;
   gap: 25px;
-  .steps,
-  .demo {
-    flex: 1;
-  }
+  transform: translateX(6%);
 }
 .steps {
   display: flex;
@@ -237,7 +237,7 @@ function onTransitionEnd() {
     left: 7px;
     width: 2px;
     height: 100%;
-    background-color: #dadada;
+    background-color: #DFE0F4;
     transition: all 0.8s linear;
   }
   .row {
@@ -248,7 +248,7 @@ function onTransitionEnd() {
     .dot {
       width: 16px;
       height: 16px;
-      background-color: #dadada;
+      background-color: #DFE0F4;
       border-radius: 50%;
       transition: all 0.8s linear;
     }
@@ -289,7 +289,7 @@ function onTransitionEnd() {
     z-index: 2;
     width: 98px;
     height: 98px;
-    background: no-repeat center/cover url(/logo.svg);
+    background: no-repeat center/cover url(/png/home/interact/dot.svg);
     transform: translateX(-44px) translateY(-12px);
     transition: all 0.8s linear;
   }
@@ -300,18 +300,17 @@ function onTransitionEnd() {
   gap: 4px;
   width: fit-content;
   padding: 15px 30px;
-  background-image: url(/png/home/btnDefault.png);
+  border-radius: 30px;
+  background: linear-gradient(135deg, #B369FF, #7B79FF);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 100% 90%;
   transition: all 0.3s ease-in-out;
   color: $devui-light-text;
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
   &:hover {
-    transform: scale(1.1);
-    background-image: url(/png/home/btnActive.png);
+    transform: scale(1.05);
   }
 }
 
@@ -328,7 +327,7 @@ function onTransitionEnd() {
   .left {
     position: absolute;
     z-index: 1;
-    transform: translateX(-50%) translateY(50%);
+    transform: translateX(-30%) translateY(70%);
   }
   .center {
     z-index: 3;
@@ -336,8 +335,18 @@ function onTransitionEnd() {
   .right {
     position: absolute;
     z-index: 2;
-    transform: translateX(50%) translateY(-30%);
+    transform: translateX(30%) translateY(-30%);
   }
+
+  // &::before {
+  //   content: '';
+  //   position: absolute;
+  //   display: block;
+  //   width: 20%;
+  //   height: 20%;
+  //   background: no-repeat center / cover url(/png/home/interact/sticker.png);
+  //   transform: translateX(-30%) translateY(70%);
+  // }
 }
 
 .steps-h {
@@ -361,7 +370,7 @@ function onTransitionEnd() {
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: #dadada;
+    background-color: #DFE0F4;
     transition: all 0.8s linear;
   }
   .row-h {
@@ -373,7 +382,7 @@ function onTransitionEnd() {
     .dot-h {
       width: 16px;
       height: 16px;
-      background-color: #dadada;
+      background-color: #DFE0F4;
       border-radius: 50%;
       transition: all 0.8s linear;
     }
@@ -410,6 +419,7 @@ function onTransitionEnd() {
 .btn-h {
   display: none;
 }
+
 @media (max-width: 1600px) {
   .content {
     margin: 56px 0 78px 0;
@@ -434,7 +444,9 @@ function onTransitionEnd() {
 @media (max-width: 768px) {
   .content {
     flex-direction: column;
+    align-items: center;
     margin: 56px 0 78px 0;
+    transform: translate(0);
   }
   .steps {
     display: none;

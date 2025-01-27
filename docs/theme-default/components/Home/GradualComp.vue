@@ -75,11 +75,16 @@ function stopIDE() {
   justify-content: center;
 }
 .gradual-video {
-  margin: 98px 0;
+  margin-top: 80px;
+  margin-bottom: 42px;
+  padding-bottom: 98px;
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
+  background: no-repeat url(/png/home/gradual/videoBg.svg);
+  background-size: contain;
+  background-position: center 100px;
   video {
     position: relative;
     width: 40%;
@@ -104,7 +109,16 @@ function stopIDE() {
 }
 @media (max-width: 1600px) {
   .gradual-video {
-    margin: 56px 0;
+    margin: 56px 0 0 0;
+    padding-bottom: 56px;
+    background-position: center 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .gradual-video {
+    background-size: 80%;
+    background-position: center 10px;
   }
 }
 </style>
