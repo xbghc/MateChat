@@ -18,7 +18,7 @@ isPlayground: true
       <template v-for="(msg, idx) in messages" :key="idx">
         <McBubble v-if="msg.from === 'user'" :content="msg.content" :align="'right'" :avatarConfig="msg.avatarConfig"></McBubble>
         <McBubble v-else :loading="msg.loading ?? false" :avatarConfig="msg.avatarConfig">
-          <McMarkDownCard :content="msg.content" :theme="theme"></McMarkDownCard>
+          <McMarkdownCard :content="msg.content" :theme="theme"></McMarkdownCard>
           <template #bottom>
             <div class="bubble-bottom-operations">
               <i class="icon-copy-new"></i>

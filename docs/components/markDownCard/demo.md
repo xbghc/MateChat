@@ -12,7 +12,7 @@ bannerSrc: '/bubbleBanner.png'
 
 ```vue
 <template>
-  <McMarkDownCard :content="content" :theme="theme"></McMarkDownCard>
+  <McMarkdownCard :content="content" :theme="theme"></McMarkdownCard>
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
@@ -94,7 +94,7 @@ onMounted(() => {
     <d-button variant="solid" @click="changeTheme">切换主题</d-button>
   </div>
   <div class="theme-container" :class="themeClass">
-    <McMarkDownCard :content="content" :theme="theme"></McMarkDownCard>
+    <McMarkdownCard :content="content" :theme="theme"></McMarkdownCard>
   </div>
 </template>
 <script setup>
@@ -194,13 +194,13 @@ onMounted(() => {
 
 ```vue
 <template>
-  <McMarkDownCard :content="content" :theme="theme">
+  <McMarkdownCard :content="content" :theme="theme">
     <template #actions="{ codeBlockData }">
       <div class="btn-group">
         <d-button variant="solid" @click="handleAction(codeBlockData)">自定义按钮</d-button>
       </div>
     </template>
-  </McMarkDownCard>
+  </McMarkdownCard>
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
@@ -249,7 +249,7 @@ onMounted(() => {
 
 ```vue
 <template>
-  <McMarkDownCard :content="content" :theme="theme">
+  <McMarkdownCard :content="content" :theme="theme">
     <template #header="{ codeBlockData }">
       <div class="header-container">
         <div class="header-left">
@@ -261,7 +261,7 @@ onMounted(() => {
         </div>
       </div>
     </template>
-  </McMarkDownCard>
+  </McMarkdownCard>
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
@@ -338,11 +338,11 @@ onMounted(() => {
 
 ```vue
 <template>
-  <McMarkDownCard :content="content" :theme="theme">
+  <McMarkdownCard :content="content" :theme="theme">
     <template #content="{ codeBlockData }">
       <div class="content-container" v-html="transfer(codeBlockData)"></div>
     </template>
-  </McMarkDownCard>
+  </McMarkdownCard>
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
