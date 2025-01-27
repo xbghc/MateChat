@@ -3,7 +3,7 @@
     <Header :show-theme="false" :isScroll="isScroll"></Header>
     <MainComp class="main-container"></MainComp>
     <Suspense>
-      <template #default v-if="showComp">
+      <template #default>
         <div>
           <div class="intro-container">
             <GradualComp class="gradual-container"></GradualComp>
@@ -18,15 +18,18 @@
         </div>
       </template>
     </Suspense>
-    <div v-if="!showComp" class="loading">
-      <McBubbleLoading></McBubbleLoading>
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, defineAsyncComponent } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { infinityTheme, galaxyTheme } from 'devui-theme';
+import GradualComp from './GradualComp.vue'; // 体验无边界
+import InteractComp from './InteractComp.vue'; // AI交互
+import AIComp from './AIComp.vue'; // AI体验
+import TypicalComp from './TypicalComp.vue'; // 组件展示
+import DemoComp from './DemoComp.vue'; // 应用案例
+import Footer from '../common/Footer.vue'; // 底部
 import Header from '../common/Header.vue';
 import MainComp from './MainComp.vue'; // 主页
 import { themeServiceInstance } from '../../index';
@@ -36,13 +39,11 @@ const ThemeConfig = {
   [ThemeKey.Galaxy]: galaxyTheme,
   [ThemeKey.Infinity]: infinityTheme,
 };
-const showComp = ref(false);
 const isScroll = ref(false);
 
 onMounted(() => {
   themeServiceInstance?.applyTheme(ThemeConfig[ThemeKey.Infinity]);
   window.addEventListener('scroll', onScroll);
-  showComp.value = true;
 });
 
 onUnmounted(() => {
@@ -72,12 +73,6 @@ function onScroll() {
 
   isScroll.value = window.scrollY > 0;
 }
-const GradualComp = defineAsyncComponent(() => import('./GradualComp.vue')); // 体验无边界
-const InteractComp = defineAsyncComponent(() => import('./InteractComp.vue')); // AI交互
-const AIComp = defineAsyncComponent(() => import('./AIComp.vue')); // AI体验
-const TypicalComp = defineAsyncComponent(() => import('./TypicalComp.vue')); // 组件展示
-const DemoComp = defineAsyncComponent(() => import('./DemoComp.vue')); // 应用案例
-const Footer = defineAsyncComponent(() => import('../common/Footer.vue')); // 底部
 </script>
 
 <style lang="scss" scoped>

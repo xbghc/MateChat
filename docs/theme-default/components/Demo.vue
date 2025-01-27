@@ -206,6 +206,10 @@ export default {
     0 2px 4px 0 $devui-light-shadow;
 }
 
+:deep(.mc-markdown-render p) {
+  margin: 0 !important;
+}
+
 .source {
   box-sizing: border-box;
   padding: 24px;
