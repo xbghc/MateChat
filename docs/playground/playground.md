@@ -18,7 +18,7 @@ isPlayground: true
       <template v-for="(msg, idx) in messages" :key="idx">
         <McBubble v-if="msg.from === 'user'" :content="msg.content" :align="'right'" :avatarConfig="msg.avatarConfig"></McBubble>
         <McBubble v-else :loading="msg.loading ?? false" :avatarConfig="msg.avatarConfig">
-          <RenderMarkdown :content="msg.content"></RenderMarkdown>
+          <McMarkDownCard :content="msg.content" :theme="theme"></McMarkDownCard>
           <template #bottom>
             <div class="bubble-bottom-operations">
               <i class="icon-copy-new"></i>
@@ -105,14 +105,15 @@ isPlayground: true
 </template>
 
 <script setup lang="ts">
-import { ref, defineComponent, nextTick } from 'vue';
+import { ref, defineComponent, nextTick, onMounted } from 'vue';
 import { introPrompt, simplePrompt, mockAnswer, guessQuestions } from './mock.constants';
-import RenderMarkdown from './RenderMarkdown.vue';
 
 const inputValue = ref('');
 const startChat = ref(false);
 const conversationRef = ref();
 const isAgentOpen = ref(false);
+const theme = ref('light');
+const themeService = window['devuiThemeService'];
 const agentList = ref([
   { label: 'MateChat', value: 'matechat', active: true },
   { label: 'InsCode', value: 'inscode' },
@@ -195,6 +196,19 @@ const onItemClick = (item) => {
     onSubmit(item.label, mockAnswer[item.value]);
   }
 };
+
+const themeChange = () => {
+  if (themeService) {
+    theme.value = themeService.currentTheme.id === 'infinity-theme' ? 'light' : 'dark';
+  }
+}
+
+onMounted(() => {
+  themeChange();
+  if (themeService && themeService.eventBus) {
+    themeService.eventBus.add('themeChanged', themeChange);
+  }
+});
 </script>
 
 <style scoped lang="scss">

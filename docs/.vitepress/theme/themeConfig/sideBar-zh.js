@@ -26,6 +26,12 @@ export default {
         { text: 'Mention 快捷操作', link: '/components/mention/demo' },
       ],
     },
+    {
+      text: '演进中',
+      items: [
+        { text: 'MarkDown 卡片', link: '/components/markDownCard/demo' }
+      ],
+    },
   ],
   '/design/': [
     { text: '介绍', link: '/design/intro' },

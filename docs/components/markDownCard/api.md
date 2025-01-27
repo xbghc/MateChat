@@ -1,0 +1,51 @@
+---
+title: MarkDown 卡片
+desc: 用于显示 MarkDown 内容的卡片组件
+bannerSrc: '/bubbleBanner.png'
+---
+
+
+### 参数
+
+| 参数名         | 类型                              | 默认值   | 说明                                                   |
+| -------------- | --------------------------------- | -------- | ------------------------------------------------------ |
+| content        | `string`                          | ''       | MarkDown文本                                           |
+| theme        | [`Theme`](#theme)                          | 'light'       | MarkDown卡片主题                                           |
+| mdOptions        | `object`                          | {}       | 设置 markdown 对字符串的处理方式， 可参考[markdown-it](https://www.npmjs.com/package/markdown-it?activeTab=readme)|
+| customXssRules       | [CustomXssRule[]](#customxssrule)       | []       | 自定义 xss 对某种 tag 的过滤方式，每条规则需要指定 tag, 并给出需要加入白名单的属性数组|
+
+
+### 代码块插槽
+
+| 插槽名     | 返回值 | 说明               |
+| ---------- | ------ | ------------------ |
+| codeActions    | { codeBlockData: [CodeBlockData](#codeblockdata) }     | 代码块头部右侧自定义操作区域     |
+| codeHeader     | { codeBlockData: [CodeBlockData](#codeblockdata) }     | 自定义代码块头部区域     |
+| codeContent     | { codeBlockData: [CodeBlockData](#codeblockdata) }     | 自定义代码块内容区域     |
+
+
+### 类型定义
+
+#### CustomXssRule
+
+```ts
+interface CustomXssRule {
+  key: string;
+  value: string[] | null;
+}
+```
+
+#### Theme
+
+```ts
+type Theme = 'light' | 'dark';
+```
+
+#### CodeBlockData
+
+```ts
+interface CodeBlockData {
+  code: string;
+  language: string;
+}
+``` 

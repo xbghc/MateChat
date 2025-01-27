@@ -24,6 +24,12 @@ export default {
         { text: 'Mention', link: '/en/components/mention' },
       ],
     },
+    {
+      text: 'Developing',
+      items: [
+        { text: 'MarkDown Card', link: '/components/markDownCard/demo' }
+      ],
+    },
   ],
   '/en/design/': [
     { text: 'Intro', link: '/en/design/intro' },
