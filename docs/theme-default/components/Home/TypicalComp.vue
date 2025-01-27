@@ -1,23 +1,27 @@
 <template>
   <div class="typical-container">
     <div class="title">典型组件展示</div>
-    <div class="content">
-      <div class="comp-card" v-for="(item, i) in list" :key="i" :class="item.class">
-        <div class="img-container">
-          <a v-localeHref="item.href">
-            <img :data-src="item.img" src="/logo.svg" />
-          </a>
-        </div>
-        <div class="bottom">
-          <div class="label">{{ item.label }}</div>
-          <div class="desc">{{ item.desc }}</div>
+    <div class="main">
+      <div class="content">
+        <div class="comp-card" v-for="(item, i) in list" :key="i" :class="item.class">
+          <div class="img-container">
+            <a v-localeHref="item.href">
+              <img :data-src="item.img" src="/logo.svg" />
+            </a>
+          </div>
+          <div class="bottom">
+            <div class="label">{{ item.label }}</div>
+            <div class="desc">{{ item.desc }}</div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="typical-btn">
-      <a v-localeHref="'/components/introduction/demo.html'">
-        <div class="btn">了解更多组件</div>
-      </a>
+      <div class="typical-btn">
+        <a v-localeHref="'/components/introduction/demo.html'">
+          <div class="btn">
+            <div class="btn-text">了解更多组件</div>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -27,45 +31,24 @@ const list = [
   {
     label: '消息气泡',
     desc: '用于承载对话内容的气泡组件',
-    class: ['bg1'],
-    img: '/png/home/comp1.png',
+    class: ['bubble-bg'],
+    img: '/png/home/comp/bubbleComp.png',
     href: '/components/bubble/demo.html',
   },
   {
     label: '快捷使用',
     desc: '用于根据输入内容进行快捷提示的组件',
-    class: ['bg2'],
-    img: '/png/home/comp2.png',
+    class: ['mention-bg'],
+    img: '/png/home/comp/mentionComp.png',
     href: '/components/mention/demo.html',
   },
   {
     label: '输入框',
     desc: '用于对话的输入框组件',
-    class: ['bg3'],
-    img: '/png/home/inputComp.png',
+    class: ['input-bg'],
+    img: '/png/home/comp/inputComp.png',
     href: '/components/input/demo.html',
   },
-  // {
-  //   label: '对话历史管理',
-  //   desc: '开箱即用、易于配置、极致体验的通用图表库',
-  //   class: ['bg4'],
-  //   img: '/png/home/comp4.png',
-  //   href: '/components/history.html',
-  // },
-  // {
-  //   label: '信息来源',
-  //   desc: '开箱即用、易于配置、极致体验的通用图表库',
-  //   class: ['bg5'],
-  //   img: '/png/home/comp5.png',
-  //   href: '/components/introduction.html',
-  // },
-  // {
-  //   label: '思考过程',
-  //   desc: '开箱即用、易于配置、极致体验的通用图表库',
-  //   class: ['bg6'],
-  //   img: '/png/home/comp6.png',
-  //   href: '/components/introduction.html',
-  // },
 ];
 </script>
 
@@ -81,10 +64,29 @@ const list = [
   align-items: center;
   justify-content: center;
 }
+.main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // background: no-repeat url(/png/home/comp/bg.svg);
+  background-size: contain;
+  background-position: right;
+  // &::before {
+  //   position: absolute;
+  //   content: '';
+  //   display: block;
+  //   width: 100px;
+  //   height: 100px;
+  //   background: no-repeat center / cover url(/png/home/comp/sticker.png);
+  // }
+}
 .content {
   width: 80%;
-  margin: 98px 0 56px 0;
-  margin-left: calc(10% - 4em);
+  margin: 80px 0 56px 0;
+  margin-left: calc(5% - 2em);
   display: flex;
   flex-wrap: wrap;
   gap: 2em;
@@ -136,28 +138,16 @@ const list = [
     }
   }
 }
-.bg1 {
-  background: no-repeat center/cover url(/png/home/compBg1.png);
+.bubble-bg {
+  background: no-repeat center/cover url(/png/home/comp/bubbleBg.png);
   background-size: 100% 100%;
 }
-.bg2 {
-  background: no-repeat center/cover url(/png/home/compBg2.png);
+.mention-bg {
+  background: no-repeat center/cover url(/png/home/comp/mentionBg.png);
   background-size: 100% 100%;
 }
-.bg3 {
-  background: no-repeat center/cover url(/png/home/compBg3.png);
-  background-size: 100% 100%;
-}
-.bg4 {
-  background: no-repeat center/cover url(/png/home/compBg4.png);
-  background-size: 100% 100%;
-}
-.bg5 {
-  background: no-repeat center/cover url(/png/home/compBg5.png);
-  background-size: 101% 100%;
-}
-.bg6 {
-  background: no-repeat center/cover url(/png/home/compBg6.png);
+.input-bg {
+  background: no-repeat center/cover url(/png/home/comp/inputBg.png);
   background-size: 100% 100%;
 }
 .typical-btn {
@@ -166,15 +156,24 @@ const list = [
   justify-content: center;
   margin-bottom: 56px;
   .btn {
-    padding: 20px 40px;
-    border-radius: 40px;
-    border: 1px solid #7b79ff;
+    width: 252px;
+    height: 84px;
+    line-height: 84px;
+    text-align: center;
+    border-radius: 84px;
+    background: no-repeat center/contain url(/png/home/comp/btnBg.svg);
     color: #db6fe5;
     font-size: 30px;
     cursor: pointer;
     transition: all 0.5s ease-in-out;
     &:hover {
-      transform: scale(1.1);
+      transform: scale(1.05);
+    }
+
+    .btn-text {
+      background: linear-gradient(to right, #B369FF, #7B79FF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
   }
 }
@@ -192,6 +191,13 @@ const list = [
       }
     }
   }
+  .typical-btn .btn {
+    width: 194px;
+    height: 65px;
+    line-height: 65px;
+    border-radius: 65px;
+    font-size: 25px;
+  }
 }
 @media (max-width: 768px) {
   .content .comp-card {
@@ -207,9 +213,11 @@ const list = [
     }
   }
   .typical-btn .btn {
-    padding: 10px 30px;
-    border-radius: 30px;
-    font-size: 20px;
+    width: 126px;
+    height: 42px;
+    line-height: 42px;
+    border-radius: 42px;
+    font-size: 16px;
   }
 }
 </style>

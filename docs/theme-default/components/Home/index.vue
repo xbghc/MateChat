@@ -1,34 +1,34 @@
 <template>
-    <div class="home-container">
-        <Header :show-theme="false"></Header>
-        <MainComp class="main-container"></MainComp>
-        <div class="intro-container">
+  <div class="home-container">
+    <Header :show-theme="false" :isScroll="isScroll"></Header>
+    <MainComp class="main-container"></MainComp>
+    <Suspense>
+      <template #default v-if="showComp">
+        <div>
+          <div class="intro-container">
             <GradualComp class="gradual-container"></GradualComp>
             <InteractComp class="interact-container"></InteractComp>
             <AIComp class="ai-container"></AIComp>
             <TypicalComp class="typical-container"></TypicalComp>
-        </div>
-        <div class="demo-container">
+          </div>
+          <div class="demo-container">
             <DemoComp class="comp-container"></DemoComp>
-            <!-- <EcoComp class="eco-container"></EcoComp> -->
+          </div>
+          <Footer class="footer-container"></Footer>
         </div>
-        <Footer class="footer-container"></Footer>
+      </template>
+    </Suspense>
+    <div v-if="!showComp" class="loading">
+      <McBubbleLoading></McBubbleLoading>
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref, defineAsyncComponent } from 'vue';
 import { infinityTheme, galaxyTheme } from 'devui-theme';
-
 import Header from '../common/Header.vue';
 import MainComp from './MainComp.vue'; // 主页
-import GradualComp from './GradualComp.vue'; // 体验无边界
-import InteractComp from './InteractComp.vue'; // AI交互
-import AIComp from './AIComp.vue'; // AI体验
-import TypicalComp from './TypicalComp.vue'; // 组件展示
-import DemoComp from './DemoComp.vue'; // 应用案例
-import EcoComp from './EcoComp.vue'; // 技术生态
-import Footer from '../common/Footer.vue'; // 底部
 import { themeServiceInstance } from '../../index';
 import { ThemeKey } from '../datas/type';
 
@@ -36,10 +36,13 @@ const ThemeConfig = {
   [ThemeKey.Galaxy]: galaxyTheme,
   [ThemeKey.Infinity]: infinityTheme,
 };
+const showComp = ref(false);
+const isScroll = ref(false);
 
 onMounted(() => {
   themeServiceInstance?.applyTheme(ThemeConfig[ThemeKey.Infinity]);
   window.addEventListener('scroll', onScroll);
+  showComp.value = true;
 });
 
 onUnmounted(() => {
@@ -66,7 +69,15 @@ function onScroll() {
       video.removeAttribute('data-src');
     }
   });
+
+  isScroll.value = window.scrollY > 0;
 }
+const GradualComp = defineAsyncComponent(() => import('./GradualComp.vue')); // 体验无边界
+const InteractComp = defineAsyncComponent(() => import('./InteractComp.vue')); // AI交互
+const AIComp = defineAsyncComponent(() => import('./AIComp.vue')); // AI体验
+const TypicalComp = defineAsyncComponent(() => import('./TypicalComp.vue')); // 组件展示
+const DemoComp = defineAsyncComponent(() => import('./DemoComp.vue')); // 应用案例
+const Footer = defineAsyncComponent(() => import('../common/Footer.vue')); // 底部
 </script>
 
 <style lang="scss" scoped>
@@ -78,6 +89,13 @@ function onScroll() {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.loading {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .main-container {
   width: 100%;
@@ -99,7 +117,7 @@ function onScroll() {
 .demo-container {
   width: 100%;
   height: 100%;
-  padding-top: 78px;
+  padding-top: 84px;
   background: no-repeat center/cover url(/png/home/demoBg.png);
   .comp-container,
   .eco-container {

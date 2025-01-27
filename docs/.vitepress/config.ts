@@ -4,9 +4,12 @@ import sideBarEn from './theme/themeConfig/sideBar-en';
 import sideBarZh from './theme/themeConfig/sideBar-zh';
 
 export default defineConfig({
-  title: 'MateChat',
-  description: 'MateChat',
-  head: [['link', { rel: 'icon', href: '/logo.svg' }]],
+  title: 'MateChat - 轻松构建你的AI应用',
+  description: 'MateChat - 前端智能化场景解决方案UI库，轻松构建你的AI应用。已服务于华为内部多个应用智能化改造，并助力CodeArts、InsCode AI IDE等智能化助手搭建。是一款企业级开箱即用的产品。全部代码开源并遵循 MIT 协议，任何企业、组织及个人均可免费使用。',
+  head: [
+    ['link', { rel: 'icon', href: '/logo.svg' }],
+    ['meta', { name: 'keywords', content: 'chat,AI,vue,GPT,web,MateChat,开源,open source,智能化,components,组件库' }]
+  ],
   markdown: {
     config: (md) => {
       md.use(demoblockPlugin);
