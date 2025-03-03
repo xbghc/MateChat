@@ -45,7 +45,7 @@ export class McI18n {
 
 export function get(path: string, params: any, messages: LocaleMessages) {
   const keys = path.split('.');
-  let value = messages;
+  let value = messages || {};
   keys.forEach((key) => {
     value = value[key] ?? path;
   });
