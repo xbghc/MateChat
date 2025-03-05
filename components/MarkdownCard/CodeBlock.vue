@@ -81,6 +81,10 @@
       navigator.clipboard.writeText(props.code);
     } else {
       const textarea = document.createElement('textarea');
+      textarea.style.position = 'fixed';
+      textarea.style.top = '-9999px';
+      textarea.style.left = '-9999px';
+      textarea.style.zIndex = '-1';
       textarea.value = props.code;
       document.body.appendChild(textarea);
       textarea.select();
