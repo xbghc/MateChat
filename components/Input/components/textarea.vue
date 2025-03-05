@@ -19,7 +19,7 @@ import { Textarea } from 'vue-devui/textarea';
 import 'vue-devui/textarea/style.css';
 import { inputInjectionKey, SubmitShortKey, DisplayType } from '../input-types';
 import type { InputContext } from '../input-types';
-import { useMcI18n } from '../../Locale';
+import { useMcI18n } from '@matechat/core/Locale';
 
 const { t } = useMcI18n();
 

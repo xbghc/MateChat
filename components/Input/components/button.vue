@@ -20,7 +20,7 @@ import LoadingIcon from './LoadingIcon.vue';
 import SendIcon from './SendIcon.vue';
 import { inputInjectionKey } from '../input-types';
 import type { InputContext } from '../input-types';
-import { useMcI18n } from '../../Locale';
+import { useMcI18n } from '@matechat/core/Locale';
 
 const { t } = useMcI18n();
 
