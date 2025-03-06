@@ -3,14 +3,14 @@ import { createMcI18n } from './i18n';
 import enUs from './lang/en-us';
 import zhCn from './lang/zh-cn';
 
-const McDefaultMesaages = {
+const McDefaultMessages = {
   'en-us': enUs,
   'zh-cn': zhCn,
 };
 
 const McI18n = createMcI18n({
   locale: 'zh-cn',
-  messages: McDefaultMesaages,
+  messages: McDefaultMessages,
 });
 
 export function useMcI18n() {
