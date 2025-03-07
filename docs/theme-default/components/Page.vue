@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch, nextTick } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { useData } from 'vitepress';
 import SideMenu from './SideMenu.vue';
 import PageNav from './PageNav.vue';
@@ -32,7 +32,6 @@ import { useActiveAnchor } from '../composables/outline';
 
 const containerEl = ref<HTMLElement>();
 const { page, frontmatter, isDark } = useData();
-let vpDocElement;
 
 useActiveAnchor(containerEl);
 
@@ -50,44 +49,17 @@ const handleResize = () => {
   }
 };
 
-watch(page, (newPage) => {
-  const needHeight = newPage.relativePath.includes('components') ? 110 : 50;
-  nextTick(() => {
-    setAnchorClass(needHeight);
-  });
-});
-
 const themeUpdate = (event) => {
   isDark.value = event;
 };
 
 onMounted(() => {
   window.addEventListener('resize', handleResize);
-  setAnchorClass(page.value.relativePath.includes('components') ? 110 : 50);
 });
 
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize);
 });
-
-function setAnchorClass(paddingTopNeedHeight) {
-  if (!vpDocElement) {
-    vpDocElement = document.getElementsByClassName('vp-doc');
-  }
-  const vpDocMainChildren = vpDocElement?.[0]?.children?.[0]?.children;
-  if (!vpDocMainChildren) {
-    return;
-  }
-  const list = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
-  for (const elemnet of vpDocMainChildren) {
-    if (!list.includes(elemnet.tagName)) {
-      continue;
-    }
-    let computedStyle = getComputedStyle(elemnet);
-    elemnet.style.marginTop = `${Number(computedStyle.marginTop.replace('px', '')) - paddingTopNeedHeight}px`;
-    elemnet.style.paddingTop = `${Number(computedStyle.paddingTop.replace('px', '')) + paddingTopNeedHeight}px`;
-  }
-}
 </script>
 
 <style scoped lang="scss">
