@@ -91,6 +91,7 @@ const onKeydown = (e: KeyboardEvent) => {
   outline: none;
   box-sizing: border-box;
   resize: none;
+  border: none;
 
   &.mc-textarea-simple {
     height: 32px;
