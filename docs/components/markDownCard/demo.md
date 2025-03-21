@@ -186,6 +186,248 @@ onMounted(() => {
 
 :::
 
+### 数学公式
+通过配置md-plugins katex插件，进行数学公式渲染。
+:::demo
+
+```vue
+<template>
+  <McMarkdownCard :content="content" :theme="theme" :mdPlugins="mdPlugins"></McMarkdownCard>
+</template>
+<script setup>
+import { ref, onMounted } from 'vue';
+import { katex } from '@mdit/plugin-katex'; // 请首先安装@mdit/plugin-katex依赖
+const themeService = window['devuiThemeService'];
+const theme = ref('light');
+const mdPlugins = ref([{
+  plugin: katex,
+  opt: {}
+}])
+const content = ref(
+`
+$E = mc^2$
+$\\sqrt{3x-1}+(1+x)^2$
+`
+);
+
+const handleAction = (codeBlockData) => {
+  console.log(codeBlockData);
+}
+
+const changeTheme = () => {
+  theme.value = theme.value === 'light' ? 'dark' : 'light';
+  themeClass.value = themeClass.value === 'light-background' ? 'dark-background' : 'light-background';
+}
+
+const themeChange = () => {
+  if (themeService) {
+    theme.value = themeService.currentTheme.id === 'infinity-theme' ? 'light' : 'dark';
+  }
+}
+
+onMounted(() => {
+  themeChange();
+  if (themeService && themeService.eventBus) {
+    themeService.eventBus.add('themeChanged', themeChange);
+  }
+})
+</script>
+<style>
+@import 'katex/dist/katex.min.css';  /* 请首先安装 katex 依赖 */
+</style>
+
+```
+
+:::
+
+
+### Mermaid 渲染
+通过配置md-plugins Mermaid插件，进行Mermaid图渲染。
+:::demo
+
+```vue
+<template>
+  <McMarkdownCard :content="content" :theme="theme" :mdPlugins="mdPlugins"></McMarkdownCard>
+</template>
+<script setup>
+import { ref, onMounted } from 'vue';
+import markdownItMermaid from "@datatraccorporation/markdown-it-mermaid";; // 请首先安装@datatraccorporation/markdown-it-mermaid依赖
+const themeService = window['devuiThemeService'];
+const theme = ref('light');
+const mdPlugins = ref([{
+  plugin: markdownItMermaid,
+}])
+const content = ref(`
+# Flow Chart
+\`\`\`mermaid
+flowchart LR
+A[Hard] -->|Text| B(Round)
+B --> C{Decision}
+C -->|One| D[Result 1]
+C -->|Two| E[Result 2]
+\`\`\`
+
+# Class Diagram
+\`\`\`mermaid
+classDiagram
+Class01 <|-- AveryLongClass : Cool
+<<Interface>> Class01
+Class09 --> C2 : Where am I?
+Class09 --* C3
+Class09 --|> Class07
+Class07 : equals()
+Class07 : Object[] elementData
+Class01 : size()
+Class01 : int chimp
+Class01 : int gorilla
+class Class10 {
+  <<service>>
+  int id
+  size()
+}
+\`\`\`
+
+# State Diagram
+\`\`\`mermaid
+stateDiagram-v2
+[*] --> Still
+Still --> [*]
+Still --> Moving
+Moving --> Still
+Moving --> Crash
+Crash --> [*]
+\`\`\`
+`);
+
+const handleAction = (codeBlockData) => {
+  console.log(codeBlockData);
+}
+
+const changeTheme = () => {
+  theme.value = theme.value === 'light' ? 'dark' : 'light';
+  themeClass.value = themeClass.value === 'light-background' ? 'dark-background' : 'light-background';
+}
+
+const themeChange = () => {
+  if (themeService) {
+    theme.value = themeService.currentTheme.id === 'infinity-theme' ? 'light' : 'dark';
+  }
+}
+
+onMounted(() => {
+  themeChange();
+  if (themeService && themeService.eventBus) {
+    themeService.eventBus.add('themeChanged', themeChange);
+  }
+})
+</script>
+```
+
+:::
+
+
+### PlantUML 渲染
+通过配置md-plugins plantuml插件，进行plantuml图渲染。
+:::demo
+
+```vue
+<template>
+  <McMarkdownCard :content="content" :theme="theme" :mdPlugins="mdPlugins"></McMarkdownCard>
+</template>
+<script setup>
+import { ref, onMounted } from 'vue';
+import PlantUml from 'markdown-it-plantuml'; // 请首先安装markdown-it-plantuml依赖
+const themeService = window['devuiThemeService'];
+const theme = ref('light');
+const mdPlugins = ref([{
+  plugin: PlantUml,
+  opts: {
+    server: 'https://www.plantuml.com/plantuml'
+  } // 自定义server可参考plantuml官方文档进行搭建
+}])
+const content = ref(`
+@startuml
+Alice -> "Bob()" : Hello
+"Bob()" -> "This is very long" as Long
+' You can also declare:
+' "Bob()" -> Long as "This is very long"
+Long --> "Bob()" : ok
+@enduml`);
+
+const handleAction = (codeBlockData) => {
+  console.log(codeBlockData);
+}
+
+const changeTheme = () => {
+  theme.value = theme.value === 'light' ? 'dark' : 'light';
+  themeClass.value = themeClass.value === 'light-background' ? 'dark-background' : 'light-background';
+}
+
+const themeChange = () => {
+  if (themeService) {
+    theme.value = themeService.currentTheme.id === 'infinity-theme' ? 'light' : 'dark';
+  }
+}
+
+onMounted(() => {
+  themeChange();
+  if (themeService && themeService.eventBus) {
+    themeService.eventBus.add('themeChanged', themeChange);
+  }
+})
+</script>
+```
+
+:::
+
+
+### emoji渲染
+通过配置markdown-it-emoji插件，进行emoji表情渲染。
+:::demo
+
+```vue
+<template>
+  <McMarkdownCard :content="content" :theme="theme" :mdPlugins="mdPlugins"></McMarkdownCard>
+</template>
+<script setup>
+import { ref, onMounted } from 'vue';
+import { full as emoji } from 'markdown-it-emoji' // 请首先安装markdown-it-emoji依赖
+const themeService = window['devuiThemeService'];
+const theme = ref('light');
+const mdPlugins = ref([{
+  plugin: emoji
+}])
+const content = ref(`
+:joy: :thumbsup: :laughing: :blush: :dog:
+`);
+
+const handleAction = (codeBlockData) => {
+  console.log(codeBlockData);
+}
+
+const changeTheme = () => {
+  theme.value = theme.value === 'light' ? 'dark' : 'light';
+  themeClass.value = themeClass.value === 'light-background' ? 'dark-background' : 'light-background';
+}
+
+const themeChange = () => {
+  if (themeService) {
+    theme.value = themeService.currentTheme.id === 'infinity-theme' ? 'light' : 'dark';
+  }
+}
+
+onMounted(() => {
+  themeChange();
+  if (themeService && themeService.eventBus) {
+    themeService.eventBus.add('themeChanged', themeChange);
+  }
+})
+</script>
+
+```
+
+:::
+
 ### 自定义代码块操作区
 
 我们提供了 `actions` 插槽，支持你自定义代码块操作区
@@ -472,4 +714,3 @@ body[ui-theme='infinity-theme'] {
 ```
 
 :::
-
