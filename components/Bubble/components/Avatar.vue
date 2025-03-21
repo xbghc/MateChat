@@ -125,7 +125,7 @@ watch([() => props.name, () => props.width, () => props.height, () => props.gend
 .mc-bubble-avatar-wrapper {
   display: inline-block;
 
-  .mc-button-avatar-style {
+  .mc-bubble-avatar-style {
     display: inline-block;
     text-align: center;
     color: $devui-light-text;
