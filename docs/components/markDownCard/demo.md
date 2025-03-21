@@ -4,6 +4,12 @@ desc: 用于显示 MarkDown 内容的卡片组件
 bannerSrc: '/bubbleBanner.png'
 ---
 
+按需引入路径：
+
+```ts
+import { McMarkdownCard } from '@matechat/core';
+```
+
 ### 基本用法
 
 基本用法只需传入 content 即可
@@ -63,20 +69,20 @@ console.log(quickSort(arr)); // 输出排序后的数组
 const changeTheme = () => {
   theme.value = theme.value === 'light' ? 'dark' : 'light';
   themeClass.value = themeClass.value === 'light-background' ? 'dark-background' : 'light-background';
-}
+};
 
 const themeChange = () => {
   if (themeService) {
     theme.value = themeService.currentTheme.id === 'infinity-theme' ? 'light' : 'dark';
   }
-}
+};
 
 onMounted(() => {
   themeChange();
   if (themeService && themeService.eventBus) {
     themeService.eventBus.add('themeChanged', themeChange);
   }
-})
+});
 </script>
 ```
 
@@ -147,22 +153,21 @@ console.log(quickSort(arr)); // 输出排序后的数组
 const changeTheme = () => {
   theme.value = theme.value === 'light' ? 'dark' : 'light';
   themeClass.value = themeClass.value === 'light-background' ? 'dark-background' : 'light-background';
-}
+};
 
 const themeChange = () => {
   if (themeService) {
     theme.value = themeService.currentTheme.id === 'infinity-theme' ? 'light' : 'dark';
     themeClass.value = themeService.currentTheme.id === 'infinity-theme' ? 'light-background' : 'dark-background';
   }
-}
+};
 
 onMounted(() => {
   themeChange();
   if (themeService && themeService.eventBus) {
     themeService.eventBus.add('themeChanged', themeChange);
   }
-})
-
+});
 </script>
 <style scoped lang="scss">
 .btn-container {
@@ -179,7 +184,7 @@ onMounted(() => {
 }
 
 .dark-background {
-  background-color: #1A1A1C;
+  background-color: #1a1a1c;
 }
 </style>
 ```
@@ -459,25 +464,25 @@ function quickSort(arr) {
 
 const handleAction = (codeBlockData) => {
   console.log(codeBlockData);
-}
+};
 
 const changeTheme = () => {
   theme.value = theme.value === 'light' ? 'dark' : 'light';
   themeClass.value = themeClass.value === 'light-background' ? 'dark-background' : 'light-background';
-}
+};
 
 const themeChange = () => {
   if (themeService) {
     theme.value = themeService.currentTheme.id === 'infinity-theme' ? 'light' : 'dark';
   }
-}
+};
 
 onMounted(() => {
   themeChange();
   if (themeService && themeService.eventBus) {
     themeService.eventBus.add('themeChanged', themeChange);
   }
-})
+});
 </script>
 ```
 
@@ -495,7 +500,7 @@ onMounted(() => {
     <template #header="{ codeBlockData }">
       <div class="header-container">
         <div class="header-left">
-          <img src="https://matechat.gitcode.com/logo.svg" alt="logo">
+          <img src="https://matechat.gitcode.com/logo.svg" alt="logo" />
           <span>MateChat</span>
         </div>
         <div class="header-right">
@@ -521,20 +526,20 @@ function quickSort(arr) {
 const changeTheme = () => {
   theme.value = theme.value === 'light' ? 'dark' : 'light';
   themeClass.value = themeClass.value === 'light-background' ? 'dark-background' : 'light-background';
-}
+};
 
 const themeChange = () => {
   if (themeService) {
     theme.value = themeService.currentTheme.id === 'infinity-theme' ? 'light' : 'dark';
   }
-}
+};
 
 onMounted(() => {
   themeChange();
   if (themeService && themeService.eventBus) {
     themeService.eventBus.add('themeChanged', themeChange);
   }
-})
+});
 </script>
 <style lang="scss">
 .header-container {
@@ -549,7 +554,8 @@ onMounted(() => {
     cursor: pointer;
   }
 
-  .header-left, .header-right {
+  .header-left,
+  .header-right {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -627,54 +633,55 @@ const mdt = markdownIt({
   highlight: (str, lang) => {
     if (lang && hljs.getLanguage(lang)) {
       try {
-        const preCode = hljs.highlight(lang, str, true).value
-        const lines = preCode.split(/\n/).slice(0, -1)
-        let html = lines.map((item, index) => {
-          return '<li><span class="line-num" data-line="' + (index + 1) + '"></span>' + item + '</li>'
-        }).join('')
-        html = '<ol>' + html + '</ol>'
-        return '<pre class="hljs"><code>' +
-          html +
-          '</code></pre>'
+        const preCode = hljs.highlight(lang, str, true).value;
+        const lines = preCode.split(/\n/).slice(0, -1);
+        let html = lines
+          .map((item, index) => {
+            return '<li><span class="line-num" data-line="' + (index + 1) + '"></span>' + item + '</li>';
+          })
+          .join('');
+        html = '<ol>' + html + '</ol>';
+        return '<pre class="hljs"><code>' + html + '</code></pre>';
       } catch (__) {}
     }
 
     const preCode = mdt.utils.escapeHtml(str);
-    const lines = preCode.split(/\n/).slice(0, -1)
-    let html = lines.map((item, index) => {
-      return '<li><span class="line-num" data-line="' + (index + 1) + '"></span>' + item + '</li>'
-    }).join('')
-    html = '<ol>' + html + '</ol>'
-    return '<pre class="hljs"><code>' + html + '</code></pre>'
-  }
+    const lines = preCode.split(/\n/).slice(0, -1);
+    let html = lines
+      .map((item, index) => {
+        return '<li><span class="line-num" data-line="' + (index + 1) + '"></span>' + item + '</li>';
+      })
+      .join('');
+    html = '<ol>' + html + '</ol>';
+    return '<pre class="hljs"><code>' + html + '</code></pre>';
+  },
 });
 
 const htmlStr = mdt.render(content.value);
 
 const transfer = (codeBlockData) => {
-  const {code, language} = codeBlockData;
-  const codeBlockStr = '\`\`\`' + language + '\n' + code + '\`\`\`'
-  return mdt.render(codeBlockStr)
-}
+  const { code, language } = codeBlockData;
+  const codeBlockStr = '\`\`\`' + language + '\n' + code + '\`\`\`';
+  return mdt.render(codeBlockStr);
+};
 
 const changeTheme = () => {
   theme.value = theme.value === 'light' ? 'dark' : 'light';
   themeClass.value = themeClass.value === 'light-background' ? 'dark-background' : 'light-background';
-}
+};
 
 const themeChange = () => {
   if (themeService) {
     theme.value = themeService.currentTheme.id === 'infinity-theme' ? 'light' : 'dark';
   }
-}
+};
 
 onMounted(() => {
   themeChange();
   if (themeService && themeService.eventBus) {
     themeService.eventBus.add('themeChanged', themeChange);
   }
-})
-
+});
 </script>
 
 <style lang="scss">
@@ -688,15 +695,12 @@ body[ui-theme='infinity-theme'] {
 }
 </style>
 
-
 <style scoped lang="scss">
-
-
 @import 'devui-theme/styles-var/devui-var.scss';
 .content-container :deep() {
   padding: 12px;
   background-color: $devui-base-bg;
-  
+
   &.hljs {
     background-color: $devui-base-bg;
   }
