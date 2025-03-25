@@ -192,7 +192,7 @@ onMounted(() => {
 :::
 
 ### 数学公式
-通过配置md-plugins katex插件，进行数学公式渲染。
+通过配置md-plugins katex插件，进行数学公式渲染（DEMO未实际渲染，实际使用时解开代码中注释即可按预期渲染）。
 :::demo
 
 ```vue
@@ -201,13 +201,13 @@ onMounted(() => {
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
-import { katex } from '@mdit/plugin-katex'; // 请首先安装@mdit/plugin-katex依赖
+//import { katex } from '@mdit/plugin-katex'; // 请首先安装@mdit/plugin-katex依赖
 const themeService = window['devuiThemeService'];
 const theme = ref('light');
-const mdPlugins = ref([{
-  plugin: katex,
-  opt: {}
-}])
+//const mdPlugins = ref([{
+//  plugin: katex,
+//  opt: {}
+//}])
 const content = ref(
 `
 $E = mc^2$
@@ -238,7 +238,7 @@ onMounted(() => {
 })
 </script>
 <style>
-@import 'katex/dist/katex.min.css';  /* 请首先安装 katex 依赖 */
+/* @import 'katex/dist/katex.min.css';  请首先安装 katex 依赖 */
 </style>
 
 ```
@@ -247,7 +247,7 @@ onMounted(() => {
 
 
 ### Mermaid 渲染
-通过配置md-plugins Mermaid插件，进行Mermaid图渲染。
+通过配置md-plugins Mermaid插件，进行Mermaid图渲染（DEMO未实际渲染，实际使用时解开代码中注释即可按预期渲染）。
 :::demo
 
 ```vue
@@ -256,12 +256,12 @@ onMounted(() => {
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
-import markdownItMermaid from "@datatraccorporation/markdown-it-mermaid";; // 请首先安装@datatraccorporation/markdown-it-mermaid依赖
+// import markdownItMermaid from "@datatraccorporation/markdown-it-mermaid";; // 请首先安装@datatraccorporation/markdown-it-mermaid依赖 实际使用时解开当前注释
 const themeService = window['devuiThemeService'];
 const theme = ref('light');
-const mdPlugins = ref([{
-  plugin: markdownItMermaid,
-}])
+// const mdPlugins = ref([{
+//  plugin: markdownItMermaid,
+// }])
 const content = ref(`
 # Flow Chart
 \`\`\`mermaid

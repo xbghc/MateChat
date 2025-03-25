@@ -169,19 +169,24 @@ const onSubmit = (e, answer = undefined) => {
 const getAIAnswer = (content) => {
   messages.value.push({
     from: 'ai-model',
-    content,
+    content: '',
     avatarPosition: 'side-left',
     avatarConfig: { ...aiModelAvatar },
     loading: true,
   });
-  setTimeout(() => {
+  
+  /* 模拟流式数据返回 */
+  setTimeout(async () => {
     messages.value.at(-1).loading = false;
-    nextTick(() => {
-      conversationRef.value?.scrollTo({
-        top: conversationRef.value.scrollHeight,
-        behavior: 'smooth',
+    for (let i = 0; i < content.length;) {
+      await new Promise(r => setTimeout(r, 300 * Math.random()));
+      messages.value[messages.value.length - 1].content = content.slice(0, i += Math.random() * 10);
+      nextTick(() => {
+        conversationRef.value?.scrollTo({
+          top: conversationRef.value.scrollHeight
+        });
       });
-    });
+    }
   }, 1000);
 };
 
