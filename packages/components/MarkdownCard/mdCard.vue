@@ -90,6 +90,9 @@ const html = mdt.render(props.content);
 return {
   name: 'MarkdownRenderer',
   render() {
+    if(typeof document === 'undefined'){
+      return;
+    }
     const container = document.createElement('div');
     container.innerHTML = html;
     

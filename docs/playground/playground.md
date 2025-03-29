@@ -113,7 +113,7 @@ const startChat = ref(false);
 const conversationRef = ref();
 const isAgentOpen = ref(false);
 const theme = ref('light');
-const themeService = window['devuiThemeService'];
+let themeService;
 const agentList = ref([
   { label: 'MateChat', value: 'matechat', active: true },
   { label: 'InsCode', value: 'inscode' },
@@ -209,6 +209,9 @@ const themeChange = () => {
 }
 
 onMounted(() => {
+  if(typeof window !== 'undefined'){
+    themeService = window['devuiThemeService'];
+  }
   themeChange();
   if (themeService && themeService.eventBus) {
     themeService.eventBus.add('themeChanged', themeChange);

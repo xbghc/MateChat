@@ -22,7 +22,7 @@ import { McMarkdownCard } from '@matechat/core';
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
-const themeService = window['devuiThemeService'];
+let themeService;
 const theme = ref('light');
 const content = ref(`
 # 快速排序（Quick Sort）
@@ -78,6 +78,9 @@ const themeChange = () => {
 };
 
 onMounted(() => {
+  if(typeof window !== 'undefined'){
+    themeService = window['devuiThemeService'];
+  }
   themeChange();
   if (themeService && themeService.eventBus) {
     themeService.eventBus.add('themeChanged', themeChange);
@@ -107,7 +110,7 @@ onMounted(() => {
 import { ref, computed, onMounted, onBeforeMount } from 'vue';
 const theme = ref('light');
 const themeClass = ref('light-background');
-const themeService = window['devuiThemeService'];
+let themeService;
 const content = ref(`
 # 快速排序（Quick Sort）
 
@@ -163,6 +166,9 @@ const themeChange = () => {
 };
 
 onMounted(() => {
+  if(typeof window !== 'undefined'){
+    themeService = window['devuiThemeService'];
+  }
   themeChange();
   if (themeService && themeService.eventBus) {
     themeService.eventBus.add('themeChanged', themeChange);
@@ -202,7 +208,7 @@ onMounted(() => {
 <script setup>
 import { ref, onMounted } from 'vue';
 //import { katex } from '@mdit/plugin-katex'; // 请首先安装@mdit/plugin-katex依赖
-const themeService = window['devuiThemeService'];
+let themeService;
 const theme = ref('light');
 //const mdPlugins = ref([{
 //  plugin: katex,
@@ -231,6 +237,9 @@ const themeChange = () => {
 }
 
 onMounted(() => {
+  if(typeof window !== 'undefined'){
+    themeService = window['devuiThemeService'];
+  }
   themeChange();
   if (themeService && themeService.eventBus) {
     themeService.eventBus.add('themeChanged', themeChange);
@@ -257,7 +266,7 @@ onMounted(() => {
 <script setup>
 import { ref, onMounted } from 'vue';
 // import markdownItMermaid from "@datatraccorporation/markdown-it-mermaid";; // 请首先安装@datatraccorporation/markdown-it-mermaid依赖 实际使用时解开当前注释
-const themeService = window['devuiThemeService'];
+let themeService;
 const theme = ref('light');
 // const mdPlugins = ref([{
 //  plugin: markdownItMermaid,
@@ -320,6 +329,9 @@ const themeChange = () => {
 }
 
 onMounted(() => {
+  if(typeof window !== 'undefined'){
+    themeService = window['devuiThemeService'];
+  }
   themeChange();
   if (themeService && themeService.eventBus) {
     themeService.eventBus.add('themeChanged', themeChange);
@@ -342,7 +354,7 @@ onMounted(() => {
 <script setup>
 import { ref, onMounted } from 'vue';
 import PlantUml from 'markdown-it-plantuml'; // 请首先安装markdown-it-plantuml依赖
-const themeService = window['devuiThemeService'];
+let themeService;
 const theme = ref('light');
 const mdPlugins = ref([{
   plugin: PlantUml,
@@ -375,6 +387,9 @@ const themeChange = () => {
 }
 
 onMounted(() => {
+  if(typeof window !== 'undefined'){
+    themeService = window['devuiThemeService'];
+  }
   themeChange();
   if (themeService && themeService.eventBus) {
     themeService.eventBus.add('themeChanged', themeChange);
@@ -397,7 +412,7 @@ onMounted(() => {
 <script setup>
 import { ref, onMounted } from 'vue';
 import { full as emoji } from 'markdown-it-emoji' // 请首先安装markdown-it-emoji依赖
-const themeService = window['devuiThemeService'];
+let themeService;
 const theme = ref('light');
 const mdPlugins = ref([{
   plugin: emoji
@@ -422,6 +437,9 @@ const themeChange = () => {
 }
 
 onMounted(() => {
+  if(typeof window !== 'undefined'){
+    themeService = window['devuiThemeService'];
+  }
   themeChange();
   if (themeService && themeService.eventBus) {
     themeService.eventBus.add('themeChanged', themeChange);
@@ -451,7 +469,7 @@ onMounted(() => {
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
-const themeService = window['devuiThemeService'];
+let themeService;
 const theme = ref('light');
 const content = ref(`以下是快速排序的实现方法：
 
@@ -478,6 +496,9 @@ const themeChange = () => {
 };
 
 onMounted(() => {
+  if(typeof window !== 'undefined'){
+    themeService = window['devuiThemeService'];
+  }
   themeChange();
   if (themeService && themeService.eventBus) {
     themeService.eventBus.add('themeChanged', themeChange);
@@ -512,7 +533,7 @@ onMounted(() => {
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
-const themeService = window['devuiThemeService'];
+let themeService;
 const theme = ref('light');
 const content = ref(`以下是快速排序的实现方法：
 
@@ -535,6 +556,9 @@ const themeChange = () => {
 };
 
 onMounted(() => {
+  if(typeof window !== 'undefined'){
+    themeService = window['devuiThemeService'];
+  }
   themeChange();
   if (themeService && themeService.eventBus) {
     themeService.eventBus.add('themeChanged', themeChange);
@@ -596,7 +620,7 @@ onMounted(() => {
 import { ref, onMounted } from 'vue';
 import markdownIt from 'markdown-it';
 import hljs from 'highlight.js';
-const themeService = window['devuiThemeService'];
+let themeService;
 const theme = ref('light');
 const content = ref(`以下是快速排序的实现方法：
 \`\`\`ts
@@ -677,6 +701,9 @@ const themeChange = () => {
 };
 
 onMounted(() => {
+  if(typeof window !== 'undefined'){
+    themeService = window['devuiThemeService'];
+  }
   themeChange();
   if (themeService && themeService.eventBus) {
     themeService.eventBus.add('themeChanged', themeChange);

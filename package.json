@@ -3,7 +3,10 @@
 	"version": "0.0.0",
 	"private": true,
 	"type": "module",
-	"workspaces": ["packages/*", "playground"],
+	"workspaces": [
+		"packages/*",
+		"playground"
+	],
 	"scripts": {
 		"generate": "node ./scripts/generate-component.js",
 		"playground:dev": "pnpm generate && pnpm --filter @matechat/playground dev",
@@ -34,12 +37,14 @@
 		"sass": "^1.83.0",
 		"three": "^0.171.0",
 		"vue-devui": "^1.6.29",
-		"vue-i18n": "^11.1.0"
+		"vue-i18n": "^11.1.0",
+		"xss": "^1.0.15"
 	},
 	"devDependencies": {
 		"@babel/parser": "^7.26.5",
 		"@babel/traverse": "^7.26.5",
 		"@biomejs/biome": "^1.9.4",
+		"@intlify/unplugin-vue-i18n": "^6.0.5",
 		"@tsconfig/node22": "^22.0.0",
 		"@types/node": "^22.9.3",
 		"@vitejs/plugin-vue": "^5.2.1",
@@ -60,7 +65,9 @@
 		}
 	},
 	"lint-staged": {
-		"*.{js,jsx,ts,mts,tsx,vue,json}": ["biome check --write"]
+		"*.{js,jsx,ts,mts,tsx,vue,json}": [
+			"biome check --write"
+		]
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [
