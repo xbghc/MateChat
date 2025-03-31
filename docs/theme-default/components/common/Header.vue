@@ -209,7 +209,7 @@ function onDropdown(status: boolean) {
   justify-content: space-between;
   align-items: center;
   top: 0;
-  width: 100%;
+  width: 100vw;
   height: 48px;
   background-color: $devui-base-bg;
   transition: 0.5s;
