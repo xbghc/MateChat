@@ -110,7 +110,7 @@ import { themeServiceInstance } from '../../index';
 import { useI18n } from 'vue-i18n';
 import { useLangs } from '../../composables/langs';
 import { useRouter } from 'vitepress';
-const emit = defineEmits(['themeUpdate']);
+import { APPEARANCE_KEY } from '../../../shared';
 const i18n = useI18n();
 const { localeLinks, currentLang } = useLangs({ correspondingLink: true });
 const { theme, page, isDark } = useData();
@@ -170,20 +170,30 @@ const toggleAppearance = inject('toggle-appearance', (isGalaxy) => {
   isDark.value = isGalaxy;
 });
 
-function setTheme(key: ThemeKey) {
-  isGalaxy.value = !isGalaxy.value;
-  typeof localStorage !== 'undefined' && localStorage.setItem('theme', key);
-  themeServiceInstance?.applyTheme(ThemeConfig[key]);
-  toggleAppearance(isGalaxy.value);
-  emit('themeUpdate', isGalaxy.value);
+init();
+function init() {
+  const mediaQueryListDark = window.matchMedia('(prefers-color-scheme: dark)');
+  // 添加主题变动监控事件
+  mediaQueryListDark.addListener(windowThemeChange);
+}
+
+function windowThemeChange(mediaQueryListEvent) {
+  const vpTheme = typeof localStorage !== 'undefined' && localStorage.getItem(APPEARANCE_KEY);
+  if (vpTheme === 'auto') {
+    isGalaxy.value = !!mediaQueryListEvent.matches;
+    changeDevUiTheme(isGalaxy.value);
+  }
 }
 
 function themeChange(change) {
-  const key = change ? ThemeKey.Galaxy : ThemeKey.Infinity;
-  localStorage.setItem('theme', key);
-  themeServiceInstance?.applyTheme(ThemeConfig[key]);
+  changeDevUiTheme(change);
   toggleAppearance(isGalaxy.value);
-  emit('themeUpdate', isGalaxy.value);
+}
+
+function changeDevUiTheme(change) {
+  const key = change ? ThemeKey.Galaxy : ThemeKey.Infinity;
+  typeof localStorage !== 'undefined' && localStorage.setItem('theme', key);
+  themeServiceInstance?.applyTheme(ThemeConfig[key]);
 }
 
 function collapseSideMenu() {
