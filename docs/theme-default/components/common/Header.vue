@@ -172,15 +172,16 @@ const toggleAppearance = inject('toggle-appearance', (isGalaxy) => {
 
 init();
 function init() {
-  const mediaQueryListDark = window.matchMedia('(prefers-color-scheme: dark)');
-  // 添加主题变动监控事件
-  mediaQueryListDark.addListener(windowThemeChange);
+  if (typeof window !== 'undefined') {
+    const mediaQueryListDark = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQueryListDark?.addListener(windowThemeChange); // 添加主题变动监控事件
+  }
 }
 
 function windowThemeChange(mediaQueryListEvent) {
   const vpTheme = typeof localStorage !== 'undefined' && localStorage.getItem(APPEARANCE_KEY);
   if (vpTheme === 'auto') {
-    isGalaxy.value = !!mediaQueryListEvent.matches;
+    isGalaxy.value = !!mediaQueryListEvent.matches; // matches 存在则 系统是深色主题
     changeDevUiTheme(isGalaxy.value);
   }
 }
