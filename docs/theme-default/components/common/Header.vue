@@ -156,6 +156,11 @@ onMounted(() => {
       isZh.value = false;
     }
   }
+  if (typeof window !== 'undefined') {
+    const mediaQueryListDark = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQueryListDark.addListener(windowThemeChange); // 添加主题变动监控事件
+    windowThemeChange(mediaQueryListDark);
+  }
 });
 
 const go = (link: string) => {
@@ -169,14 +174,6 @@ const goThird = (link: string) => {
 const toggleAppearance = inject('toggle-appearance', (isGalaxy) => {
   isDark.value = isGalaxy;
 });
-
-init();
-function init() {
-  if (typeof window !== 'undefined') {
-    const mediaQueryListDark = window.matchMedia('(prefers-color-scheme: dark)');
-    mediaQueryListDark?.addListener(windowThemeChange); // 添加主题变动监控事件
-  }
-}
 
 function windowThemeChange(mediaQueryListEvent) {
   const vpTheme = typeof localStorage !== 'undefined' && localStorage.getItem(APPEARANCE_KEY);
