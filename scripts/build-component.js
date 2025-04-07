@@ -14,7 +14,7 @@ import {
 import { resolveFilesInfo } from './utils.js';
 
 async function buildComponents() {
-  const filesInfo = resolveFilesInfo(componentsDir, ignoreDirs);
+  const filesInfo = resolveFilesInfo(componentsDir, ['node_modules', 'dist']);
 
   for (let i = 0; i < filesInfo.length; i++) {
     await buildSingle(filesInfo[i]);
