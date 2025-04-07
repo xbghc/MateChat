@@ -1,15 +1,15 @@
 import path from 'node:path';
-import fs from 'fs-extra';
-import { defineConfig, build } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
+import fs from 'fs-extra';
+import { build, defineConfig } from 'vite';
 import {
-  componentsDir,
   buildLibOutputDir,
-  ignoreDirs,
-  componentIndexFile,
-  buildLibOutputIndexFile,
   buildLibOutputIndexDtsFile,
+  buildLibOutputIndexFile,
+  componentIndexFile,
+  componentsDir,
+  ignoreDirs,
 } from './const.js';
 import { resolveFilesInfo } from './utils.js';
 
@@ -33,7 +33,16 @@ async function buildSingle(itemFile) {
       plugins: [vue(), vueJsx()],
       build: {
         rollupOptions: {
-          external: ['vue', '@floating-ui/dom', '@vue/shared', 'lodash-es', /@matechat\/core/, 'markdown-it', 'highlight.js', 'xss'],
+          external: [
+            'vue',
+            '@floating-ui/dom',
+            '@vue/shared',
+            'lodash-es',
+            /@matechat\/core/,
+            'markdown-it',
+            'highlight.js',
+            'xss',
+          ],
         },
         lib: {
           entry: itemFile.indexPath,
@@ -49,13 +58,21 @@ async function buildSingle(itemFile) {
 
 // 自动引入index.css
 function autoImportCss() {
-  const itemDirs = fs.readdirSync(buildLibOutputDir)
-  .filter((itemDir) => fs.statSync(path.resolve(buildLibOutputDir, itemDir)).isDirectory() && !ignoreDirs.includes(itemDir))
-  .map((itemDir) => ({ indexPath: path.resolve(buildLibOutputDir, itemDir, 'index.js') }));
+  const ignore = [...ignoreDirs, 'Locale'];
+  const itemDirs = fs
+    .readdirSync(buildLibOutputDir)
+    .filter(
+      (itemDir) =>
+        fs.statSync(path.resolve(buildLibOutputDir, itemDir)).isDirectory() &&
+        !ignore.includes(itemDir),
+    )
+    .map((itemDir) => ({
+      indexPath: path.resolve(buildLibOutputDir, itemDir, 'index.js'),
+    }));
   for (const itemDir of itemDirs) {
-      const fileContent = fs.readFileSync(itemDir.indexPath);
-      const outputFileContent = `import "./index.css";\n${fileContent}`;
-      fs.outputFile(itemDir.indexPath, outputFileContent, 'utf-8');
+    const fileContent = fs.readFileSync(itemDir.indexPath);
+    const outputFileContent = `import "./index.css";\n${fileContent}`;
+    fs.outputFile(itemDir.indexPath, outputFileContent, 'utf-8');
   }
 }
 
