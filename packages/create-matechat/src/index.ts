@@ -28,22 +28,7 @@ const main = defineCommand({
   },
   callback: (ctx: Context) => {
     let projectName = ctx.args.name;
-    if (projectName) {
-      if (existsSync(path.join(cwd, projectName))) {
-        const clean = ctx.confirm(
-          'The project already exists, do you want to continue?',
-          { default: false },
-        );
-        if (clean) {
-          const spinner = ctx.createSpinner();
-          spinner.setMessage('Cleaning existed directory...');
-          rmdirSync(path.join(cwd, projectName), { recursive: true });
-          spinner.finishWithMessage('Directory cleaned.');
-        } else {
-          return;
-        }
-      }
-    }
+
     while (true) {
       projectName ||= ctx.ask('Please input the project name:', {
         initialValue: projectName,
@@ -57,6 +42,27 @@ const main = defineCommand({
         );
         projectName = '';
         continue;
+      }
+      if (existsSync(path.join(cwd, projectName))) {
+        const clean = ctx.confirm(
+          'The project already exists, do you want to continue?',
+          { default: false },
+        );
+        if (clean) {
+          const spinner = ctx.createSpinner();
+          spinner.setMessage('Cleaning existed directory...');
+          rmdirSync(path.join(cwd, projectName), { recursive: true });
+          spinner.finishWithMessage('Directory cleaned.');
+        } else {
+          console.log(
+            chalk.red(
+              `The project ${chalk.redBright(
+                projectName,
+              )} already exists, please try again.`,
+            ),
+          );
+          return;
+        }
       }
       break;
     }
