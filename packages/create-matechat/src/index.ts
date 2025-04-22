@@ -25,6 +25,20 @@ const main = defineCommand({
       type: 'positional',
       help: 'The name of the project',
     },
+    clean: {
+      type: 'option',
+      parser: 'boolean',
+      short: 'c',
+      action: 'store',
+      help: 'Clean the directory if it exists',
+      default: 'false',
+    },
+    template: {
+      type: 'option',
+      short: 't',
+      help: 'The template of the project',
+      default: 'simple',
+    },
   },
   callback: (ctx: Context) => {
     let projectName = ctx.args.name;
@@ -44,10 +58,11 @@ const main = defineCommand({
         continue;
       }
       if (existsSync(path.join(cwd, projectName))) {
-        const clean = ctx.confirm(
-          'The project already exists, do you want to continue?',
-          { default: false },
-        );
+        const clean =
+          ctx.args.clean ||
+          ctx.confirm('The project already exists, do you want to continue?', {
+            default: false,
+          });
         if (clean) {
           const spinner = ctx.createSpinner();
           spinner.setMessage('Cleaning existed directory...');
@@ -73,10 +88,21 @@ create a new issue at https://gitcode.com/DevCloudFE/MateChat/issues`),
       );
       return;
     }
-    const template = select(
-      'Please select the template:',
-      Object.keys(templateMap),
-    );
+    let template = ctx.args.template;
+    if (!templateMap.has(template)) {
+      console.log(
+        chalk.red(
+          `Invalid template ${chalk.redBright(template)}, please try again.`,
+        ),
+      );
+      return;
+    }
+    if (!template) {
+      template = select(
+        'Please select the template:',
+        Object.keys(templateMap),
+      );
+    }
     console.log(`Selected template: ${chalk.greenBright(template)}`);
   },
 });
