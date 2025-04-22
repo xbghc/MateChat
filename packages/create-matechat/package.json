@@ -20,7 +20,7 @@
     "core-js": "^3.41.0"
   },
   "dependencies": {
-    "archons": "^0.2.9",
+    "archons": "^0.2.11",
     "chalk": "^5.4.1"
   }
 }

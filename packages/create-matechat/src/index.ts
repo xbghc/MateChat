@@ -29,7 +29,6 @@ const main = defineCommand({
       type: 'option',
       parser: 'boolean',
       short: 'c',
-      action: 'store',
       help: 'Clean the directory if it exists',
       default: 'false',
     },
