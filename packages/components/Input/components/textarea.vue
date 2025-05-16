@@ -96,6 +96,7 @@ const onBlur = (e: FocusEvent) => {
   height: 64px;
   padding: 4px 0;
   color: $devui-text;
+  font-size: $devui-font-size;
   background-color: $devui-form-control-bg;
   vertical-align: middle;
   outline: none;
@@ -104,7 +105,8 @@ const onBlur = (e: FocusEvent) => {
   border: none;
 
   &.mc-textarea-simple {
-    height: 32px;
+    height: 24px;
+    padding: 0;
   }
 
   &.mc-textarea-disabled {

@@ -4,10 +4,24 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 4px 0;
+  padding: 12px 0;
   border: 1px solid $devui-form-control-line;
-  border-radius: 14px;
+  border-radius: 16px;
   box-sizing: border-box;
+  background-color: $devui-base-bg;
+  box-shadow: 0 1px 8px 0 rgba(25, 25, 25, 0.06);
+
+  &.mc-input-simple {
+    border-radius: 24px;
+
+    .mc-input-content {
+      padding: 0 20px;
+    }
+  }
+
+  &.mc-input-borderless {
+    border: none;
+  }
 
   &.mc-input-disabled {
     background-color: $devui-disabled-bg;
@@ -17,15 +31,15 @@
   .mc-input-content {
     display: flex;
     align-items: flex-end;
-    padding: 0 8px;
+    padding: 0 16px;
   }
 
   .mc-input-foot {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 32px;
-    padding: 0 8px;
+    height: 28px;
+    padding: 0 16px;
 
     .mc-input-foot-left {
       flex: 1;
@@ -34,8 +48,8 @@
       align-items: center;
 
       .mc-input-foot-count {
-        color: $devui-text;
-        font-size: $devui-font-size;
+        color: #aeaeae;
+        font-size: $devui-font-size-sm;
       }
     }
   }
