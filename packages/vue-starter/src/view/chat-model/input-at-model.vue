@@ -1,10 +1,10 @@
 <template>
-  <span class="container" @click="emits('click')">
-    <i class="icon-at"></i>
-    <span>{{ $t("agent") }}</span>
-  </span>
+  <d-popover :content="$t('agent')" trigger="hover" :position="['top']" style="color: var(--devui-text)">
+    <span class="container" @click="emits('click')">
+      <i class="icon-at"></i>
+    </span>
+  </d-popover>
 </template>
-
 <script setup lang="ts">
 const emits = defineEmits(['click']);
 </script>
