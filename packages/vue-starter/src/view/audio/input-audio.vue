@@ -1,5 +1,5 @@
 <template>
-  <d-tooltip position="top" :content="$t('underDevelop')">
+  <d-popover :content="$t('audio') + $t('underDevelop')" trigger="hover" :position="['top']" style="color: var(--devui-text)">
     <span class="input-audio-container">
       <svg fill="none" width="16" height="16" viewBox="0 0 16 16">
         <g id="microphone">
@@ -12,9 +12,8 @@
           ></path>
         </g>
       </svg>
-      <span class="input-audio-text">{{ $t("audio") }}</span>
     </span>
-  </d-tooltip>
+  </d-popover>
 </template>
 
 <style scoped lang="scss">

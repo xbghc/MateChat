@@ -1,10 +1,10 @@
 <template>
-  <d-tooltip position="top" :content="$t('underDevelop')">
-    <span class="input-online-search-container">
-      <d-switch v-model="checked" size="sm"></d-switch>
+  <d-popover :content="$t('underDevelop')" trigger="hover" :position="['top']" style="color: var(--devui-text)">
+    <div class="input-online-search-container" :class="{ 'active': checked }" @click="checked = !checked">
+      <i class="icon-point"></i>
       <span>{{ $t("onlineSearch") }}</span>
-    </span>
-  </d-tooltip>
+    </div>
+  </d-popover>
 </template>
 
 <script setup lang="ts">
@@ -19,9 +19,23 @@ const checked = ref(false);
   align-items: center;
   gap: 4px;
   color: $devui-text;
+  cursor: pointer;
+  border-radius: 24px;
+  padding: 4px 8px;
+  background-color: $devui-disabled-bg;
+
+  &:hover {
+    color: $devui-brand;
+    background-color: var(--devui-list-item-active-bg);
+  }
 
   span {
     font-size: $devui-font-size-sm;
   }
+}
+
+.active {
+  color: $devui-brand;
+  background-color: var(--devui-list-item-active-bg);
 }
 </style>

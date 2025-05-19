@@ -1,10 +1,9 @@
 <template>
-  <d-tooltip position="top" :content="$t('underDevelop')">
+  <d-popover :content="$t('appendix') + $t('underDevelop')" trigger="hover" :position="['top']" style="color: var(--devui-text)">
     <span class="container">
       <i class="icon-add"></i>
-      <span>{{ $t("appendix") }}</span>
     </span>
-  </d-tooltip>
+  </d-popover>
 </template>
 
 <script setup lang="ts"></script>

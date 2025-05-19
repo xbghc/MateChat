@@ -9,12 +9,11 @@
       <template #extra>
         <div class="input-foot-wrapper">
           <InputAtModel @click="onModelClick" />
-          <d-tooltip position="top" :content="$t('underDevelop')">
+          <d-popover :content="$t('thesaurus') + $t('underDevelop')" trigger="hover" :position="['top']" style="color: var(--devui-text)">
             <span class="input-word-container">
               <i class="icon-standard"></i>
-              <span class="input-word-text">{{ $t("thesaurus") }}</span>
             </span>
-          </d-tooltip>
+          </d-popover>
           <InputAppendix />
           <InputAudio />
           <InputOnlineSearch />

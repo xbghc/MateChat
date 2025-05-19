@@ -1,10 +1,10 @@
 <template>
-  <d-tooltip position="top" :content="$t('underDevelop')">
+  <d-popover :content="$t('underDevelop')" trigger="hover" :position="['top']" style="color: var(--devui-text)">
     <div class="knowledge-wrapper">
       <i class="icon-operation-log"></i>
       <span>{{ $t("knowledge.addKnowledge") }}</span>
     </div>
-  </d-tooltip>
+  </d-popover>
 </template>
 
 <style scoped lang="scss">
