@@ -68,7 +68,6 @@ const parseContent = () => {
 watch(
   () => [props.content, props.enableThink, props.thinkOptions?.customClass],
   () => {
-    console.log('Parsing Markdown due to content or think options change');
     parseContent();
   },
   { immediate: true },
