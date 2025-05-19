@@ -4,7 +4,11 @@
       <NavBar v-if="displayShape === DisplayShape.Immersive" />
     </template>
     <template #content>
-      <History v-if="displayShape === DisplayShape.Immersive" />
+      <template v-if="displayShape === DisplayShape.Immersive">
+        <HistoryContainer>
+          <HistoryList></HistoryList>
+        </HistoryContainer>
+      </template>
       <ChatView />
     </template>
   </Layout>
@@ -17,7 +21,7 @@ import { useLang, useTheme } from '@/hooks';
 import { useLangStore, useThemeStore } from '@/store';
 import { LangType } from '@/types';
 import { ChatView } from '@view/chat-view';
-import { History } from '@view/history';
+import { HistoryContainer, HistoryList } from '@view/history';
 import { Layout } from '@view/layout';
 import { NavBar } from '@view/navbar';
 

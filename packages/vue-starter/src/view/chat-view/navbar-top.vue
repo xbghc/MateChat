@@ -9,7 +9,7 @@
           <i class="icon-history" />
         </div>
         <template #content>
-          <History class="navbar-top-history" />
+          <HistoryList class="navbar-top-history" />
         </template>
       </d-popover>
       <SwitchLang v-if="!GlobalConfig.language" />
@@ -30,7 +30,7 @@
 import GlobalConfig from '@/global-config';
 import { SwitchLang } from '@/view/navbar';
 import { Theme } from '@/view/theme';
-import { History } from '@view/history';
+import { HistoryList } from '@view/history';
 </script>
 
 <style scoped lang="scss">
@@ -91,6 +91,7 @@ import { History } from '@view/history';
 }
 
 .navbar-top-history {
+  width: 100%;
   border-right: none;
 }
 
