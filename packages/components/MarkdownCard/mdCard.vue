@@ -1,11 +1,11 @@
 <template>
   <div class="mc-markdown-render" :class="themeClass">
-      <component :is="markdownComponent" />
+    <component :is="markdownComponent" />
   </div>
   <div v-if="false">
-      <slot name="actions"></slot>
-      <slot name="header"></slot>
-      <slot name="content"></slot>
+    <slot name="actions"></slot>
+    <slot name="header"></slot>
+    <slot name="content"></slot>
   </div>
 </template>
 
@@ -13,7 +13,7 @@
 import hljs from 'highlight.js';
 import markdownit from 'markdown-it';
 import type { MarkdownIt, Token } from 'markdown-it';
-import { type VNode, computed, h, onMounted, useSlots, watch } from 'vue';
+import { type VNode, computed, h, onMounted, ref, useSlots, watch } from 'vue';
 import CodeBlock from './CodeBlock.vue';
 import { MDCardService } from './MDCardService';
 import { type CodeBlockSlot, mdCardProps } from './mdCard.types';
@@ -24,11 +24,8 @@ type MarkdownComponentType = {
 };
 
 const mdCardService = new MDCardService();
-
 const props = defineProps(mdCardProps);
-
 const emit = defineEmits(['afterMdtInit']);
-
 const slots = useSlots();
 
 const mdt: MarkdownIt = markdownit({
@@ -50,38 +47,48 @@ mdt.renderer.rules.fence = (tokens: Token[], idx: number) => {
   return `<!----MC_MARKDOWN_CODE_BLOCK_${idx}---->`;
 };
 
+const parsedContent = ref<{ tokens: Token[]; html: string }>({
+  tokens: [],
+  html: '',
+});
+
+const parseContent = () => {
+  let content = props.content || '';
+  if (props.enableThink) {
+    const thinkClass = props.thinkOptions?.customClass || 'mc-think-block';
+    content = content
+      .replace('<think>', `<div class="${thinkClass}">`)
+      .replace('</think>', '</div>');
+  }
+  const tokens = mdt.parse(content, {});
+  const html = mdt.render(content);
+  parsedContent.value = { tokens, html };
+};
+
+watch(
+  () => [props.content, props.enableThink, props.thinkOptions?.customClass],
+  () => {
+    parseContent();
+  },
+  { immediate: true },
+);
+
 const createCodeBlock = (
   language: string,
   code: string,
   blockIndex: number,
 ) => {
   const codeBlockSlots: CodeBlockSlot = {
-    actions: () =>
-      slots.actions?.({
-        codeBlockData: {
-          code,
-          language,
-        },
-      }),
+    actions: slots.actions
+      ? () => slots.actions({ codeBlockData: { code, language } }) || null
+      : undefined,
+    header: slots.header
+      ? () => slots.header({ codeBlockData: { code, language } }) || null
+      : undefined,
+    content: slots.content
+      ? () => slots.content({ codeBlockData: { code, language } }) || null
+      : undefined,
   };
-  if (slots.header) {
-    codeBlockSlots.header = () =>
-      slots.header?.({
-        codeBlockData: {
-          code,
-          language,
-        },
-      });
-  }
-  if (slots.content) {
-    codeBlockSlots.content = () =>
-      slots.content?.({
-        codeBlockData: {
-          code,
-          language,
-        },
-      });
-  }
   return h(
     CodeBlock,
     {
@@ -89,39 +96,26 @@ const createCodeBlock = (
       code,
       blockIndex,
       theme: props.theme,
+      key: `code-block-${blockIndex}`,
     },
     codeBlockSlots,
   );
 };
 
 const markdownComponent = computed<MarkdownComponentType>(() => {
-  let content = props.content || '';
-
-  if (props.enableThink) {
-    const thinkClass = props.thinkOptions?.customClass || 'mc-think-block';
-    content =
-      props.content
-        ?.replace('<think>', `<div class="${thinkClass}">`)
-        .replace('</think>', '</div>') || '';
-  }
-
-  const tokens = mdt.parse(content, {});
-  const html = mdt.render(content);
-
   return {
     name: 'MarkdownRenderer',
     render() {
       if (typeof document === 'undefined') {
-        return;
+        return h('div');
       }
-      const container = document.createElement('div');
-      container.innerHTML = html;
-
-      const vNodes = [];
+      const { html, tokens } = parsedContent.value;
+      const vNodes: VNode[] = [];
       let lastIndex = 0;
       let match: RegExpExecArray | null;
       const regex = /<!----MC_MARKDOWN_CODE_BLOCK_(\d+)---->/g;
       let codeBlockIndex = 0;
+      let nodeIndex = 0;
 
       while (true) {
         match = regex.exec(html);
@@ -130,6 +124,7 @@ const markdownComponent = computed<MarkdownComponentType>(() => {
           vNodes.push(
             h('div', {
               innerHTML: html.slice(lastIndex, match.index),
+              key: `markdown-segment-${nodeIndex++}`,
             }),
           );
         }
@@ -146,6 +141,7 @@ const markdownComponent = computed<MarkdownComponentType>(() => {
         vNodes.push(
           h('div', {
             innerHTML: html.slice(lastIndex),
+            key: `markdown-segment-${nodeIndex++}`,
           }),
         );
       }
@@ -160,6 +156,7 @@ watch(
   (rules) => {
     mdCardService.setCustomXssRules(rules);
   },
+  { deep: false },
 );
 
 watch(
@@ -167,9 +164,7 @@ watch(
   (plugins) => {
     mdCardService.setMdPlugins(plugins, mdt);
   },
-  {
-    immediate: true,
-  },
+  { immediate: true, deep: false },
 );
 
 const themeClass = computed(() => {
@@ -182,22 +177,20 @@ onMounted(() => {
   emit('afterMdtInit', mdt);
 });
 
-defineExpose({
-  mdt,
-});
+defineExpose({ mdt });
 </script>
 
 <style scoped lang="scss">
 @import 'devui-theme/styles-var/devui-var.scss';
 
 .mc-markdown-render {
-overflow-x: auto;
-&.mc-markdown-render-dark {
-  color: #CED1DB;
-}
-&.mc-markdown-render-light {
-  color: #252b3a;
-}
+  overflow-x: auto;
+  &.mc-markdown-render-dark {
+    color: #ced1db;
+  }
+  &.mc-markdown-render-light {
+    color: #252b3a;
+  }
 }
 
 :deep(.mc-think-block) {
