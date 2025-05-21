@@ -188,7 +188,7 @@ defineExpose({ mdt });
   font-size: var(--devui-font-size, 14px);
   overflow-x: auto;
   &.mc-markdown-render-dark {
-  color: #CED1DB;
+    color: #CED1DB;
   }
   &.mc-markdown-render-light {
     color: #252b3a;
