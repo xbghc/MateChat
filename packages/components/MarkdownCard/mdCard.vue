@@ -181,12 +181,14 @@ defineExpose({ mdt });
 </script>
 
 <style scoped lang="scss">
-@import 'devui-theme/styles-var/devui-var.scss';
+@import "devui-theme/styles-var/devui-var.scss";
+@import "./markdown.scss";
 
 .mc-markdown-render {
+  font-size: var(--devui-font-size, 14px);
   overflow-x: auto;
   &.mc-markdown-render-dark {
-    color: #ced1db;
+  color: #CED1DB;
   }
   &.mc-markdown-render-light {
     color: #252b3a;
