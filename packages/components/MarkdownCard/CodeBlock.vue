@@ -205,7 +205,7 @@
       align-items: center;
       padding: 0.5rem 1rem;
       .mc-code-lang {
-        font-size: $devui-font-size;
+        font-size: var(--devui-font-size, 14px);
       }
     }
   
