@@ -76,7 +76,7 @@ const onConfirm = (e: MouseEvent) => {
   height: 28px;
   line-height: 1.5;
   color: $devui-light-text;
-  font-size: $devui-font-size-md;
+  font-size: var(--devui-font-size, 14px);
   padding: 0 12px;
   border-radius: 20px;
   background-color: $devui-primary;
@@ -125,7 +125,7 @@ const onConfirm = (e: MouseEvent) => {
   .mc-button-content {
     display: inline-flex;
     align-items: center;
-    font-size: $devui-font-size-sm;
+    font-size: var(--devui-font-size, 14px);
   }
 
   .mc-button-water-wave {
