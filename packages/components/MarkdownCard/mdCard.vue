@@ -81,7 +81,7 @@ const parseContent = () => {
 };
 
 watch(
-  () => [props.content, props.enableThink, props.thinkOptions?.customClass],
+  () => [props.enableThink, props.thinkOptions?.customClass],
   () => {
     parseContent();
   },
@@ -122,6 +122,7 @@ watch(
   (newVal, oldVal) => {
     if (!props.typing) {
       typingIndex.value = newVal?.length || 0;
+      parseContent();
       return
     }
 
