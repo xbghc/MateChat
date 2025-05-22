@@ -56,19 +56,36 @@
       default: 'light'
     }
   });
-  
+
   const mdCardService = new MDCardService();
   
   const expanded = ref(true);
   const copied = ref(false);
   
   const highlightedCode = computed(() => {
-    if (props.language && hljs.getLanguage(props.language)) {
       try {
-        return hljs.highlight(props.code, { language: props.language }).value;
+        const typeIndex = props.code.indexOf(`<span class="mc-typewriter`);
+
+        let content;
+        if (props.language && hljs.getLanguage(props.language)) {
+          if (typeIndex !== -1) {
+            content = hljs.highlight(props.code.slice(0, typeIndex), { language: props.language }).value + props.code.slice(typeIndex);
+          } else {
+            content = hljs.highlight(props.code, { language: props.language }).value;
+          }
+        } else {
+          if (typeof hljs.highlightAuto !== undefined) {
+              if (typeIndex !== -1) {
+                content = hljs.highlightAuto(props.code.slice(0, typeIndex)).value + props.code.slice(typeIndex);
+              } else {
+                content = hljs.highlightAuto(props.code).value;
+              }
+            } else {
+              content = mdCardService.filterHtml(props.code);
+            }
+        }
+        return content;
       } catch (_) {}
-    }
-    return mdCardService.filterHtml(props.code);
   });
   
   const toggleExpand = () => {

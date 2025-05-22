@@ -13,10 +13,10 @@
 import hljs from 'highlight.js';
 import markdownit from 'markdown-it';
 import type { MarkdownIt, Token } from 'markdown-it';
-import { type VNode, computed, h, onMounted, ref, useSlots, watch } from 'vue';
+import { type VNode, computed, h, nextTick, onMounted, ref, useSlots, watch } from 'vue';
 import CodeBlock from './CodeBlock.vue';
 import { MDCardService } from './MDCardService';
-import { type CodeBlockSlot, mdCardProps } from './mdCard.types';
+import { type CodeBlockSlot, defaultTypingConfig, mdCardProps } from './mdCard.types';
 
 type MarkdownComponentType = {
   name: string;
@@ -25,8 +25,9 @@ type MarkdownComponentType = {
 
 const mdCardService = new MDCardService();
 const props = defineProps(mdCardProps);
-const emit = defineEmits(['afterMdtInit']);
+const emit = defineEmits(['afterMdtInit', 'typingStart', 'typing', 'typingEnd']);
 const slots = useSlots();
+let timer: ReturnType<typeof setTimeout> | null = null
 
 const mdt: MarkdownIt = markdownit({
   breaks: true,
@@ -52,13 +53,27 @@ const parsedContent = ref<{ tokens: Token[]; html: string }>({
   html: '',
 });
 
+const typingIndex = ref(0)
+const isTyping = ref(false)
+
 const parseContent = () => {
   let content = props.content || '';
+  if (props.typing && isTyping.value) {
+    content = props.content.slice(0, typingIndex.value) || '';
+    const options = {...defaultTypingConfig, ...props?.typingOptions};
+
+    if (options.style === 'cursor') {
+      content += `<span class="mc-typewriter mc-typewriter-cursor">|</span>`;
+    } else if (options.style === 'color' || options.style === 'gradient') {
+      content = content.slice(0, -5) + `<span class="mc-typewriter mc-typewriter-${options.style}">${content.slice(-5)}</span>`;
+    }
+  }
+
   if (props.enableThink) {
     const thinkClass = props.thinkOptions?.customClass || 'mc-think-block';
     content = content
-      .replace('<think>', `<div class="${thinkClass}">`)
-      .replace('</think>', '</div>');
+        ?.replace('<think>', `<div class="${thinkClass}">`)
+        .replace('</think>', '</div>') || '';
   }
   const tokens = mdt.parse(content, {});
   const html = mdt.render(content);
@@ -102,6 +117,56 @@ const createCodeBlock = (
   );
 };
 
+watch(
+  () => props.content,
+  (newVal, oldVal) => {
+    if (!props.typing) {
+      typingIndex.value = newVal?.length || 0;
+      return
+    }
+
+    if (newVal.indexOf(oldVal) === -1) {
+      typingIndex.value = 0;
+    }
+
+    nextTick(() => typewriterStart())
+  },
+  { immediate: true },
+)
+
+const typewriterEnd = () => {
+  isTyping.value = false;
+  emit('typingEnd');
+}
+
+const typewriterStart = () => {
+  clearTimeout(timer!)
+
+  isTyping.value = true;
+  emit('typingStart');
+  const options = {...defaultTypingConfig, ...props?.typingOptions};
+
+  const typingStep = () => {
+    let step = options.step;
+    if (Array.isArray(options.step)) {
+      step = options.step[0] + Math.floor(Math.random() * (options.step[1] - options.step[0]));
+    }
+    typingIndex.value += step;
+    parseContent();
+    emit('typing');
+
+    if (typingIndex.value >= props.content!.length) {
+      typewriterEnd();
+      parseContent();
+      return;
+    }
+
+    timer = setTimeout(typingStep, options.interval);
+  }
+
+  timer = setTimeout(typingStep);
+}
+
 const markdownComponent = computed<MarkdownComponentType>(() => {
   return {
     name: 'MarkdownRenderer',
@@ -129,7 +194,7 @@ const markdownComponent = computed<MarkdownComponentType>(() => {
           );
         }
         const token = tokens[Number.parseInt(match[1])];
-        const lang = token.info || '';
+        const lang = token?.info?.replace(/<span\b[^>]*>/i, '').replace('</span>', '') || '';
         const code = token.content;
 
         vNodes.push(createCodeBlock(lang, code, codeBlockIndex));
@@ -201,4 +266,36 @@ defineExpose({ mdt });
   padding-left: 8px;
   margin-bottom: 1rem;
 }
+
+:deep(.mc-typewriter-color) {
+  background-image: -webkit-linear-gradient(left, #191919, #5588f0, #e171ee, #f2c55c);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+:deep(.mc-typewriter-gradient) {
+  background: linear-gradient(to right, $devui-text, $devui-base-bg);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+:deep(.mc-typewriter-cursor) {
+  font-weight: 900;
+  animation: typewriter 800ms linear 0s infinite;
+}
+
+@keyframes typewriter {
+  0% {
+    opacity: 1;
+  }
+  50% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
 </style>
