@@ -84,8 +84,7 @@ watch(
   () => [props.enableThink, props.thinkOptions?.customClass],
   () => {
     parseContent();
-  },
-  { immediate: true },
+  }
 );
 
 const createCodeBlock = (
