@@ -212,7 +212,7 @@
     }
     background-color: #f5f5f5;
     .mc-code-lang {
-      color: #252b3a
+      color: #252b3a;
     }
     .mc-code-block-actions {
       .mc-copy-btn,
@@ -232,7 +232,7 @@
     }
     background-color: #34363A;
     .mc-code-lang {
-      color: #CED1DB
+      color: #CED1DB;
     }
     .mc-code-block-actions {
       .mc-copy-btn,
