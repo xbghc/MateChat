@@ -220,6 +220,7 @@ watch(
   () => props.customXssRules,
   (rules) => {
     mdCardService.setCustomXssRules(rules);
+    parseContent();
   },
   { deep: false },
 );
@@ -228,6 +229,7 @@ watch(
   () => props.mdPlugins,
   (plugins) => {
     mdCardService.setMdPlugins(plugins, mdt);
+    parseContent();
   },
   { immediate: true, deep: false },
 );
