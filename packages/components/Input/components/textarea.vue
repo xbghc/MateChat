@@ -105,8 +105,7 @@ const onBlur = (e: FocusEvent) => {
   border: none;
 
   &.mc-textarea-simple {
-    height: 24px;
-    padding: 0;
+    height: 32px;
   }
 
   &.mc-textarea-disabled {
