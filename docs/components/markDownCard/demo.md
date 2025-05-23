@@ -104,31 +104,32 @@ onMounted(() => {
   <div>
     <span class="demo-title">默认效果</span>
     <McBubble :variant="'bordered'">
-      <McMarkdownCard :content="content" :typing="true"></McMarkdownCard>
+      <McMarkdownCard :content="content" :theme="theme" :typing="true"></McMarkdownCard>
     </McBubble>
     <span class="demo-title">打字机并配置打字速度</span>
     <McBubble :variant="'bordered'">
-      <McMarkdownCard :content="content" :typing="true" :typingOptions="typingOptions1"></McMarkdownCard>
+      <McMarkdownCard :content="content" :theme="theme" :typing="true" :typingOptions="typingOptions1"></McMarkdownCard>
     </McBubble>
     <span class="demo-title">渐变打字</span>
     <McBubble :variant="'bordered'">
-      <McMarkdownCard :content="content" :typing="true" :typingOptions="typingOptions2"></McMarkdownCard>
+      <McMarkdownCard :content="content" :theme="theme" :typing="true" :typingOptions="typingOptions2"></McMarkdownCard>
     </McBubble>
     <span class="demo-title">彩色打字</span>
     <McBubble :variant="'bordered'">
-      <McMarkdownCard :content="content" :typing="true" :typingOptions="typingOptions3"></McMarkdownCard>
+      <McMarkdownCard :content="content" :theme="theme" :typing="true" :typingOptions="typingOptions3"></McMarkdownCard>
     </McBubble>
     <span class="demo-title">流式返回</span>
     <McBubble :variant="'bordered'">
-      <McMarkdownCard :content="content1" :typing="true" :typingOptions="typingOptions4" @typingEnd="typingEnd"></McMarkdownCard>
+      <McMarkdownCard :content="content1" :theme="theme" :typing="true" :typingOptions="typingOptions4" @typingEnd="typingEnd"></McMarkdownCard>
     </McBubble>
   </div>
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
 const MOCK_CONTENT = `**我了解到了你的需求**，*会进行<span style="color:red">打字机效果输出</span>，如果你需要重新执行打字机动效*，可点击重新执行按钮。`;
-
+let themeService;
 const content = ref(MOCK_CONTENT);
+const theme = ref('light');
 
 const typingOptions1 = {
   step: [1, 5],
@@ -183,8 +184,21 @@ const typingEnd = () => {
   }
 }
 
+const themeChange = () => {
+  if (themeService) {
+    theme.value = themeService.currentTheme.id === 'infinity-theme' ? 'light' : 'dark';
+  }
+};
+
 onMounted(() => {
   streamContent();
+  if(typeof window !== 'undefined'){
+    themeService = window['devuiThemeService'];
+  }
+  themeChange();
+  if (themeService && themeService.eventBus) {
+    themeService.eventBus.add('themeChanged', themeChange);
+  }
 });
 </script>
 
