@@ -62,7 +62,7 @@
       <div class="release">
         <d-dropdown :trigger="'hover'" style="width: 100px" :position="['bottom-end', 'right', 'top-end']">
           <div class="version">
-            <span>1.4.0</span>
+            <span>1.5.1</span>
             <i class="icon-chevron-down-2"></i>
           </div>
           <template #menu>
