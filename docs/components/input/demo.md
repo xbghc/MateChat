@@ -85,8 +85,8 @@ const onSubmit = (e) => {
 
 <style scoped lang="scss">
 .input-prefix-wrap {
-  height: 28px;
-  line-height: 28px;
+  height: 32px;
+  line-height: 32px;
   margin-right: 8px;
   cursor: pointer;
 }

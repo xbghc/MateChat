@@ -73,7 +73,7 @@ const onConfirm = (e: MouseEvent) => {
   align-items: center;
   justify-content: center;
   white-space: nowrap;
-  height: 28px;
+  height: 32px;
   line-height: 1.5;
   color: $devui-light-text;
   font-size: var(--devui-font-size, 14px);
@@ -100,7 +100,7 @@ const onConfirm = (e: MouseEvent) => {
   }
 
   &.mc-button-simple {
-    width: 28px;
+    width: 32px;
     padding: 6px;
     flex-shrink: 0;
     border-radius: 100%;
