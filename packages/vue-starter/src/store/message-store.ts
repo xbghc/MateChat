@@ -1,15 +1,15 @@
-import { aiModelAvatar, customerAvatar } from '@/mock-data/mock-chat-view';
-import { Client, type LLMService } from '@/models';
-import { MODEL_CONFIGS } from '@/models/config';
-import type { IMessage } from '@/types';
-import dayjs from 'dayjs';
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
-import { useChatHistoryStore } from './history-store';
-import { useChatModelStore } from './model-store';
-import { useChatStatusStore } from './status-store';
+import { aiModelAvatar, customerAvatar } from "@/mock-data/mock-chat-view";
+import { Client, type LLMService } from "@/models";
+import { MODEL_CONFIGS } from "@/models/config";
+import type { IMessage } from "@/types";
+import dayjs from "dayjs";
+import { defineStore } from "pinia";
+import { ref } from "vue";
+import { useChatHistoryStore } from "./history-store";
+import { useChatModelStore } from "./model-store";
+import { useChatStatusStore } from "./status-store";
 
-export const useChatMessageStore = defineStore('chat-message', () => {
+export const useChatMessageStore = defineStore("chat-message", () => {
   const chatStatusStore = useChatStatusStore();
   const chatHistoryStore = useChatHistoryStore();
   const chatModelStore = useChatModelStore();
@@ -18,7 +18,7 @@ export const useChatMessageStore = defineStore('chat-message', () => {
   let client: LLMService;
 
   function ask(question: string, answer?: string) {
-    if (question === '') {
+    if (question === "") {
       return;
     }
     if (!messages.value.length) {
@@ -27,13 +27,13 @@ export const useChatMessageStore = defineStore('chat-message', () => {
     }
     chatHistoryStore.addHistory(
       chatStatusStore.currentChatId,
-      dayjs().format('YYYY-MM-DD'),
-      messages.value,
+      dayjs().format("YYYY-MM-DD HH:mm"),
+      messages.value
     );
     messages.value.push({
-      from: 'user',
+      from: "user",
       content: question,
-      avatarPosition: 'side-right',
+      avatarPosition: "side-right",
       avatarConfig: { ...customerAvatar },
     });
     messageChangeCount.value++;
@@ -42,9 +42,9 @@ export const useChatMessageStore = defineStore('chat-message', () => {
 
   const getAIAnswer = (content: string) => {
     messages.value.push({
-      from: 'ai-model',
-      content: '',
-      avatarPosition: 'side-left',
+      from: "ai-model",
+      content: "",
+      avatarPosition: "side-left",
       avatarConfig: { ...aiModelAvatar },
       loading: true,
       complete: false,
@@ -59,14 +59,14 @@ export const useChatMessageStore = defineStore('chat-message', () => {
           i += Math.random() * 10;
           messages.value[messages.value.length - 1].content = content.slice(
             0,
-            i,
+            i
           );
           messageChangeCount.value++;
         }
         chatHistoryStore.addHistory(
           chatStatusStore.currentChatId,
-          dayjs().format('YYYY-MM-DD'),
-          messages.value,
+          dayjs().format("YYYY-MM-DD HH:mm"),
+          messages.value
         );
       }, 1000);
     } else {
@@ -82,15 +82,16 @@ export const useChatMessageStore = defineStore('chat-message', () => {
       }
       client = new Client(
         chatModelStore.currentModel.clientKey,
-        chatModelStore.currentModel.providerKey,
+        chatModelStore.currentModel.providerKey
       ).client;
       client.chat(request).then((res) => {
         messages.value.at(-1).loading = false;
         messages.value[messages.value.length - 1].content = res;
         chatHistoryStore.addHistory(
           chatStatusStore.currentChatId,
-          dayjs().format('YYYY-MM-DD'),
+          dayjs().format("YYYY-MM-DD HH:mm"),
           messages.value,
+          chatModelStore.currentModel
         );
       });
     }
