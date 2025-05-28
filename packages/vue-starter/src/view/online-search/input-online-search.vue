@@ -23,6 +23,7 @@ const checked = ref(false);
   border-radius: 24px;
   padding: 4px 8px;
   background-color: $devui-disabled-bg;
+  min-width: 85px;
 
   &:hover {
     color: $devui-brand;

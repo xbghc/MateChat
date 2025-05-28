@@ -100,5 +100,9 @@ const onModelClick = () => {
       color: $devui-aide-text;
     }
   }
+  :deep(.mc-input-foot-left) {
+      overflow-x: auto;
+      scrollbar-width: none;
+  }
 }
 </style>

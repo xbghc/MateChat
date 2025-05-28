@@ -14,7 +14,7 @@
   font-size: $devui-font-size;
   color: $devui-text;
   cursor: pointer;
-
+  flex: none;
   span {
     margin-left: 4px;
   }
