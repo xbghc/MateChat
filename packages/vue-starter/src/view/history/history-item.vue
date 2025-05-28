@@ -125,9 +125,14 @@ const isOperateOpen = ref(false);
   &.active,
   &.open,
   &:hover {
-    color: $devui-list-item-hover-text;
-    background-color: $devui-list-item-hover-bg;
-    border-radius: $devui-border-radius-card;
+    background: linear-gradient(
+      to right,
+      #f3efff,
+      #f3efff33,
+      #e2f1fd33,
+      #e2f1fd
+    );
+    box-shadow: 2px 2px 8px #e9e9e9;
     cursor: pointer;
 
     :deep(.history-operate-icon) {
