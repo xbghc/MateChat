@@ -35,11 +35,10 @@ import SwitchLang from './switch-lang.vue';
 @import "devui-theme/styles-var/devui-var.scss";
 
 :deep(.switch-lang-container) {
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
   text-align: center;
-  margin-bottom: 8px;
   color: $devui-text;
   border-radius: $devui-border-radius-card;
   transition: all $devui-animation-duration-slow
@@ -71,6 +70,7 @@ import SwitchLang from './switch-lang.vue';
 
   .navbar-bottom {
     padding-bottom: 16px;
+    gap: 16px;
   }
 
   :deep(.mc-header-logo-container) {
@@ -78,15 +78,15 @@ import SwitchLang from './switch-lang.vue';
     cursor: pointer;
 
     .mc-header-title.mc-header-title {
-      font-size: 12px;
+      font-size: 10px;
       font-weight: 600;
     }
   }
 
   .dividing-line {
-    width: 80%;
+    width: 50%;
     height: 1px;
-    margin: 12px 0;
+    margin: 20px 0;
     background-color: $devui-dividing-line;
   }
 
@@ -94,15 +94,15 @@ import SwitchLang from './switch-lang.vue';
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: $devui-font-size;
+    gap: 8px;
+    font-size: $devui-font-size-sm;
     cursor: pointer;
 
     .chat-icon-box {
-      width: 32px;
-      height: 32px;
-      line-height: 32px;
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
       text-align: center;
-      margin-bottom: 4px;
       color: $devui-text;
       border-radius: $devui-border-radius-card;
       transition: all $devui-animation-duration-slow
@@ -115,13 +115,13 @@ import SwitchLang from './switch-lang.vue';
       }
 
       i {
-        font-size: 16px;
+        font-size: 20px;
       }
     }
   }
 
   ::v-deep .system-setting {
-    font-size: 16px;
+    font-size: 20px;
     cursor: pointer;
   }
 }
