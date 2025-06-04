@@ -79,7 +79,7 @@ import { HistoryList } from '@view/history';
     cursor: pointer;
 
     &:hover {
-      background-color: $devui-base-bg;
+      background-color: $devui-icon-fill-weak;
       box-shadow: $devui-shadow-length-base $devui-light-shadow;
     }
   }
