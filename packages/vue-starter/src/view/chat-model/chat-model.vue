@@ -80,6 +80,11 @@ const onSelectModel = (val) => {
     font-size: $devui-font-size;
     color: $devui-text;
     margin-right: 8px;
+    word-break: break-all;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
   }
 
   i {
