@@ -15,7 +15,6 @@
 .matechat-layout {
   width: 100%;
   height: 100vh;
-  min-width: 640px;
   padding: 8px 8px 8px 0;
   overflow: auto;
   box-sizing: border-box;

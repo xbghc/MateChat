@@ -108,6 +108,10 @@ const onModelClick = () => {
       color: $devui-aide-text;
     }
   }
+  :deep(.mc-input-foot-left) {
+      overflow-x: auto;
+      scrollbar-width: none;
+  }
 
   .shadow {
     box-shadow: 0 1px 8px 0 rgba(25, 25, 25, 0.06);
