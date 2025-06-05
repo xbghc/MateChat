@@ -68,7 +68,8 @@ const onItemClick = (item) => {
     width: 100%;
     padding: 24px;
     border-radius: $devui-border-radius-card;
-    box-shadow: 0 1px 8px 0 rgba(25, 25, 25, 0.1);
+    box-shadow: 0 0 2px 0 $devui-form-control-line;
+    background-color: $devui-base-bg;
 
     .guess-title {
       display: flex;
