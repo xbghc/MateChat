@@ -1,13 +1,32 @@
 <template>
   <div :class="['history-item', isOperateOpen && 'open']">
-    <span :title="itemData.messages[0].content">
-      {{ itemData.messages[0].content }}
-    </span>
-    <OperateIcon
-      class="history-operate-icon"
-      @toggle-change="(e) => (isOperateOpen = e)"
-      @delete="emits('delete')"
-    />
+    <div class="history-item-top">
+      <span :title="itemData.messages[0].content">
+        {{ itemData.messages[0].content }}
+      </span>
+      <OperateIcon
+        class="history-operate-icon"
+        @toggle-change="(e) => (isOperateOpen = e)"
+        @delete="emits('delete')"
+      />
+    </div>
+    <div class="history-item-bottom">
+      <div class="agent-box">
+        <img
+          :src="
+            itemData.chatModel?.iconPath ??
+            'https://matechat.gitcode.com/logo.svg'
+          "
+        />
+        <span
+          class="agent-name"
+          :title="itemData.chatModel?.modelName ?? 'MateChat'"
+        >
+          {{ itemData.chatModel?.modelName ?? "MateChat" }}
+        </span>
+      </div>
+      <span class="create-time">{{ itemData.updateTime }}</span>
+    </div>
   </div>
 </template>
 
@@ -31,36 +50,89 @@ const isOperateOpen = ref(false);
 @import "devui-theme/styles-var/devui-var.scss";
 
 .history-item {
-  display: flex;
-  align-items: center;
   width: 100%;
-  height: 32px;
-  line-height: 32px;
-  padding: 0 8px;
+  height: 82px;
+  padding: 16px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  background-color: $devui-base-bg;
 
-  span {
-    flex: 1;
-    padding-right: 4px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  .history-item-top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+
+    span {
+      flex: 1;
+      height: 22px;
+      line-height: 22px;
+      font-size: $devui-font-size;
+      padding-right: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &:deep(.history-operate-icon) {
+      visibility: hidden;
+      width: 12px;
+    }
   }
 
-  &:deep(.history-operate-icon) {
-    visibility: hidden;
-    width: 12px;
+  .history-item-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .agent-box {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      width: 0;
+      margin-right: 8px;
+
+      img {
+        width: 16px;
+        height: 16px;
+        margin-right: 8px;
+      }
+
+      .agent-name {
+        flex: 1;
+        width: 0;
+        height: 20px;
+        line-height: 20px;
+        color: $devui-aide-text;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    .create-time {
+      width: 32px;
+      height: 20px;
+      line-height: 20px;
+      font-size: $devui-font-size-sm;
+      color: #aeaeae;
+    }
   }
 
   &:not(:last-child) {
-    margin-bottom: 4px;
+    margin-bottom: 8px;
   }
 
   &.active,
   &.open,
   &:hover {
-    color: $devui-list-item-hover-text;
-    background-color: $devui-list-item-hover-bg;
-    border-radius: $devui-border-radius-card;
+    background: linear-gradient(
+      to right,
+      #f3efff,
+      #f3efff33,
+      #e2f1fd33,
+      #e2f1fd
+    );
+    box-shadow: 2px 2px 8px #e9e9e9;
     cursor: pointer;
 
     :deep(.history-operate-icon) {

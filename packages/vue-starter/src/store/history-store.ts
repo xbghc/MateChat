@@ -1,18 +1,33 @@
-import type { HistoryList, IMessage } from '@/types';
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import type { HistoryList, IMessage } from "@/types";
+import type { ModelOption } from "@/models/types";
+import { defineStore } from "pinia";
+import { ref } from "vue";
 
-export const useChatHistoryStore = defineStore('chat-history', () => {
+export const useChatHistoryStore = defineStore("chat-history", () => {
   const historyList = ref<HistoryList>([]);
-  const activeHistoryId = ref<string>('');
+  const activeHistoryId = ref<string>("");
 
-  const addHistory = (chatId: string, date: string, messages: IMessage[]) => {
+  const addHistory = (
+    chatId: string,
+    date: string,
+    messages: IMessage[],
+    chatModel?: ModelOption
+  ) => {
     const index = historyList.value.findIndex((item) => item.chatId === chatId);
+    const [d, time] = date.split(" ");
     if (index !== -1) {
       historyList.value[index].messages = messages;
-      historyList.value[index].updateDate = date;
+      historyList.value[index].updateDate = d;
+      historyList.value[index].updateTime = time;
+      historyList.value[index].chatModel = chatModel;
     } else {
-      historyList.value.unshift({ chatId, updateDate: date, messages });
+      historyList.value.unshift({
+        chatId,
+        chatModel,
+        updateDate: d,
+        updateTime: time,
+        messages,
+      });
     }
   };
 
