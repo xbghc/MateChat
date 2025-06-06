@@ -3,6 +3,7 @@
     <McInput
       :value="inputValue"
       :maxLength="2000"
+      class="shadow"
       @change="(e:string) => (inputValue = e)"
       @submit="onSubmit"
     >
@@ -24,6 +25,13 @@
         </div>
       </template>
     </McInput>
+    <div class="statement-box">
+        <div>{{ $t('input.disclaimer') }}</div>
+        <div class="separator" />
+        <div>
+          <span class="link-span">{{ $t('input.privacyStatement') }}</span>
+        </div>
+    </div>
   </div>
 </template>
 
@@ -103,6 +111,30 @@ const onModelClick = () => {
   :deep(.mc-input-foot-left) {
       overflow-x: auto;
       scrollbar-width: none;
+  }
+
+  .shadow {
+    box-shadow: 0 1px 8px 0 rgba(25, 25, 25, 0.06);
+  }
+
+  .statement-box {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 8px;
+    color: $devui-disabled-text;
+
+    .separator {
+      height: 12px;
+      margin: 0 4px;
+      border: 0.6px solid $devui-disabled-text;
+    }
+
+    .link-span {
+      cursor: pointer;
+      text-decoration: underline;
+    }
   }
 }
 </style>
