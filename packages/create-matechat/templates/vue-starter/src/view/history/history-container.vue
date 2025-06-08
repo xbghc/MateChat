@@ -36,10 +36,14 @@ const handleToggle = () => {
 .history-container {
   position: relative;
   width: 25%;
+  min-width: 240px;
+  max-width: 420px;
   height: 100%;
   border-radius: 12px;
   transition: all 0.3s ease-in-out;
   overflow: hidden;
+  backdrop-filter: blur(50px);
+  background-color: rgba(249, 249, 249, 0.8);
 
   &.stow {
     width: 0;

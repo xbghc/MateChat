@@ -8,7 +8,7 @@
     <i
       ref="iconEl"
       :class="['icon-more-2', attrs.class]"
-      @click="isOpen = !isOpen"
+      @click.stop="isOpen = !isOpen"
     ></i>
     <template #content>
       <div class="history-operate-menu-item" @click="modalVisible = true">

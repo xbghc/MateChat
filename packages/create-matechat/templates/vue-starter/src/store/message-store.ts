@@ -27,7 +27,7 @@ export const useChatMessageStore = defineStore('chat-message', () => {
     }
     chatHistoryStore.addHistory(
       chatStatusStore.currentChatId,
-      dayjs().format('YYYY-MM-DD'),
+      dayjs().format('YYYY-MM-DD HH:mm'),
       messages.value,
     );
     messages.value.push({
@@ -65,7 +65,7 @@ export const useChatMessageStore = defineStore('chat-message', () => {
         }
         chatHistoryStore.addHistory(
           chatStatusStore.currentChatId,
-          dayjs().format('YYYY-MM-DD'),
+          dayjs().format('YYYY-MM-DD HH:mm'),
           messages.value,
         );
       }, 1000);
@@ -89,8 +89,9 @@ export const useChatMessageStore = defineStore('chat-message', () => {
         messages.value[messages.value.length - 1].content = res;
         chatHistoryStore.addHistory(
           chatStatusStore.currentChatId,
-          dayjs().format('YYYY-MM-DD'),
+          dayjs().format('YYYY-MM-DD HH:mm'),
           messages.value,
+          chatModelStore.currentModel,
         );
       });
     }

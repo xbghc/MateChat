@@ -66,16 +66,17 @@ const onItemClick = (item) => {
 
   .guess-question {
     width: 100%;
-    padding: 16px 12px;
+    padding: 24px;
     border-radius: $devui-border-radius-card;
-    background-color: $devui-gray-form-control-bg;
+    box-shadow: 0 0 2px 0 $devui-form-control-line;
+    background-color: $devui-base-bg;
 
     .guess-title {
       display: flex;
       justify-content: space-between;
       align-items: center;
       color: $devui-text;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
 
       & > div:first-child {
         font-weight: 700;
@@ -84,6 +85,7 @@ const onItemClick = (item) => {
       & > div:last-child {
         font-size: $devui-font-size-sm;
         cursor: pointer;
+        color: $devui-placeholder;
         span {
           margin-left: 4px;
         }
@@ -97,10 +99,10 @@ const onItemClick = (item) => {
       gap: 8px;
       span {
         font-size: $devui-font-size-sm;
-        color: $devui-text;
-        padding: 4px 12px;
+        color: $devui-aide-text;
+        padding: 10px 16px;
         border-radius: $devui-border-radius-full;
-        background-color: $devui-gray-form-control-hover-bg;
+        background-color: $devui-dividing-line;
         cursor: pointer;
       }
     }

@@ -24,6 +24,10 @@ export default {
   theme: {
     themeTitle: '主题',
   },
+  input: {
+    disclaimer: '内容由AI生成，无法确保准确性和完整性，仅供参考',
+    privacyStatement: '隐私声明',
+  },
   delete: '删除',
   deleteSuccess: '删除成功',
   confirm: '确认',

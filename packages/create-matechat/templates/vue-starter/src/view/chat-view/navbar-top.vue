@@ -16,7 +16,7 @@
       <Theme v-if="!GlobalConfig.theme" />
       <d-popover :position="['bottom-end']" trigger="hover">
         <template #content>
-          <span class="devui-text">{{ $t('navbar.systemSetting') }}</span>
+          <span class="devui-text">{{ $t("navbar.systemSetting") }}</span>
         </template>
         <div class="switch-lang-container">
           <i class="icon-setting system-setting" />
@@ -75,11 +75,11 @@ import { HistoryList } from '@view/history';
     color: $devui-text;
     border-radius: $devui-border-radius-card;
     transition: all $devui-animation-duration-slow
-    $devui-animation-ease-in-out-smooth;
+      $devui-animation-ease-in-out-smooth;
     cursor: pointer;
 
     &:hover {
-      background-color: $devui-base-bg;
+      background-color: $devui-icon-fill-weak;
       box-shadow: $devui-shadow-length-base $devui-light-shadow;
     }
   }
@@ -93,6 +93,8 @@ import { HistoryList } from '@view/history';
 .navbar-top-history {
   width: 100%;
   border-right: none;
+  backdrop-filter: blur(50px);
+  background-color: rgba(249, 249, 249, 0.8);
 }
 
 .devui-text {
