@@ -22,5 +22,8 @@
   "dependencies": {
     "archons": "^0.2.11",
     "chalk": "^5.4.1"
+  },
+  "bin": {
+    "create-matechat": "dist/index.js"
   }
 }
