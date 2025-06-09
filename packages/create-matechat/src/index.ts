@@ -1,10 +1,12 @@
 import { existsSync, readFileSync } from 'node:fs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { type Context, defineCommand, run, select } from 'archons';
 import chalk from 'chalk';
 
 const cwd = process.cwd();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const templateMap = new Map([
   ['Vue Starter', path.join(__dirname, '../templates/vue-starter')],
