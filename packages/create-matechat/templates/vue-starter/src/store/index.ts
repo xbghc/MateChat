@@ -1,3 +1,4 @@
+export * from './common-store';
 export * from './history-store';
 export * from './lang-store';
 export * from './message-store';

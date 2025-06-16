@@ -21,19 +21,23 @@ export const LLM_MODELS: LLMModelsConfig[] = [
     providerKey: LLMProviders.SILICON_FLOW,
     apiPath: 'https://api.siliconflow.cn/v1',
     apiKey: '',
-    models: ['deepseek-ai/DeepSeek-R1', 'Qwen/Qwen3-8B'],
+    models: [
+      { name: 'deepseek-ai/DeepSeek-R1', iconPath: '/deepseek-color.svg'},
+      { name: 'Qwen/Qwen3-8B', iconPath: '/qwen.svg' }
+    ],
     available: true,
     clientKey: LLMClientKey.openai,
-    iconPath: '/siliconcloud-color.svg',
   },
   {
     // deepseek
     providerKey: LLMProviders.DEEP_SEEK,
     apiPath: 'https://api.deepseek.com',
     apiKey: '',
-    models: ['deepseek-chat', 'deepseek-reasoner'],
+    models: [
+      { name: 'deepseek-chat', iconPath: '/deepseek-color.svg'},
+      { name: 'deepseek-reasoner', iconPath: '/deepseek-color.svg' }
+    ],
     available: true,
     clientKey: LLMClientKey.openai,
-    iconPath: '/deepseek-color.svg',
   },
 ];

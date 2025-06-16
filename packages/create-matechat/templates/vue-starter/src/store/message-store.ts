@@ -29,6 +29,7 @@ export const useChatMessageStore = defineStore('chat-message', () => {
       chatStatusStore.currentChatId,
       dayjs().format('YYYY-MM-DD HH:mm'),
       messages.value,
+      chatModelStore.currentModel
     );
     messages.value.push({
       from: 'user',

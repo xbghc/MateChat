@@ -1,19 +1,22 @@
 <template>
   <d-dropdown
     :position="['top']"
+    :offset='8'
+    class='agent-menu'
     @toggle="(val:boolean) => (isAgentOpen = val)"
   >
     <div class="agent-wrapper">
       <img :src="selectedAgent.iconPath" />
       <span>{{ selectedAgent.label }}</span>
-      <i class="icon-infrastructure"></i>
       <i :class="['icon-chevron-down-2', { 'is-open': isAgentOpen }]"></i>
     </div>
     <template #menu>
       <McList :data="agentList" @select="onSelectModel">
         <template #item="{ item }">
-          <img :src="item.iconPath" />
-          {{ item.label }}
+          <div class='agent-list-item'>
+            <img :src="item.iconPath" />
+            {{ item.label }}
+          </div>
         </template>
       </McList>
     </template>
@@ -34,12 +37,12 @@ for (const item of LLM_MODELS) {
   if (item.models?.length) {
     for (const model of item.models) {
       agentList.value.push({
-        label: model,
-        modelName: model,
+        label: model.name,
+        modelName: model.name,
         providerKey: item.providerKey,
         clientKey: item.clientKey,
         active: false,
-        iconPath: item.iconPath,
+        iconPath: model.iconPath,
       });
     }
   }
@@ -67,7 +70,8 @@ const onSelectModel = (val) => {
   align-items: center;
   padding: 4px 8px;
   border-radius: $devui-border-radius-full;
-  background-color: $devui-area;
+  background-color: $devui-base-bg;
+  box-shadow: 0px 1px 8px 0px rgba(25, 25, 25, 0.06);
   cursor: pointer;
 
   img {
@@ -100,5 +104,23 @@ const onSelectModel = (val) => {
   .is-open {
     transform: rotate(180deg);
   }
+}
+
+.agent-list-item {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+  }
+}
+</style>
+
+<style lang='scss'>
+.agent-menu {
+  width: 230px;
+  padding: 8px;
 }
 </style>

@@ -1,5 +1,7 @@
 <template>
-  <div class="history-list-container">
+  <div
+    :class="['history-list-container', !commonStore.isExpand && 'not-expand']"
+  >
     <div class="history-header">
       <div class="history-header-left">
         <span class="history-title">{{ $t("history.chatHistory") }}</span>
@@ -14,7 +16,7 @@
       class="history-search"
       @search="onSearch"
     />
-    <div class="history-list-box">
+    <div :class="['history-list-box', !renderList.length && 'empty']">
       <template v-for="(item, index) in renderList" :key="index">
         <Collapse v-model="item.expand" :title="item.title">
           <HistoryItem
@@ -29,29 +31,41 @@
           />
         </Collapse>
       </template>
+      <div v-if="!renderList.length" class="history-list-empty">
+        <img
+          :src="
+            themeStore.theme === 'light' ? '/no-data.png' : '/no-data-dark.png'
+          "
+        />
+        <span>{{ $t("noData") }}</span>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Collapse } from '@/components';
+import { Collapse } from "@/components";
 import {
   useChatHistoryStore,
   useChatMessageStore,
   useChatStatusStore,
-} from '@/store';
-import type { CategorizedHistoryItem, IHistoryItem } from '@/types';
-import { getHistoryTitle } from '@/utils';
-import { useI18n } from 'vue-i18n';
-import HistoryItem from './history-item.vue';
+  useThemeStore,
+  useCommonStore,
+} from "@/store";
+import type { CategorizedHistoryItem, IHistoryItem } from "@/types";
+import { getHistoryTitle } from "@/utils";
+import { useI18n } from "vue-i18n";
+import HistoryItem from "./history-item.vue";
 
 const { t } = useI18n();
 const chatHistoryStore = useChatHistoryStore();
 const chatMessageStore = useChatMessageStore();
 const chatStatusStore = useChatStatusStore();
+const themeStore = useThemeStore();
+const commonStore = useCommonStore();
 
 const { proxy } = getCurrentInstance();
-const searchKey = ref('');
+const searchKey = ref("");
 const renderList = ref<CategorizedHistoryItem[]>([]);
 let categorizedHistoryList: CategorizedHistoryItem[] = [];
 
@@ -62,7 +76,7 @@ const onSearch = (e: string) => {
       const item = { ...categorizedHistoryList[i] };
       for (let j = 0; j < item.list.length; j++) {
         item.list = item.list.filter((listItem) =>
-          listItem.messages[0].content.includes(e),
+          listItem.messages[0].content.includes(e)
         );
         item.list.length && res.push(item);
       }
@@ -80,9 +94,9 @@ const onHistoryClick = (e: IHistoryItem) => {
 const onHistoryDelete = (e: IHistoryItem) => {
   chatHistoryStore.deleteHistory(e.chatId);
   proxy.$notificationService.open({
-    type: 'success',
-    title: t('history.deleteHistoryTipTitle'),
-    content: t('deleteSuccess'),
+    type: "success",
+    title: t("history.deleteHistoryTipTitle"),
+    content: t("deleteSuccess"),
   });
   if (chatStatusStore.currentChatId === e.chatId) {
     chatStatusStore.startChat = false;
@@ -91,7 +105,7 @@ const onHistoryDelete = (e: IHistoryItem) => {
 };
 const updateCategorizedHistoryList = () => {
   const map: Record<
-    CategorizedHistoryItem['updateDate'],
+    CategorizedHistoryItem["updateDate"],
     CategorizedHistoryItem
   > = {};
   for (let i = 0; i < chatHistoryStore.historyList.length; i++) {
@@ -114,11 +128,11 @@ const updateCategorizedHistoryList = () => {
 watch(
   chatHistoryStore.historyList,
   () => {
-    searchKey.value = '';
+    searchKey.value = "";
     updateCategorizedHistoryList();
-    onSearch('');
+    onSearch("");
   },
-  { immediate: true },
+  { immediate: true }
 );
 </script>
 
@@ -130,10 +144,19 @@ watch(
   flex-direction: column;
   gap: 12px;
   min-width: 240px;
-  max-width: 420px;
+  max-width: 380px;
+  width: 25%;
   height: 100%;
   padding: 12px;
   color: $devui-text;
+  transition: all 0.3s ease-in-out;
+
+  &.not-expand {
+    width: 0;
+    min-width: 0;
+    padding: 0;
+    opacity: 0;
+  }
 
   .history-header {
     display: flex;
@@ -165,6 +188,36 @@ watch(
     flex: 1;
     margin-top: 8px;
     overflow: auto;
+
+    &.empty {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .history-list-empty {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+
+        span {
+          margin-top: 20px;
+        }
+      }
+    }
+  }
+}
+
+body[ui-theme="infinity-theme"] {
+  .history-list-container {
+    backdrop-filter: blur(50px);
+    background-color: rgba(249, 249, 249, 0.8);
+  }
+}
+
+body[ui-theme="galaxy-theme"] {
+  .history-list-container {
+    background-color: $devui-global-bg;
   }
 }
 </style>

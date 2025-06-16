@@ -12,16 +12,8 @@
     </div>
     <div class="history-item-bottom">
       <div class="agent-box">
-        <img
-          :src="
-            itemData.chatModel?.iconPath ??
-            'https://matechat.gitcode.com/logo.svg'
-          "
-        />
-        <span
-          class="agent-name"
-          :title="itemData.chatModel?.modelName ?? 'MateChat'"
-        >
+        <img :src="itemData.chatModel?.iconPath"/>
+        <span class="agent-name" :title="itemData.chatModel?.modelName">
           {{ itemData.chatModel?.modelName ?? "MateChat" }}
         </span>
       </div>
@@ -121,22 +113,37 @@ const isOperateOpen = ref(false);
   &:not(:last-child) {
     margin-bottom: 8px;
   }
+}
 
-  &.active,
-  &.open,
-  &:hover {
-    background: linear-gradient(
-      to right,
-      #f3efff,
-      #f3efff33,
-      #e2f1fd33,
-      #e2f1fd
-    );
-    box-shadow: 2px 2px 8px #e9e9e9;
-    cursor: pointer;
+body[ui-theme='infinity-theme'] {
+  .history-item {
+    &.active,
+    &.open,
+    &:hover {
+      background: linear-gradient(to right, #f3efff,#f3efff33,#e2f1fd33,#e2f1fd);
+      bos-shadow: 2px 2px 8px #e9e9e9;
+      cursor: pointer;
 
-    :deep(.history-operate-icon) {
-      visibility: visible;
+      :deep(.history-operate-icon){
+        visibility: visible;
+      }
+    }
+  }
+}
+
+body[ui-theme='galaxy-theme']{
+  .history-item {
+    border: 1px solid transparent;
+
+    &.active,
+    &.open,
+    &:hover {
+      border-color: $devui-line;
+      cursor: pointer;
+
+      :deep(.history-operate-icon){
+        visibility: visible;
+      }
     }
   }
 }

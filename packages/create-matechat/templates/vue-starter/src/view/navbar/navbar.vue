@@ -1,11 +1,14 @@
 <template>
   <div class="navbar-container">
     <div class="navbar-top">
-      <McHeader :logoImg="GlobalConfig.logoPath || '/logo.svg'" :title="GlobalConfig.title || 'MateChat'"></McHeader>
+      <div class='navbar-header'>
+        <img :src="GlobalConfig.logoPath || '/logo.svg'" />
+        <span>{{ GlobalConfig.title || 'MateChat' }}</span>
+      </div>
       <div class="dividing-line"></div>
       <div class="chat-box">
         <div class="chat-icon-box active">
-          <i class="icon-develop-collaboration"></i>
+          <img src='/chat-icon.svg' />
         </div>
         <span>{{ $t("navbar.chat") }}</span>
       </div>
@@ -35,19 +38,17 @@ import SwitchLang from './switch-lang.vue';
 @import "devui-theme/styles-var/devui-var.scss";
 
 :deep(.switch-lang-container) {
+  display:flex;
+  justify-content:center;
+  align-items:center;
   width: 36px;
   height: 36px;
-  line-height: 36px;
-  text-align: center;
   color: $devui-text;
   border-radius: $devui-border-radius-card;
-  transition: all $devui-animation-duration-slow
-  $devui-animation-ease-in-out-smooth;
   cursor: pointer;
 
   &:hover {
-    background-color: $devui-base-bg;
-    box-shadow: $devui-shadow-length-base $devui-light-shadow;
+    background-color: rgba(255,255,255,0.2);
   }
 }
 
@@ -56,7 +57,7 @@ import SwitchLang from './switch-lang.vue';
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 80px;
+  width: 60px;
   height: 100%;
   box-sizing: border-box;
 
@@ -66,6 +67,28 @@ import SwitchLang from './switch-lang.vue';
     flex-direction: column;
     align-items: center;
     width: 100%;
+  }
+
+  .navbar-top {
+    margin-top: 12px;
+
+     .navbar-header {
+        display:flex;
+        flex-flow:column;
+        justify-content:center;
+        align-items:center;
+        gap:4px;
+
+        img {
+          width:34px;
+          height:34px;
+        }
+        span{
+          line-height:20px;
+          font-size: 11px;
+          font-weight:bold;
+        }
+     }
   }
 
   .navbar-bottom {
@@ -84,39 +107,39 @@ import SwitchLang from './switch-lang.vue';
   }
 
   .dividing-line {
-    width: 50%;
+    width: 32px;
     height: 1px;
-    margin: 20px 0;
-    background-color: $devui-dividing-line;
+    margin: 16px 0;
+    background-color: #babbc0;
   }
 
   .chat-box {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
     font-size: $devui-font-size-sm;
     cursor: pointer;
 
     .chat-icon-box {
+      display:flex;
+      justify-content:center;
+      align-items:center;
       width: 36px;
       height: 36px;
-      line-height: 36px;
-      text-align: center;
-      color: $devui-text;
       border-radius: $devui-border-radius-card;
-      transition: all $devui-animation-duration-slow
-        $devui-animation-ease-in-out-smooth;
 
       &.active,
       &:hover {
         background-color: $devui-base-bg;
-        box-shadow: $devui-shadow-length-base $devui-light-shadow;
+        box-shadow: 0 4px 12px 0 rgba(0,0,0,0.1);
       }
+    }
 
-      i {
-        font-size: 20px;
-      }
+    span {
+      color:$devui-text;
+      font-size: $devui-font-size-sm;
+      line-height: 20px;
     }
   }
 
