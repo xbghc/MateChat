@@ -221,3 +221,15 @@ body[ui-theme="galaxy-theme"] {
   }
 }
 </style>
+
+<style lang="scss">
+@import "devui-theme/styles-var/devui-var.scss";
+
+.devui-notification-item-container {
+  color: $devui-text;
+
+  .devui-notification__icon-close i.icon {
+    color: $devui-text !important;
+  }
+}
+</style>

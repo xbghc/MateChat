@@ -12,7 +12,7 @@
     </div>
     <div class="history-item-bottom">
       <div class="agent-box">
-        <img :src="itemData.chatModel?.iconPath"/>
+        <img :src="itemData.chatModel?.iconPath" />
         <span class="agent-name" :title="itemData.chatModel?.modelName">
           {{ itemData.chatModel?.modelName ?? "MateChat" }}
         </span>
@@ -23,9 +23,9 @@
 </template>
 
 <script setup lang="ts">
-import type { IHistoryItem } from '@/types';
-import type { PropType } from 'vue';
-import OperateIcon from './operate-icon.vue';
+import type { IHistoryItem } from "@/types";
+import type { PropType } from "vue";
+import OperateIcon from "./operate-icon.vue";
 
 defineProps({
   itemData: {
@@ -33,7 +33,7 @@ defineProps({
     default: () => ({}),
   },
 });
-const emits = defineEmits(['delete']);
+const emits = defineEmits(["delete"]);
 
 const isOperateOpen = ref(false);
 </script>
@@ -115,23 +115,29 @@ const isOperateOpen = ref(false);
   }
 }
 
-body[ui-theme='infinity-theme'] {
+body[ui-theme="infinity-theme"] {
   .history-item {
     &.active,
     &.open,
     &:hover {
-      background: linear-gradient(to right, #f3efff,#f3efff33,#e2f1fd33,#e2f1fd);
-      bos-shadow: 2px 2px 8px #e9e9e9;
+      background: linear-gradient(
+        to right,
+        #f3efff,
+        #f3efff33,
+        #e2f1fd33,
+        #e2f1fd
+      );
+      box-shadow: 2px 2px 8px #e9e9e9;
       cursor: pointer;
 
-      :deep(.history-operate-icon){
+      :deep(.history-operate-icon) {
         visibility: visible;
       }
     }
   }
 }
 
-body[ui-theme='galaxy-theme']{
+body[ui-theme="galaxy-theme"] {
   .history-item {
     border: 1px solid transparent;
 
@@ -141,7 +147,7 @@ body[ui-theme='galaxy-theme']{
       border-color: $devui-line;
       cursor: pointer;
 
-      :deep(.history-operate-icon){
+      :deep(.history-operate-icon) {
         visibility: visible;
       }
     }

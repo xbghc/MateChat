@@ -5,7 +5,7 @@
       :title="GlobalConfig.title"
       :sub-title="GlobalConfig.subTitle"
       :description="[$t('welcome.description1'), $t('welcome.description2')]"
-      class='welcome-introduction'
+      class="welcome-introduction"
     ></McIntroduction>
     <div class="guess-question">
       <div class="guess-title">
@@ -29,23 +29,26 @@
 </template>
 
 <script setup lang="ts">
-import GlobalConfig from '@/global-config';
+import GlobalConfig from "@/global-config";
 import {
   guessQuestionsCn,
   guessQuestionsEn,
-} from '@/mock-data/mock-chat-view';
-import { useChatMessageStore, useLangStore } from '@/store';
-import { LangType } from '@/types';
+  mockAnswer,
+} from "@/mock-data/mock-chat-view";
+import { useChatMessageStore, useLangStore } from "@/store";
+import { LangType } from "@/types";
 
 const langStore = useLangStore();
 const chatMessageStore = useChatMessageStore();
 
 const list = computed(() =>
-  langStore.currentLang === LangType.CN ? guessQuestionsCn : guessQuestionsEn,
+  langStore.currentLang === LangType.CN ? guessQuestionsCn : guessQuestionsEn
 );
 
 const onItemClick = (item) => {
-  chatMessageStore.ask(item.label);
+  if (mockAnswer[item.value]) {
+    chatMessageStore.ask(item.label, mockAnswer[item.value]);
+  }
 };
 </script>
 
