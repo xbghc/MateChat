@@ -1,7 +1,7 @@
 <template>
   <div class="navbar-top-container">
     <div class="navbar-left">
-      <McHeader :logoImg="'/logo.svg'" :title="'MateChat'"></McHeader>
+      <McHeader :logoImg="Logo" :title="'MateChat'"></McHeader>
     </div>
     <div class="navbar-right">
       <d-popover :position="['bottom-end']" class="navbar-top-history-menu">
@@ -27,10 +27,11 @@
 </template>
 
 <script setup lang="ts">
-import GlobalConfig from '@/global-config';
-import { SwitchLang } from '@/view/navbar';
-import { Theme } from '@/view/theme';
-import { HistoryList } from '@view/history';
+import GlobalConfig from "@/global-config";
+import { SwitchLang } from "@/view/navbar";
+import { Theme } from "@/view/theme";
+import { HistoryList } from "@view/history";
+import Logo from "../../../public/logo.svg";
 </script>
 
 <style scoped lang="scss">
@@ -81,7 +82,7 @@ import { HistoryList } from '@view/history';
     }
 
     i {
-      font-size:16px;
+      font-size: 16px;
     }
   }
 }
@@ -107,14 +108,14 @@ import { HistoryList } from '@view/history';
   }
 }
 
-body[ui-theme='infinity-theme'] {
+body[ui-theme="infinity-theme"] {
   .navbar-top-history {
     backdrop-filter: blur(50px);
-    background-color:rgba(249,249,249,0.8);
+    background-color: rgba(249, 249, 249, 0.8);
   }
 }
 
-body[ui-theme='galaxy-theme'] {
+body[ui-theme="galaxy-theme"] {
   .navbar-top-history {
     background-color: $devui-global-bg;
   }

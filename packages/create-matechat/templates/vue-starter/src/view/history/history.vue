@@ -32,11 +32,7 @@
         </Collapse>
       </template>
       <div v-if="!renderList.length" class="history-list-empty">
-        <img
-          :src="
-            themeStore.theme === 'light' ? '/no-data.png' : '/no-data-dark.png'
-          "
-        />
+        <img :src="themeStore.theme === 'light' ? NoDataPng : NoDataDarkPng" />
         <span>{{ $t("noData") }}</span>
       </div>
     </div>
@@ -56,6 +52,8 @@ import type { CategorizedHistoryItem, IHistoryItem } from "@/types";
 import { getHistoryTitle } from "@/utils";
 import { useI18n } from "vue-i18n";
 import HistoryItem from "./history-item.vue";
+import NoDataPng from "../../../public/no-data.png";
+import NoDataDarkPng from "../../../public/no-data-dark.png";
 
 const { t } = useI18n();
 const chatHistoryStore = useChatHistoryStore();

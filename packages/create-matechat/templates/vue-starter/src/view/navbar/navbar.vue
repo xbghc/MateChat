@@ -1,14 +1,14 @@
 <template>
   <div class="navbar-container">
     <div class="navbar-top">
-      <div class='navbar-header'>
-        <img :src="GlobalConfig.logoPath || '/logo.svg'" />
-        <span>{{ GlobalConfig.title || 'MateChat' }}</span>
+      <div class="navbar-header">
+        <img :src="GlobalConfig.logoPath || Logo" />
+        <span>{{ GlobalConfig.title || "MateChat" }}</span>
       </div>
       <div class="dividing-line"></div>
       <div class="chat-box">
         <div class="chat-icon-box active">
-          <img src='/chat-icon.svg' />
+          <img src="/chat-icon.svg" />
         </div>
         <span>{{ $t("navbar.chat") }}</span>
       </div>
@@ -18,7 +18,7 @@
       <Theme v-if="!GlobalConfig.theme" />
       <d-popover :position="['right']" trigger="hover">
         <template #content>
-          <span class="devui-text">{{ $t('navbar.systemSetting') }}</span>
+          <span class="devui-text">{{ $t("navbar.systemSetting") }}</span>
         </template>
         <div class="switch-lang-container">
           <i class="icon-setting system-setting" />
@@ -29,18 +29,19 @@
 </template>
 
 <script setup lang="ts">
-import GlobalConfig from '@/global-config';
-import { Theme } from '@/view/theme';
-import SwitchLang from './switch-lang.vue';
+import GlobalConfig from "@/global-config";
+import { Theme } from "@/view/theme";
+import SwitchLang from "./switch-lang.vue";
+import Logo from "../../../public/logo.svg";
 </script>
 
 <style scoped lang="scss">
 @import "devui-theme/styles-var/devui-var.scss";
 
 :deep(.switch-lang-container) {
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 36px;
   height: 36px;
   color: $devui-text;
@@ -48,7 +49,7 @@ import SwitchLang from './switch-lang.vue';
   cursor: pointer;
 
   &:hover {
-    background-color: rgba(255,255,255,0.2);
+    background-color: rgba(255, 255, 255, 0.2);
   }
 }
 
@@ -72,23 +73,23 @@ import SwitchLang from './switch-lang.vue';
   .navbar-top {
     margin-top: 12px;
 
-     .navbar-header {
-        display:flex;
-        flex-flow:column;
-        justify-content:center;
-        align-items:center;
-        gap:4px;
+    .navbar-header {
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
 
-        img {
-          width:34px;
-          height:34px;
-        }
-        span{
-          line-height:20px;
-          font-size: 11px;
-          font-weight:bold;
-        }
-     }
+      img {
+        width: 34px;
+        height: 34px;
+      }
+      span {
+        line-height: 20px;
+        font-size: 11px;
+        font-weight: bold;
+      }
+    }
   }
 
   .navbar-bottom {
@@ -122,9 +123,9 @@ import SwitchLang from './switch-lang.vue';
     cursor: pointer;
 
     .chat-icon-box {
-      display:flex;
-      justify-content:center;
-      align-items:center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: 36px;
       height: 36px;
       border-radius: $devui-border-radius-card;
@@ -132,12 +133,12 @@ import SwitchLang from './switch-lang.vue';
       &.active,
       &:hover {
         background-color: $devui-base-bg;
-        box-shadow: 0 4px 12px 0 rgba(0,0,0,0.1);
+        box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
       }
     }
 
     span {
-      color:$devui-text;
+      color: $devui-text;
       font-size: $devui-font-size-sm;
       line-height: 20px;
     }

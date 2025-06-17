@@ -1,7 +1,7 @@
 <template>
   <div class="welcome-page">
     <McIntroduction
-      logo-img="/logo2x.svg"
+      :logo-img="Logo2X"
       :title="GlobalConfig.title"
       :sub-title="GlobalConfig.subTitle"
       :description="[$t('welcome.description1'), $t('welcome.description2')]"
@@ -37,6 +37,7 @@ import {
 } from "@/mock-data/mock-chat-view";
 import { useChatMessageStore, useLangStore } from "@/store";
 import { LangType } from "@/types";
+import Logo2X from "../../../public/logo2x.svg";
 
 const langStore = useLangStore();
 const chatMessageStore = useChatMessageStore();

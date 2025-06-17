@@ -1,4 +1,6 @@
 import type { LLMModelsConfig } from "./types";
+import DeepSeekIcon from "../../public/deepseek-color.svg";
+import QwenIcon from "../../public/qwen.svg";
 
 export const MODEL_CONFIGS = {
   stream: true,
@@ -22,8 +24,8 @@ export const LLM_MODELS: LLMModelsConfig[] = [
     apiPath: "https://api.siliconflow.cn/v1",
     apiKey: "",
     models: [
-      { name: "deepseek-ai/DeepSeek-R1", iconPath: "/deepseek-color.svg" },
-      { name: "Qwen/Qwen3-8B", iconPath: "/qwen.svg" },
+      { name: "deepseek-ai/DeepSeek-R1", iconPath: DeepSeekIcon },
+      { name: "Qwen/Qwen3-8B", iconPath: QwenIcon },
     ],
     available: true,
     clientKey: LLMClientKey.openai,
@@ -34,8 +36,8 @@ export const LLM_MODELS: LLMModelsConfig[] = [
     apiPath: "https://api.deepseek.com",
     apiKey: "",
     models: [
-      { name: "deepseek-chat", iconPath: "/deepseek-color.svg" },
-      { name: "deepseek-reasoner", iconPath: "/deepseek-color.svg" },
+      { name: "deepseek-chat", iconPath: DeepSeekIcon },
+      { name: "deepseek-reasoner", iconPath: DeepSeekIcon },
     ],
     available: true,
     clientKey: LLMClientKey.openai,

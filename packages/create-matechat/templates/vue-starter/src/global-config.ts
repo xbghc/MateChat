@@ -1,7 +1,6 @@
-import type { IGlobalConfig } from '@/global-config-types';
+import type { IGlobalConfig } from "@/global-config-types";
 
 export default {
-  displayShape: 'Immersive',
-  logoPath: '/logo.svg',
-  title: 'MateChat',
+  displayShape: "Immersive",
+  title: "MateChat",
 } as IGlobalConfig;
