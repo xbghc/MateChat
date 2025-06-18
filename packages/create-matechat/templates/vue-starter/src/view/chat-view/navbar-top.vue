@@ -1,7 +1,7 @@
 <template>
   <div class="navbar-top-container">
     <div class="navbar-left">
-      <McHeader :logoImg="'/logo.svg'" :title="'MateChat'"></McHeader>
+      <McHeader :logoImg="Logo" :title="'MateChat'"></McHeader>
     </div>
     <div class="navbar-right">
       <d-popover :position="['bottom-end']" class="navbar-top-history-menu">
@@ -27,10 +27,11 @@
 </template>
 
 <script setup lang="ts">
-import GlobalConfig from '@/global-config';
-import { SwitchLang } from '@/view/navbar';
-import { Theme } from '@/view/theme';
-import { HistoryList } from '@view/history';
+import GlobalConfig from "@/global-config";
+import { SwitchLang } from "@/view/navbar";
+import { Theme } from "@/view/theme";
+import { HistoryList } from "@view/history";
+import Logo from "../../../public/logo.svg";
 </script>
 
 <style scoped lang="scss">
@@ -43,7 +44,7 @@ import { HistoryList } from '@view/history';
   width: 100%;
   height: 32px;
   padding: 0 8px;
-  box-sizing: border-box;
+  margin-top: 8px;
 
   .navbar-left,
   .navbar-right {
@@ -67,34 +68,28 @@ import { HistoryList } from '@view/history';
   }
 
   :deep(.switch-lang-container) {
-    width: 32px;
-    height: 32px;
-    line-height: 32px;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
     text-align: center;
     margin-left: 8px;
     color: $devui-text;
     border-radius: $devui-border-radius-card;
-    transition: all $devui-animation-duration-slow
-      $devui-animation-ease-in-out-smooth;
     cursor: pointer;
 
     &:hover {
-      background-color: $devui-icon-fill-weak;
-      box-shadow: $devui-shadow-length-base $devui-light-shadow;
+      background-color: var(--mc-icon-hover-bg);
     }
-  }
 
-  ::v-deep .system-setting {
-    font-size: 16px;
-    cursor: pointer;
+    i {
+      font-size: 16px;
+    }
   }
 }
 
 .navbar-top-history {
   width: 100%;
   border-right: none;
-  backdrop-filter: blur(50px);
-  background-color: rgba(249, 249, 249, 0.8);
 }
 
 .devui-text {
@@ -112,6 +107,19 @@ import { HistoryList } from '@view/history';
     display: inline-block !important;
   }
 }
+
+body[ui-theme="infinity-theme"] {
+  .navbar-top-history {
+    backdrop-filter: blur(50px);
+    background-color: rgba(249, 249, 249, 0.8);
+  }
+}
+
+body[ui-theme="galaxy-theme"] {
+  .navbar-top-history {
+    background-color: $devui-global-bg;
+  }
+}
 </style>
 
 <style lang="scss">
@@ -119,7 +127,7 @@ import { HistoryList } from '@view/history';
 
 .devui-popover__content.navbar-top-history-menu {
   padding: 0;
-  background-color: $devui-connected-overlay-bg;
+  background-color: $devui-global-bg;
   box-shadow: $devui-shadow-length-connected-overlay $devui-shadow;
 }
 </style>

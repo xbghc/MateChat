@@ -1,6 +1,6 @@
 <template>
   <d-layout class="matechat-layout">
-    <d-aside>
+    <d-aside class='aside-content'>
       <slot name="header"></slot>
     </d-aside>
     <d-content class="main-content">
@@ -12,33 +12,52 @@
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
+@import 'devui-theme/styles-var/devui-var.scss';
+
 .matechat-layout {
   width: 100%;
   height: 100vh;
   padding: 8px 8px 8px 0;
   overflow: auto;
   box-sizing: border-box;
-  background: var(
-    --mc-gradient-base-bg,
-    linear-gradient(135deg, rgba(179, 105, 255, .5), rgba(123, 121, 255, .5))
-  );
+}
+.aside-content {
+  padding: 0 8px;
 }
 .main-content {
   position: relative;
   flex: 1;
   display: flex;
   border-radius: 12px;
-  background-color: var(--devui-base-bg, #ffffff);
+  overflow: auto;
+}
+
+body[ui-theme='infinity-theme'] {
+  .matechat-layout {
+    background-image: url('/global-bg.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+}
+
+body[ui-theme='galaxy-theme'] {
+  .matechat-layout {
+    background-color: $devui-global-bg;
+  }
 }
 
 @media screen and (max-width: 940px) {
   .matechat-layout {
     padding: 8px;
   }
+  .aside-content {
+    padding:0;
+  }
 }
 
 @media screen and (max-width: 860px) {
-  .main-content :deep(.history-container) {
+  .main-content :deep(.history-list-container) {
     display: none;
   }
 }

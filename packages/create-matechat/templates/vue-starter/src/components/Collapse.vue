@@ -90,7 +90,7 @@ const afterLeave = (el: RendererElement) => {
   padding-left: 12px;
   padding-right: 28px;
   line-height: 40px;
-  color: #191919;
+  color: $devui-text;
   border-radius: $devui-border-radius;
   font-size: $devui-font-size;
   box-sizing: border-box;

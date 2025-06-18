@@ -1,6 +1,6 @@
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
-import './style.css';
+import './style.scss';
 import MateChat from '@matechat/core';
 import VueDevui from 'vue-devui';
 import App from './App.vue';

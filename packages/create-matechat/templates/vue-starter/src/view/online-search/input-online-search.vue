@@ -24,6 +24,7 @@ const checked = ref(false);
   padding: 4px 8px;
   background-color: $devui-disabled-bg;
   min-width: 85px;
+  height: 30px;
 
   &:hover {
     color: $devui-brand;

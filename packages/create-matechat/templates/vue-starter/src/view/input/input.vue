@@ -3,21 +3,27 @@
     <McInput
       :value="inputValue"
       :maxLength="2000"
-      class="shadow"
+      variant="borderless"
       @change="(e:string) => (inputValue = e)"
       @submit="onSubmit"
     >
       <template #extra>
         <div class="input-foot-wrapper">
+          <InputOnlineSearch />
+          <span class="input-foot-dividing-line"></span>
           <InputAtModel @click="onModelClick" />
-          <d-popover :content="$t('thesaurus') + $t('underDevelop')" trigger="hover" :position="['top']" style="color: var(--devui-text)">
-            <span class="input-word-container">
-              <i class="icon-standard"></i>
-            </span>
+          <d-popover
+            :content="$t('underDevelop')"
+            trigger="hover"
+            :position="['top']"
+            style="color: var(--devui-text)"
+          >
+            <div class="input-word-container">
+              <PromptsIcon />
+              <span>{{ $t("thesaurus") }}</span>
+            </div>
           </d-popover>
           <InputAppendix />
-          <InputAudio />
-          <InputOnlineSearch />
           <span class="input-foot-dividing-line"></span>
           <span class="input-foot-maxlength">
             {{ inputValue.length }}/2000
@@ -26,31 +32,29 @@
       </template>
     </McInput>
     <div class="statement-box">
-        <div>{{ $t('input.disclaimer') }}</div>
-        <div class="separator" />
-        <div>
-          <span class="link-span">{{ $t('input.privacyStatement') }}</span>
-        </div>
+      <span>{{ $t("input.disclaimer") }}</span>
+      <span class="separator" />
+      <span class="link-span">{{ $t("input.privacyStatement") }}</span>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useChatMessageStore, useChatModelStore } from '@/store';
-import { InputAppendix } from '@view/appendix';
-import { InputAudio } from '@view/audio';
-import { InputAtModel } from '@view/chat-model';
-import { InputOnlineSearch } from '@view/online-search';
-import { ref } from 'vue';
+import { useChatMessageStore, useChatModelStore } from "@/store";
+import { InputAppendix } from "@view/appendix";
+import { InputAtModel } from "@view/chat-model";
+import { InputOnlineSearch } from "@view/online-search";
+import { PromptsIcon } from "@/components";
+import { ref } from "vue";
 
 const chatMessageStore = useChatMessageStore();
 const chatModelStore = useChatModelStore();
 
-const inputValue = ref('');
+const inputValue = ref("");
 
 chatMessageStore.$onAction(({ name }) => {
-  if (name === 'ask') {
-    inputValue.value = '';
+  if (name === "ask") {
+    inputValue.value = "";
   }
 });
 
@@ -59,7 +63,7 @@ const onSubmit = (val: string) => {
 };
 
 const onModelClick = () => {
-  inputValue.value += `@${chatModelStore.currentModel}`;
+  inputValue.value += `@${chatModelStore.currentModel?.modelName}`;
 };
 </script>
 
@@ -67,6 +71,8 @@ const onModelClick = () => {
 @import "devui-theme/styles-var/devui-var.scss";
 
 .input-container {
+  width: 100%;
+  max-width: 1200px;
   padding: 0 12px 12px 12px;
 
   .input-foot-wrapper {
@@ -74,21 +80,30 @@ const onModelClick = () => {
     align-items: center;
     width: 100%;
     height: 100%;
-    gap: 8px;
     margin-right: 8px;
 
     .input-word-container {
       display: flex;
       align-items: center;
       gap: 4px;
+      height: 30px;
+      color: $devui-text;
       font-size: $devui-font-size;
+      border-radius: 4px;
+      padding: 6px;
+      cursor: pointer;
 
-      .input-word-text {
+      svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      span {
         font-size: $devui-font-size-sm;
       }
 
-      i {
-        font-size: $devui-font-size-icon;
+      &:hover {
+        background-color: var(--devui-icon-hover-bg);
       }
     }
 
@@ -101,6 +116,7 @@ const onModelClick = () => {
       width: 1px;
       height: 14px;
       background-color: $devui-line;
+      margin: 0 8px;
     }
 
     .input-foot-maxlength {
@@ -108,22 +124,22 @@ const onModelClick = () => {
       color: $devui-aide-text;
     }
   }
-  :deep(.mc-input-foot-left) {
+  :deep() {
+    .mc-input-foot-left {
       overflow-x: auto;
       scrollbar-width: none;
-  }
-
-  .shadow {
-    box-shadow: 0 1px 8px 0 rgba(25, 25, 25, 0.06);
+    }
+    .mc-button svg path {
+      transition: fill $devui-animation-duration-slow
+        $devui-animation-ease-in-out-smooth;
+    }
   }
 
   .statement-box {
     font-size: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     margin-top: 8px;
-    color: $devui-disabled-text;
+    color: $devui-aide-text;
+    text-align: center;
 
     .separator {
       height: 12px;
@@ -135,6 +151,26 @@ const onModelClick = () => {
       cursor: pointer;
       text-decoration: underline;
     }
+  }
+}
+
+body[ui-theme="galaxy-theme"] {
+  .input-container {
+    :deep() {
+      .mc-button:disabled {
+        color: $devui-disabled-text;
+        background-color: $devui-disabled-bg;
+        svg path {
+          fill: $devui-disabled-text;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .input-word-container span {
+    display: none;
   }
 }
 </style>

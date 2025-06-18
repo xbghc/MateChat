@@ -1,9 +1,8 @@
 <template>
-  <d-popover :content="$t('agent')" trigger="hover" :position="['top']" style="color: var(--devui-text)">
-    <span class="container" @click="emits('click')">
-      <i class="icon-at"></i>
-    </span>
-  </d-popover>
+  <div class="container" @click="emits('click')">
+    <i class="icon-at"></i>
+    <span>{{ $t('agent') }}</span>
+  </div>
 </template>
 <script setup lang="ts">
 const emits = defineEmits(['click']);
@@ -16,16 +15,24 @@ const emits = defineEmits(['click']);
   display: flex;
   gap: 4px;
   align-items: center;
+  height: 30px;
   color: $devui-text;
-  font-size: $devui-font-size;
+  border-radius: 4px;
+  padding: 6px;
   cursor: pointer;
 
   span {
     font-size: $devui-font-size-sm;
   }
 
-  i {
-    font-size: $devui-font-size;
+  &:hover {
+    background-color: var(--devui-icon-hover-bg);
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .container span {
+    display: none;
   }
 }
 </style>

@@ -1,27 +1,29 @@
 <template>
-  <div ref="conversationRef" class="conversation-area">
-    <template v-for="(msg, idx) in chatMessageStore.messages" :key="idx">
-      <McBubble
-        v-if="msg.from === 'user'"
-        :content="msg.content"
-        :align="'right'"
-        :avatarConfig="msg.avatarConfig"
-      ></McBubble>
-      <McBubble
-        v-else
-        :loading="msg.loading ?? false"
-        :avatarConfig="msg.avatarConfig"
-      >
-        <McMarkdownCard :content="msg.content" :theme="themeStore.theme" />
-        <template #bottom>
-          <div class="bubble-bottom-operations" v-if="msg.complete">
-            <i class="icon-copy-new"></i>
-            <i class="icon-like"></i>
-            <i class="icon-dislike"></i>
-          </div>
-        </template>
-      </McBubble>
-    </template>
+  <div ref="conversationRef" class="conversation-area mc-scroll-overlay">
+    <div class='chat-list'>
+      <template v-for="(msg, idx) in chatMessageStore.messages" :key="idx">
+        <McBubble
+          v-if="msg.from === 'user'"
+          :content="msg.content"
+          :align="'right'"
+          :avatarConfig="msg.avatarConfig"
+        ></McBubble>
+        <McBubble
+          v-else
+          :loading="msg.loading ?? false"
+          :avatarConfig="msg.avatarConfig"
+        >
+          <McMarkdownCard :content="msg.content" :theme="themeStore.theme" />
+          <template #bottom>
+            <div class="bubble-bottom-operations" v-if="msg.complete">
+              <i class="icon-copy-new"></i>
+              <i class="icon-like"></i>
+              <i class="icon-dislike"></i>
+            </div>
+          </template>
+        </McBubble>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -55,8 +57,19 @@ watch(
   display: flex;
   flex-direction: column;
   overflow: auto;
-  padding: 0 12px;
-  gap: 8px;
+  width: 100%;
+  padding-top: 20px;
+
+  .chat-list {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 12px;
+
+    & > * {
+      margin-top: 8px;
+    }
+  }
 
   .bubble-bottom-operations {
     margin-top: 8px;
@@ -67,6 +80,16 @@ watch(
 
       &:hover {
         background-color: $devui-gray-10;
+      }
+    }
+  }
+}
+
+body[ui-theme='galaxy-theme'] {
+  .conversation-area {
+    :deep() {
+      .mc-bubble-content.filled {
+        background-color: $devui-base-bg;
       }
     }
   }

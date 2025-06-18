@@ -1,13 +1,17 @@
 import type { LLMClientKey, LLMProviders } from './config';
 
+export interface ModelsItem {
+  name: string;
+  iconPath: string;
+}
+
 export interface LLMModelsConfig {
   providerKey: LLMProviders;
   apiKey: string;
   apiPath: string;
-  models: string[];
+  models: ModelsItem[];
   available: boolean;
   clientKey: LLMClientKey;
-  iconPath: string;
 }
 
 export interface ModelOption {
