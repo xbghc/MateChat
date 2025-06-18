@@ -1,7 +1,10 @@
 <template>
   <div class="navbar-top-container">
     <div class="navbar-left">
-      <McHeader :logoImg="Logo" :title="'MateChat'"></McHeader>
+      <McHeader
+        :logoImg="GlobalConfig.logoPath || Logo"
+        :title="GlobalConfig.title || 'MateChat'"
+      ></McHeader>
     </div>
     <div class="navbar-right">
       <d-popover :position="['bottom-end']" class="navbar-top-history-menu">

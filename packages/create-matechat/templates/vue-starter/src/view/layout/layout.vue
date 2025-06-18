@@ -1,6 +1,6 @@
 <template>
   <d-layout class="matechat-layout">
-    <d-aside class='aside-content'>
+    <d-aside :class="['aside-content', GlobalConfig.displayShape]">
       <slot name="header"></slot>
     </d-aside>
     <d-content class="main-content">
@@ -9,10 +9,12 @@
   </d-layout>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import GlobalConfig from "@/global-config";
+</script>
 
 <style scoped lang="scss">
-@import 'devui-theme/styles-var/devui-var.scss';
+@import "devui-theme/styles-var/devui-var.scss";
 
 .matechat-layout {
   width: 100%;
@@ -21,7 +23,7 @@
   overflow: auto;
   box-sizing: border-box;
 }
-.aside-content {
+.aside-content:not(.Assistant) {
   padding: 0 8px;
 }
 .main-content {
@@ -32,16 +34,16 @@
   overflow: auto;
 }
 
-body[ui-theme='infinity-theme'] {
+body[ui-theme="infinity-theme"] {
   .matechat-layout {
-    background-image: url('/global-bg.png');
+    background-image: url("/global-bg.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
   }
 }
 
-body[ui-theme='galaxy-theme'] {
+body[ui-theme="galaxy-theme"] {
   .matechat-layout {
     background-color: $devui-global-bg;
   }
@@ -52,7 +54,7 @@ body[ui-theme='galaxy-theme'] {
     padding: 8px;
   }
   .aside-content {
-    padding:0;
+    padding: 0;
   }
 }
 

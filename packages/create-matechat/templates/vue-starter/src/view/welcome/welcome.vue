@@ -1,7 +1,7 @@
 <template>
   <div class="welcome-page">
     <McIntroduction
-      :logo-img="Logo2X"
+      :logo-img="GlobalConfig.logoPath || Logo2X"
       :title="GlobalConfig.title"
       :sub-title="GlobalConfig.subTitle"
       :description="[$t('welcome.description1'), $t('welcome.description2')]"

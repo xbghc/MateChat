@@ -1,5 +1,5 @@
 <template>
-  <div class='chat-view-wrapper'>
+  <div class="chat-view-wrapper">
     <div class="chat-view-container">
       <NavbarTop />
       <ChatProcess v-if="chatStatusStore.startChat" />
@@ -13,18 +13,22 @@
         </div>
         <d-popover
           :content="$t('newChat')"
-          trigger='hover'
+          trigger="hover"
           :position="['top']"
           style="color: var(--devui-text)"
         >
-          <div class='new-chat-setting' @click="onNewConvo">
-            <i class='icon-add'></i>
+          <div class="new-chat-setting" @click="onNewConvo">
+            <i class="icon-add"></i>
           </div>
         </d-popover>
       </div>
       <Input />
     </div>
-    <div :class="['toggle-wrapper', !commonStore.isExpand && 'not-expand']" @click='onToggle'>
+    <div
+      v-if="GlobalConfig.displayShape === DisplayShape.Immersive"
+      :class="['toggle-wrapper', !commonStore.isExpand && 'not-expand']"
+      @click="onToggle"
+    >
       <ExpandIcon />
     </div>
   </div>
@@ -35,16 +39,18 @@ import {
   useChatHistoryStore,
   useChatMessageStore,
   useChatStatusStore,
-  useCommonStore
-} from '@/store';
-import { ChatModel } from '@view/chat-model';
-import { ChatProcess } from '@view/chat-process';
-import { ChatSetting } from '@view/chat-setting';
-import { Input } from '@view/input';
-import { Knowledge } from '@view/knowledge';
-import { Welcome } from '@view/welcome';
-import NavbarTop from './navbar-top.vue';
-import { ExpandIcon } from '@/components';
+  useCommonStore,
+} from "@/store";
+import { ChatModel } from "@view/chat-model";
+import { ChatProcess } from "@view/chat-process";
+import { ChatSetting } from "@view/chat-setting";
+import { Input } from "@view/input";
+import { Knowledge } from "@view/knowledge";
+import { Welcome } from "@view/welcome";
+import NavbarTop from "./navbar-top.vue";
+import { ExpandIcon } from "@/components";
+import GlobalConfig from "@/global-config";
+import { DisplayShape } from "@/global-config-types";
 
 const chatHistoryStore = useChatHistoryStore();
 const chatMessageStore = useChatMessageStore();
@@ -52,14 +58,14 @@ const chatStatusStore = useChatStatusStore();
 const commonStore = useCommonStore();
 
 const onNewConvo = () => {
-  chatHistoryStore.setActiveHistoryId('');
+  chatHistoryStore.setActiveHistoryId("");
   chatStatusStore.startChat = false;
   chatMessageStore.messages = [];
 };
 
 const onToggle = () => {
   commonStore.isExpand = !commonStore.isExpand;
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -113,7 +119,7 @@ const onToggle = () => {
     height: 24px;
     border-radius: $devui-border-radius-full;
     background-color: $devui-base-bg;
-    box-shadow: 0px 1px 8px 0px rgba(25, 25, 25,0.06);
+    box-shadow: 0px 1px 8px 0px rgba(25, 25, 25, 0.06);
     cursor: pointer;
 
     &:hover {
@@ -147,19 +153,23 @@ const onToggle = () => {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 
-    svg{
-      transform:rotate(180deg);
+    svg {
+      transform: rotate(180deg);
     }
   }
 }
 
-body[ui-theme='infinity-theme'] {
+body[ui-theme="infinity-theme"] {
   .chat-view-wrapper {
-    background: linear-gradient(180deg, rgba(255,255,255,0.95),rgba(248,250,255,0.95) 99%);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.95),
+      rgba(248, 250, 255, 0.95) 99%
+    );
   }
 }
 
-body[ui-theme='galaxy-theme'] {
+body[ui-theme="galaxy-theme"] {
   .chat-view-wrapper {
     background-color: $devui-global-bg;
   }
