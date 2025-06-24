@@ -227,7 +227,7 @@ onMounted(() => {
   <div class="btn-container">
     <d-button variant="solid" @click="generateAnswer">{{ isLoading ? '停止' : '重新生成'}}</d-button>
   </div>
-  <div>
+  <div id="think-demo-content">
     <template v-for="(msg, idx) in messages" :key="idx">
       <McBubble v-if="msg.from === 'user'" :content="msg.content" :align="'right'" :avatarConfig="msg.avatarConfig"></McBubble>
       <McBubble v-else :loading="msg.loading ?? false" :avatarConfig="msg.avatarConfig" :variant="'bordered'">
@@ -324,7 +324,7 @@ const toggleThink = (idx) => {
   if (isLoading.value) {
     return
   }
-  const targetNode = document.querySelectorAll('.mc-bubble-content-container')[idx];
+  const targetNode = document.querySelectorAll('#think-demo-content .mc-bubble-content-container')[idx];
   if (targetNode) {
     const thinkBlock = targetNode.querySelector('.mc-think-block');
     if (thinkBlock) {
