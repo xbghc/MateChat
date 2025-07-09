@@ -3,8 +3,8 @@
 </template>
 
 <script setup lang="ts">
-import markdownit from 'markdown-it';
 import hljs from 'highlight.js';
+import markdownit from 'markdown-it';
 import { computed } from 'vue';
 
 const props = defineProps({

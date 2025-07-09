@@ -2,9 +2,9 @@
 
 前端智能化场景解决方案UI库，轻松构建你的AI应用。已服务于华为内部多个应用智能化改造，并助力CodeArts、InsCode AI IDE等智能化助手搭建。
 
-![example](../public/example1.png)
+![example](/example1.png)
 
-![example](../public/example3.png)
+![example](/example3.png)
 
 ## 🌈 特性
 

@@ -1,8 +1,8 @@
-import quickSortMd from './quicksort.md?raw';
-import helpMd from './help.md?raw';
 import bindProjectSpaceMd from './bind-project-space.md?raw';
-import piplineListMd from './pipeline-list.md?raw';
 import formatDateMd from './format-date.md?raw';
+import helpMd from './help.md?raw';
+import piplineListMd from './pipeline-list.md?raw';
+import quickSortMd from './quicksort.md?raw';
 
 export const introPrompt = {
   direction: 'horizontal',

@@ -33,6 +33,13 @@
                   <div>主题</div>
                 </div>
               </li>
+              <!-- Mobile Language Switch -->
+              <li v-for="locale in localeLinks" :key="locale.text" class="mobile-lang-item">
+                <a :href="locale.link" class="mobile-lang-link">
+                  <i class="icon-global"></i>
+                  <span>{{ locale.text }}</span>
+                </a>
+              </li>
               <a href="https://gitcode.com/DevCloudFE/MateChat/overview" rel="noopener noreferrer" target="_blank">
                 <img src="/png/footer/gitcode.svg" style="height: 16px" />
                 <span>MateChat</span>
@@ -90,6 +97,26 @@
             </template>
           </d-switch>
         </div>
+      </div>
+      <div class="header-menu-splitter"></div>
+      <!-- Language Switch Button -->
+      <div v-if="localeLinks.length" class="language-switch" title="切换语言 / Switch Language">
+        <d-dropdown :trigger="'hover'" :position="['bottom-end', 'right', 'top-end']">
+          <div class="lang-button">
+            <i class="icon-global"></i>
+            <span>{{ currentLang.label }}</span>
+            <i class="icon-chevron-down-2"></i>
+          </div>
+          <template #menu>
+            <ul class="lang-menu">
+              <li v-for="locale in localeLinks" :key="locale.text" class="lang-item">
+                <a :href="locale.link" class="lang-link">
+                  <span>{{ locale.text }}</span>
+                </a>
+              </li>
+            </ul>
+          </template>
+        </d-dropdown>
       </div>
       <div class="header-menu-splitter"></div>
       <div class="gitcode-address" title="到GitCode关注">
@@ -380,6 +407,68 @@ function onDropdown(status: boolean) {
     border-left: 1px solid $devui-line;
   }
 
+  .language-switch {
+    margin: 0 12px;
+    
+    .lang-button {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      border-radius: $devui-border-radius;
+      color: $devui-aide-text;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all var(--devui-animation-duration-base, 0.2s) var(--devui-animation-ease-in-out-smooth, cubic-bezier(0.645, 0.045, 0.355, 1));
+      
+      &:hover {
+        color: $devui-text;
+        background: $devui-icon-bg;
+        box-shadow: var(--devui-shadow-length-base, 0 2px 6px 0) var(--devui-light-shadow, rgba(37, 43, 58, 0.12));
+      }
+      
+      .icon-global {
+        font-size: 16px;
+      }
+      
+      .icon-chevron-down-2 {
+        font-size: 12px;
+        transition: transform 0.2s;
+      }
+    }
+    
+    .lang-menu {
+      min-width: 120px;
+      padding: 4px 0;
+      margin: 0;
+      list-style: none;
+      background: $devui-base-bg;
+      border-radius: $devui-border-radius;
+      box-shadow: var(--devui-shadow-length-base, 0 2px 6px 0) var(--devui-light-shadow, rgba(37, 43, 58, 0.12));
+      
+      .lang-item {
+        margin: 0;
+        
+        .lang-link {
+          display: flex;
+          align-items: center;
+          padding: 8px 16px;
+          color: $devui-text;
+          text-decoration: none;
+          transition: background-color 0.2s;
+          
+          &:hover {
+            background: $devui-icon-bg;
+          }
+          
+          span {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
   .gitcode-address {
     margin: 0 20px 0 8px;
   }
@@ -417,6 +506,23 @@ function onDropdown(status: boolean) {
     justify-content: space-between;
     gap: 8px;
   }
+  
+  .mobile-lang-item {
+    .mobile-lang-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      
+      .icon-global {
+        font-size: 16px;
+      }
+      
+      span {
+        color: $devui-text;
+      }
+    }
+  }
 }
 
 .list-menu {
@@ -453,6 +559,7 @@ function onDropdown(status: boolean) {
       .theme,
       .release,
       .header-menu-splitter,
+      .language-switch,
       .gitcode-address {
         display: none;
       }
