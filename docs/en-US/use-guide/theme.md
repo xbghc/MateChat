@@ -1,95 +1,90 @@
-# Custom Theme
+# Custom Themes
 
-Currently, MateChat custom theme is implemented based on DevUI Theme.
-DevUI Theme is a framework-agnostic universal theme customization solution provided by `DevUI`, with rich built-in themes and support for custom themes.
+The current MateChat custom theme is implemented based on DevUI Theme.  
+DevUI Theme is a framework-agnostic universal theme customization solution provided by `DevUI`, featuring built-in rich themes and support for custom themes.
 
-**DevUI Theme** provides 5 built-in themes:
+**DevUI Theme** offers five built-in themes:
 
 - Infinity Theme `infinityTheme` (default theme)
 - Provence Theme `provenceTheme`
 - Sweet Theme `sweetTheme`
-- Deep Theme `deepTheme`
+- Deep Night Theme `deepTheme`
 - Galaxy Theme `galaxyTheme`
 
-### Install DevUI Theme
-
+### Installing DevUI Theme
 ```shell
 npm i devui-theme
 ```
+Made some modifications here
 
 ### Initialize Theme
-
 ```ts
 import { ThemeServiceInit, infinityTheme } from 'devui-theme';
-
-// Use infinity theme
+ 
+// 使用无限主题
 ThemeServiceInit({ infinityTheme }, 'infinityTheme');
 ```
+Changes have also been made here
 
-Infinity Theme `infinityTheme` effect demo
+Infinity Theme `infinityTheme` Demo
 
 <img src="/png/theme/matechat-theme-default.png" />
 
-### Switch Theme
-
+### Switching Themes
 ```ts
 import { ThemeServiceInit, infinityTheme, galaxyTheme } from 'devui-theme';
 
 import { infinityTheme } from 'devui-theme';
-
-// Initially infinityTheme infinity theme
+ 
+// 初始是 infinityTheme 无限主题
 const themeService = ThemeServiceInit({ infinityTheme }, 'infinityTheme');
-
-// Can dynamically switch to galaxyTheme galaxy theme
+ 
+// 可以动态切换成 galaxyTheme 追光主题
 themeService.applyTheme(galaxyTheme);
 ```
-
-Galaxy Theme `galaxyTheme` effect demo
+Galaxy Theme `galaxyTheme` Demo
 
 <img src="/png/theme/matechat-theme-dark.png" />
 
-### Custom Theme
+### Customizing Themes
 
-You can support custom themes by passing parameters to `ThemeServiceInit`.
+You can create custom themes by passing parameters to `ThemeServiceInit`.
 
-#### Create Custom Theme
+#### Creating a Custom Theme
 
-You can create a new theme through `new Theme` and change colors, font sizes, border radius, shadow values, etc. from the default theme.
+Use `new Theme` to create a theme and modify colors, font sizes, border radii, shadow values, etc. from the default theme.
 
 Create a `my-theme.ts` file with the following content:
-
 ```ts
 import { Theme, devuiLightTheme, devuiDarkTheme } from 'devui-theme';
-
+ 
 export const myLightTheme: Theme = new Theme({
   id: 'my-light-theme',
   name: 'My Light Theme',
-  cnName: 'My Light Theme',
+  cnName: '我的浅色主题',
   data: Object.assign({}, devuiLightTheme.data, {
     'devui-global-bg': '#ccc',
   }),
   isDark: false,
 });
-
+ 
 export const myDarkTheme: Theme = new Theme({
   id: 'my-dark-theme',
   name: 'My Dark Theme',
-  cnName: 'My Dark Theme',
+  cnName: '我的深色主题',
   data: Object.assign({}, devuiDarkTheme.data, {
     'devui-global-bg': '#333',
   }),
   isDark: true,
 });
 ```
+#### Using Custom Themes
 
-#### Use Custom Theme
-
-Simply pass the custom theme to the first parameter of `ThemeServiceInit` to complete the registration of the custom theme.
-
+Simply pass the custom theme as the first parameter to `ThemeServiceInit` to complete the registration of the custom theme.
 ```ts
 import { ThemeServiceInit } from 'devui-theme';
 import { myLightTheme, myDarkTheme } from './my-theme';
-
+ 
 ThemeServiceInit(
   {
     'my-light-theme': myLightTheme,
@@ -98,13 +93,11 @@ ThemeServiceInit(
   'my-light-theme'
 );
 ```
-
 ### API
 
 #### ThemeServiceInit Function
 
 The function definition of `ThemeServiceInit` is as follows:
-
 ```ts
 ThemeServiceInit(
     themes?: {[themeName: string]: Theme},
@@ -118,31 +111,28 @@ ThemeServiceInit(
     ieSupport = true
 ): ThemeService;
 ```
+- themes: A Map object containing all available themes for switching, where the key is the theme name and the value is the theme class instance.
+- defaultThemeName: The default theme name, which must be one of the keys in `themes`. It is used when no previous theme name is specified in localStorage.
+- extraData: Additional theme data for third-party library compatibility. The key is the theme name, and the value is an object. The `appendClasses` field specifies the classes bound to the body, while `cssVariables` contains additional custom variables for the theme.
+- ieSupport: Whether to enable IE support. Currently, the `css-var-polyfill` solution is used to support theme switching in IE.
 
-- themes: Map object of all themes that can be switched, key is theme name, value is theme class instance.
-- defaultThemeName: Default theme name, one of the themes, will be used when localStorage does not specify the last theme name.
-- extraData: Additional data of the theme, used for third-party library compatibility, key is theme name, value is object, appendClasses field specifies the class bound to body, cssVariables are additional custom variables of the theme.
-- ieSupport: Whether to enable IE support, currently using css-var-polyfill solution to support IE theme switching.
+The `ThemeServiceInit` function returns a `themeService` instance, which mainly includes the following variables and methods:
 
-The `ThemeServiceInit` function returns a `themeService` instance, which mainly contains the following variables and methods:
-
-- `currentTheme`: Get current theme
-- `applyTheme`: Dynamically switch theme
+- `currentTheme`: Gets the current theme.
+- `applyTheme`: Dynamically switches themes.
 
 #### Theme Class
 
-The theme class is used to create custom themes and mainly contains the following properties:
-
+The Theme class is used to create custom themes and primarily includes the following properties:
 ```ts
 export class Theme {
-  id: ThemeId;                    // Theme ID
-  name: string;                   // Theme name
-  cnName?: string;                // Theme Chinese name
-  data: {                         // Theme variable data
+  id: ThemeId;                    // 主题ID
+  name: string;                   // 主题名称
+  cnName?: string;                // 主题中文名称
+  data: {                         // 主题变量数据
     [cssVarName: string]: string;
   };
-  isDark?: boolean;               // Whether it is a dark theme
+  isDark?: boolean;               // 是否是深色主题
 }
 ```
-
 For more usage, please refer to [DevUI Theme Customization](https://vue-devui.github.io/theme-guide/).
