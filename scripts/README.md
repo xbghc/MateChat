@@ -4,6 +4,8 @@
 
 本系统使用 DeepSeek API 自动将中文文档翻译为英文，并通过 GitHub Actions 自动创建 PR。
 
+现在支持增量翻译
+
 ## 工作流程
 
 1. 当 `docs/zh-CN/` 目录下的 `.md` 文件发生变化时触发
@@ -21,7 +23,26 @@
 
 获取 API Key：访问 [DeepSeek Platform](https://platform.deepseek.com/)
 
-### 2. 触发方式
+### 2. 启用 GitHub Actions 创建 PR 权限
+
+**重要**：在仓库设置中启用权限：
+1. 进入 Settings → Actions → General
+2. 在 Workflow permissions 部分：
+   - 选择 "Read and write permissions"
+   - ✅ 勾选 "Allow GitHub Actions to create and approve pull requests"
+3. 点击 Save
+
+### 3. (备选) 使用 Personal Access Token
+
+如果无法修改仓库设置，可以使用 PAT：
+
+1. 创建 token：GitHub Settings → Developer settings → Personal access tokens
+2. 权限：勾选 `repo` 和 `workflow`
+3. 添加到仓库 Secrets：
+   - 名称：`PAT_TOKEN`
+   - 值：你创建的 token
+
+### 4. 触发方式
 
 #### 自动触发
 - Push 到 `main` 或 `dev` 分支

@@ -161,13 +161,93 @@ async function callDeepSeekAPI(text, apiKey, config) {
 }
 
 /**
+ * Call DeepSeek API for incremental translation
+ */
+async function callDeepSeekAPIIncremental(currentChinese, previousChinese, previousEnglish, apiKey, config) {
+  const userContent = `Previous Chinese version:
+${previousChinese}
+
+Current Chinese version:
+${currentChinese}
+
+Previous English translation:
+${previousEnglish}`;
+
+  const response = await fetch(`${config.deepseek.baseURL}/v1/chat/completions`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`
+    },
+    body: JSON.stringify({
+      model: config.deepseek.model,
+      messages: [
+        { role: 'system', content: config.incrementalSystemPrompt },
+        { role: 'user', content: userContent }
+      ],
+      temperature: config.deepseek.temperature,
+      max_tokens: config.deepseek.maxTokens,
+      stream: false
+    })
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`DeepSeek API error: ${response.status} - ${error}`);
+  }
+
+  const data = await response.json();
+  return data.choices[0].message.content;
+}
+
+/**
  * Translate content with retry logic
  */
-export async function translateContent(contentArray, apiKey, config) {
-  const translated = [];
+export async function translateContent(contentArray, apiKey, config, options = {}) {
   const maxRetries = 3;
   
-  // Also extract and translate frontmatter title/desc
+  // Handle incremental translation
+  if (options.incremental && options.previousChinese && options.previousEnglish) {
+    let retries = 0;
+    let success = false;
+    let translatedText = '';
+    
+    while (retries < maxRetries && !success) {
+      try {
+        translatedText = await callDeepSeekAPIIncremental(
+          contentArray, // currentChinese
+          options.previousChinese,
+          options.previousEnglish,
+          apiKey,
+          config
+        );
+        
+        // Apply any corrections from config
+        for (const [incorrect, correct] of Object.entries(config.corrections)) {
+          translatedText = translatedText.replace(
+            new RegExp(incorrect, 'g'), 
+            correct
+          );
+        }
+        
+        success = true;
+      } catch (error) {
+        retries++;
+        console.warn(`Translation attempt ${retries} failed:`, error.message);
+        if (retries < maxRetries) {
+          // Wait before retrying (exponential backoff)
+          await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, retries)));
+        } else {
+          throw error;
+        }
+      }
+    }
+    
+    return translatedText;
+  }
+  
+  // Full translation (original logic)
+  const translated = [];
   let frontmatterTitle = null;
   let frontmatterDesc = null;
   
@@ -182,7 +262,9 @@ export async function translateContent(contentArray, apiKey, config) {
     
     while (retries < maxRetries && !success) {
       try {
-        translatedText = await callDeepSeekAPI(content, apiKey, config);
+        // Use full translation prompt
+        const promptConfig = { ...config, systemPrompt: config.fullTranslationSystemPrompt };
+        translatedText = await callDeepSeekAPI(content, apiKey, promptConfig);
         
         // Apply any corrections from config
         for (const [incorrect, correct] of Object.entries(config.corrections)) {

@@ -2,6 +2,8 @@
 
 当前 MateChat 自定义主题基于 DevUI Theme 实现。 
 DevUI Theme 是`DevUI`提供的一个框架无关的通用主题定制方案，内置丰富的主题，并支持自定义主题。
+
+现在支持增量翻译
  
 **DevUI Theme** 提供了5种内置主题：
  
@@ -27,6 +29,7 @@ import { ThemeServiceInit, infinityTheme } from 'devui-theme';
 ThemeServiceInit({ infinityTheme }, 'infinityTheme');
 ```
 
+还有这里也做了修改
 
 无限主题 `infinityTheme` 效果演示
 

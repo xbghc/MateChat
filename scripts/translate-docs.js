@@ -47,24 +47,63 @@ async function main() {
     console.log(`\nTranslating: ${file}`);
     
     try {
-      // Read source file
-      const content = await fs.readFile(sourcePath, 'utf-8');
-      
-      // Parse markdown to separate translatable content from code/special blocks
-      const parsed = parseMarkdown(content);
-      
-      // Translate content
-      const translatedParts = await translateContent(
-        parsed.translatableContent,
-        apiKey,
-        translationConfig
-      );
-      
-      // Reconstruct the full markdown with translated content
-      const translatedContent = reconstructMarkdown(parsed, translatedParts);
+      // Read current Chinese source file
+      const currentContent = await fs.readFile(sourcePath, 'utf-8');
       
       // Get target path (zh-CN -> en-US)
       const targetPath = getTargetPath(file, rootDir);
+      
+      // Try to read existing English translation
+      let previousEnglishContent = null;
+      if (await fs.pathExists(targetPath)) {
+        previousEnglishContent = await fs.readFile(targetPath, 'utf-8');
+      }
+      
+      // Get previous Chinese version using git
+      let previousChineseContent = null;
+      try {
+        const { execSync } = await import('child_process');
+        previousChineseContent = execSync(
+          `git show HEAD~1:${file}`,
+          { encoding: 'utf-8', cwd: rootDir }
+        ).toString();
+      } catch (gitError) {
+        // If git command fails, it might be a new file
+        console.log('Note: Unable to get previous version (might be a new file)');
+      }
+      
+      let translatedContent;
+      
+      if (previousEnglishContent && previousChineseContent) {
+        // Incremental translation
+        console.log('   → Using incremental translation');
+        translatedContent = await translateContent(
+          currentContent,
+          apiKey,
+          translationConfig,
+          {
+            previousChinese: previousChineseContent,
+            previousEnglish: previousEnglishContent,
+            incremental: true
+          }
+        );
+      } else {
+        // Full translation (new file or no previous English version)
+        console.log('   → Using full translation');
+        // Parse markdown to separate translatable content from code/special blocks
+        const parsed = parseMarkdown(currentContent);
+        
+        // Translate content
+        const translatedParts = await translateContent(
+          parsed.translatableContent,
+          apiKey,
+          translationConfig,
+          { incremental: false }
+        );
+        
+        // Reconstruct the full markdown with translated content
+        translatedContent = reconstructMarkdown(parsed, translatedParts);
+      }
       
       // Ensure target directory exists
       await fs.ensureDir(path.dirname(targetPath));
