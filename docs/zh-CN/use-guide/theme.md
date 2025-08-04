@@ -16,6 +16,7 @@ DevUI Theme 是`DevUI`提供的一个框架无关的通用主题定制方案，�
 ```shell
 npm i devui-theme
 ```
+这里做了一点修改
  
 ### 初始化主题
  
