@@ -27,6 +27,7 @@ import { ThemeServiceInit, infinityTheme } from 'devui-theme';
 ThemeServiceInit({ infinityTheme }, 'infinityTheme');
 ```
 
+还有这里也做了修改
 
 无限主题 `infinityTheme` 效果演示
 
