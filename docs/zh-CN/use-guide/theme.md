@@ -3,7 +3,7 @@
 当前 MateChat 自定义主题基于 DevUI Theme 实现。 
 DevUI Theme 是`DevUI`提供的一个框架无关的通用主题定制方案，内置丰富的主题，并支持自定义主题。
 
-现在不会将pnpm-lock文件放在PR中了
+现在添加了演示视频
  
 **DevUI Theme** 提供了5种内置主题：
  

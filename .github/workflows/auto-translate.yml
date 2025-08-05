@@ -14,6 +14,11 @@ on:
         description: 'Specific files to translate (comma-separated, optional)'
         required: false
         type: string
+      check_all:
+        description: 'Check all files for pending translations'
+        required: false
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -27,7 +32,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2  # Need history to detect changes
+          fetch-depth: 0  # Need full history to find the base version
       
       - name: Install pnpm
         uses: pnpm/action-setup@v2
@@ -49,8 +54,35 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ github.event.inputs.files }}" ]; then
             echo "files=${{ github.event.inputs.files }}" >> $GITHUB_OUTPUT
           else
-            # Get changed markdown files in zh-CN directory
-            CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD -- 'docs/zh-CN/**/*.md' | tr '\n' ',')
+            CHANGED_FILES=""
+            
+            # Get recently changed files (always include these)
+            RECENT_CHANGES=$(git diff --name-only HEAD~1 HEAD -- 'docs/zh-CN/**/*.md' || true)
+            for file in $RECENT_CHANGES; do
+              CHANGED_FILES="${CHANGED_FILES}${file},"
+            done
+            
+            # If check_all is true or this is manual trigger with check_all
+            if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.event.inputs.check_all }}" = "true" ]; then
+              echo "Checking all files for pending translations..."
+              
+              # Check all zh-CN files to see if they need translation
+              for zh_file in $(find docs/zh-CN -name "*.md" -type f); do
+                en_file="${zh_file/zh-CN/en-US}"
+                
+                # Skip if already in recent changes
+                if echo "$RECENT_CHANGES" | grep -q "$zh_file"; then
+                  continue
+                fi
+                
+                # Include file if English file doesn't exist
+                if [ ! -f "$en_file" ]; then
+                  CHANGED_FILES="${CHANGED_FILES}${zh_file},"
+                  echo "  - Missing translation: $zh_file"
+                fi
+              done
+            fi
+            
             echo "files=${CHANGED_FILES%,}" >> $GITHUB_OUTPUT
           fi
       

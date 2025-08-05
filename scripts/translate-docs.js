@@ -61,15 +61,43 @@ async function main() {
       
       // Get previous Chinese version using git
       let previousChineseContent = null;
+      let baseCommit = null;
+      
       try {
         const { execSync } = await import('child_process');
-        previousChineseContent = execSync(
-          `git show HEAD~1:${file}`,
-          { encoding: 'utf-8', cwd: rootDir }
-        ).toString();
+        
+        // First, try to find the last commit where the English file exists
+        if (await fs.pathExists(targetPath)) {
+          try {
+            // Get the last commit that modified the English file
+            baseCommit = execSync(
+              `git log -1 --format=%H -- "${targetPath.replace(rootDir + '/', '')}"`,
+              { encoding: 'utf-8', cwd: rootDir }
+            ).toString().trim();
+            
+            if (baseCommit) {
+              // Get the Chinese file at that commit
+              previousChineseContent = execSync(
+                `git show ${baseCommit}:${file}`,
+                { encoding: 'utf-8', cwd: rootDir }
+              ).toString();
+              console.log(`   → Found base version at commit: ${baseCommit.substring(0, 7)}`);
+            }
+          } catch (e) {
+            // English file exists but no git history, fall back to HEAD~1
+          }
+        }
+        
+        // If no base commit found, try HEAD~1
+        if (!previousChineseContent) {
+          previousChineseContent = execSync(
+            `git show HEAD~1:${file}`,
+            { encoding: 'utf-8', cwd: rootDir }
+          ).toString();
+        }
       } catch (gitError) {
         // If git command fails, it might be a new file
-        console.log('Note: Unable to get previous version (might be a new file)');
+        console.log('   → Note: Unable to get previous version (might be a new file)');
       }
       
       let translatedContent;
