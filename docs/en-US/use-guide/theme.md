@@ -3,6 +3,8 @@
 Currently, MateChat custom theme is implemented based on DevUI Theme.
 DevUI Theme is a framework-agnostic universal theme customization solution provided by `DevUI`, with rich built-in themes and support for custom themes.
 
+Now supports incremental translation
+
 **DevUI Theme** provides 5 built-in themes:
 
 - Infinity Theme `infinityTheme` (default theme)
@@ -25,6 +27,8 @@ import { ThemeServiceInit, infinityTheme } from 'devui-theme';
 // Use infinity theme
 ThemeServiceInit({ infinityTheme }, 'infinityTheme');
 ```
+
+Also modified here
 
 Infinity Theme `infinityTheme` effect demo
 
