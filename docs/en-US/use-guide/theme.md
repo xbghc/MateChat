@@ -3,6 +3,8 @@
 Currently, MateChat custom theme is implemented based on DevUI Theme.
 DevUI Theme is a framework-agnostic universal theme customization solution provided by `DevUI`, with rich built-in themes and support for custom themes.
 
+We no longer include pnpm-lock files in PRs
+
 **DevUI Theme** provides 5 built-in themes:
 
 - Infinity Theme `infinityTheme` (default theme)
